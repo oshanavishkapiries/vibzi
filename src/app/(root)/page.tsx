@@ -1,7 +1,6 @@
 "use client";
 
 import Banner from "@/components/common/Banner";
-import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
 import { TravelCarousel } from "@/components/common/TravelCarousel";
 import { travelData } from "@/mock/_travelData";
@@ -26,7 +25,6 @@ export default function Home() {
       <Banner />
       <TravelCarousel travelData={data} title={"Recent suggestions for you"} />
       <TravelCarousel travelData={data} title={"Trending on Vibzi"} />
-      <Footer />
     </div>
   );
 }

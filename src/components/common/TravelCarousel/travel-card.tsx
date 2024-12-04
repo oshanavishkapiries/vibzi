@@ -1,4 +1,3 @@
-import Image from "next/image"
 import { Star } from 'lucide-react'
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Badge } from "@/components/ui/badge"
@@ -11,7 +10,7 @@ interface TravelCardProps {
   rating: number
   reviews: number
   title: string
-  price: String
+  price: string
 }
 
 export function TravelCard({ imageSrc, rating, reviews, title, price }: TravelCardProps) {

@@ -1,8 +1,6 @@
-import { Input } from '@/components/ui/input'
 import Image from 'next/image'
 import React from 'react'
 import { AdvanceSearch } from './AdvanceSearch'
-import { Button } from 'react-day-picker'
 
 const Header = () => {
     return (

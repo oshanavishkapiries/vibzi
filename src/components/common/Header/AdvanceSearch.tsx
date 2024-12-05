@@ -63,7 +63,7 @@ export function AdvanceSearch({
               id="date"
               variant={"outline"}
               className={cn(
-                "w-full min-w-[240px] justify-start text-left font-normal py-6 rounded-md lg:rounded-full",
+                "w-full md:min-w-[240px] justify-start text-left font-normal py-6 rounded-md lg:rounded-full",
                 !date && "text-muted-foreground"
               )}
             >

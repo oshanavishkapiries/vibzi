@@ -12,7 +12,7 @@ export function TravelGrid({
     travelData: ITravelData[];
     title: string;
 }) {
-    const skeletonCards = Array.from({ length: 12 });
+    const skeletonCards = Array.from({ length: 15 });
 
     return (
         <div className="w-full px-[30px] md:px-[60px] py-3">
@@ -26,8 +26,8 @@ export function TravelGrid({
                             <TravelGridCardSkeleton />
                         </div>
                     ))
-                    : travelData.map((item) => (
-                        <div key={item.title} className="w-full">
+                    : travelData.map((item, index) => (
+                        <div key={index} className="w-full">
                             <TravelGridCard
                                 imageSrc={item.image_url}
                                 rating={item.rating}

@@ -42,7 +42,7 @@ export function AdvanceSearch({
   return (
     <motion.div
       className={cn(
-        "w-full lg:w-2/3 flex flex-col lg:flex-row gap-3 shadow-lg rounded-lg lg:rounded-full p-2",
+        "w-full lg:w-2/3 max-w-6xl transition-all duration-500 flex flex-row gap-3 shadow-lg rounded-full p-2",
         className
       )}
       variants={containerVariants}
@@ -53,7 +53,7 @@ export function AdvanceSearch({
         <Input
           type="text"
           placeholder="Enter your destination"
-          className="py-6 rounded-md lg:rounded-full"
+          className="py-6 rounded-full"
         />
       </motion.div>
       <motion.div className="flex gap-3" variants={childVariants}>
@@ -63,22 +63,24 @@ export function AdvanceSearch({
               id="date"
               variant={"outline"}
               className={cn(
-                "w-full md:min-w-[240px] justify-start text-left font-normal py-6 rounded-md lg:rounded-full",
+                "w-full md:min-w-[240px] justify-start text-left font-normal py-6 rounded-full",
                 !date && "text-muted-foreground"
               )}
             >
               <CalendarIcon />
               {date?.from ? (
                 date.to ? (
-                  <>
+                  <span className="max-md:hidden">
                     {format(date.from, "LLL dd, y")} -{" "}
                     {format(date.to, "LLL dd, y")}
-                  </>
+                  </span>
                 ) : (
-                  format(date.from, "LLL dd, y")
+                  <span className="max-md:hidden">
+                    {format(date.from, "LLL dd, y")}
+                  </span>
                 )
               ) : (
-                <span>When</span>
+                <span className="max-md:hidden">When</span>
               )}
             </Button>
           </PopoverTrigger>
@@ -94,7 +96,7 @@ export function AdvanceSearch({
           </PopoverContent>
         </Popover>
         <motion.div variants={childVariants}>
-          <Button className="py-6 rounded-md lg:rounded-full">
+          <Button className="py-6 rounded-full">
             <Search />
           </Button>
         </motion.div>

@@ -10,25 +10,27 @@ import { travelData } from "@/mock/_travelData";
 import { ITravelData } from "@/types";
 import { useState } from "react";
 
-
 export default function Home() {
-  const [data, setdata] = useState<ITravelData[]>([])
-
-
+  const [data, setdata] = useState<ITravelData[]>([]);
 
   setTimeout(() => {
-    setdata(travelData)
-  }, 2000)
+    setdata(travelData);
+  }, 2000);
 
   return (
-    <div className="container mx-auto min-h-screen">
+    <>
       <Header />
-      <TravelCarousel travelData={data} title={"Recent suggestions for you"} />
-      <TravelCarousel travelData={data} title={"Trending on Vibzi"} />
-      <Banner />
-      <TravelGrid travelData={data} title={"Popular Destinations"} />
-      <FAQSection />
+      <div className="container mx-auto min-h-screen">
+        <TravelCarousel
+          travelData={data}
+          title={"Recent suggestions for you"}
+        />
+        <TravelCarousel travelData={data} title={"Trending on Vibzi"} />
+        <Banner />
+        <TravelGrid travelData={data} title={"Popular Destinations"} />
+        <FAQSection />
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }

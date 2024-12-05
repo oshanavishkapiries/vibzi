@@ -100,7 +100,31 @@ export const travelData: ITravelData[] = [
         "price": "LKR 65,826",
         "rating": 4.4,
         "reviews": 220
-    }
+    },
+    {
+        "image_url": "https://cf.bstatic.com/xdata/images/hotel/square240/237468242.jpg?k=fb30b778257e83900aef3ea3ecd2cdde2ec821255d891e757e114a1f34fd3e41&o=",
+        "title": "Millennium Place Barsha Heights Hotel",
+        "sub_title": "Dubai, United Arab Emirates",
+        "price": "LKR 65,826",
+        "rating": 4.4,
+        "reviews": 220
+    },
+    {
+        "image_url": "https://cf.bstatic.com/xdata/images/hotel/square240/237468242.jpg?k=fb30b778257e83900aef3ea3ecd2cdde2ec821255d891e757e114a1f34fd3e41&o=",
+        "title": "Millennium Place Barsha Heights Hotel",
+        "sub_title": "Dubai, United Arab Emirates",
+        "price": "LKR 65,826",
+        "rating": 4.4,
+        "reviews": 220
+    },
+    {
+        "image_url": "https://cf.bstatic.com/xdata/images/hotel/square240/237468242.jpg?k=fb30b778257e83900aef3ea3ecd2cdde2ec821255d891e757e114a1f34fd3e41&o=",
+        "title": "Millennium Place Barsha Heights Hotel",
+        "sub_title": "Dubai, United Arab Emirates",
+        "price": "LKR 65,826",
+        "rating": 4.4,
+        "reviews": 220
+    },
 ]
 
 

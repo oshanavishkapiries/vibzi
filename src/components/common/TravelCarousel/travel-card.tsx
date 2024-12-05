@@ -25,7 +25,7 @@ export function TravelCard({ imageSrc, rating, reviews, title, price }: TravelCa
         </AspectRatio>
       </CardHeader>
 
-      <CardContent className="p-4">
+      <CardContent className="p-4 ps-0">
         <div className="flex items-center justify-start gap-3 mb-2">
           <Badge variant="secondary" className="flex items-center gap-1">
             <Star className="h-3 w-3 fill-primary text-primary" />
@@ -36,7 +36,7 @@ export function TravelCard({ imageSrc, rating, reviews, title, price }: TravelCa
         <h3 className="font-semibold text-md truncate">{title}</h3>
       </CardContent>
 
-      <CardFooter className="p-4 pt-0">
+      <CardFooter className="p-4 pt-0 ps-0">
         <p className="text-sm">
           from <span className="font-semibold">{price.toLocaleString()}</span> / Person
         </p>

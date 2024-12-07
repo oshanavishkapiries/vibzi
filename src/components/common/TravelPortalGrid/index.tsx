@@ -1,20 +1,19 @@
+import {ITravelData} from "@/types";
+import {TravelCard} from "@/components/common/TravelCarousel/travel-card";
+import TravelCardSkeleton from "@/components/common/TravelCarousel/travel-card-skeleton";
 
-import { ITravelData } from "@/types";
-import TravelGridCardSkeleton from "./travel-grid-card-skeleton";
-import { TravelGridCard } from "./travel-grid-card";
+export default function TravelPortalGrid(
+    {
+        travelData,
+        title,
+        children
+    }: {
+        travelData: ITravelData[];
+        title: string;
+        children?: React.ReactNode
+    }) {
 
-
-
-export function TravelGrid({
-    travelData,
-    title,
-    children
-}: {
-    travelData: ITravelData[];
-    title: string;
-    children?: React.ReactNode;
-}) {
-    const skeletonCards = Array.from({ length: 15 });
+    const skeletonCards = Array.from({length: 15});
 
     return (
         <div className="w-full px-[30px] md:px-[60px] py-3">
@@ -26,12 +25,12 @@ export function TravelGrid({
                 {travelData.length === 0
                     ? skeletonCards.map((_, index) => (
                         <div key={`skeleton-${index}`} className="w-full">
-                            <TravelGridCardSkeleton />
+                            <TravelCardSkeleton/>
                         </div>
                     ))
                     : travelData.map((item, index) => (
                         <div key={index} className="w-full">
-                            <TravelGridCard
+                            <TravelCard
                                 imageSrc={item.image_url}
                                 rating={item.rating}
                                 reviews={item.reviews}

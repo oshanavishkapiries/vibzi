@@ -15,6 +15,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
 export function AdvanceSearch({
   className,
@@ -96,9 +97,11 @@ export function AdvanceSearch({
           </PopoverContent>
         </Popover>
         <motion.div variants={childVariants}>
+          <Link prefetch={true} href="/results">
           <Button className="py-6 rounded-full">
             <Search />
           </Button>
+        </Link>
         </motion.div>
       </motion.div>
     </motion.div>

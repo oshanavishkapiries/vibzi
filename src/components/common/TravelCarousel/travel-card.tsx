@@ -15,7 +15,7 @@ interface TravelCardProps {
 
 export function TravelCard({ imageSrc, rating, reviews, title, price }: TravelCardProps) {
   return (
-    <Card className="overflow-hidden border-none shadow-none rounded-none">
+    <Card className="overflow-hidden border-none shadow-none rounded-none cursor-pointer">
       <CardHeader className="p-0">
         <AspectRatio ratio={3 / 4}>
           <OptimizedImage

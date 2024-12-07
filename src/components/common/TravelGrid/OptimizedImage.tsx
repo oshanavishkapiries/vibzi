@@ -26,7 +26,7 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 priority
                 onLoad={() => setIsLoaded(true)}
-                className={`duration-500 ease-in-out hover:scale-110 transition-all ${isLoaded ? "opacity-100" : "opacity-0"
+                className={`duration-500 ease-in-out object-cover hover:scale-110 transition-all ${isLoaded ? "opacity-100" : "opacity-0"
                     }`}
             />
         </div>

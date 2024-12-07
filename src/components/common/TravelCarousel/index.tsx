@@ -12,9 +12,11 @@ import TravelCardSkeleton from "./travel-card-skeleton";
 export function TravelCarousel({
   travelData,
   title,
+  children,
 }: {
   travelData: ITravelData[];
   title: string;
+  children?: React.ReactNode;
 }) {
   const skeletonCards = Array.from({ length: 12 });
 
@@ -23,6 +25,7 @@ export function TravelCarousel({
       <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-3">
         {title}
       </h4>
+      {children}
       <Carousel
         opts={{
           align: "start",

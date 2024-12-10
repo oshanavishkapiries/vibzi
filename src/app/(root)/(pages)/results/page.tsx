@@ -21,12 +21,6 @@ export default function ResultsPage() {
         travelData={data.slice(0, 10)}
         title={"2,000 Things to Do in Bangkok"}
       />
-      <TravelGrid travelData={data?.slice(10, 15)} title={""}>
-        <h1 className="scroll-m-20 text-2xl font-bold tracking-tight mb-3">
-          Attractions
-        </h1>
-        <FilterClaude filters={filters} />
-      </TravelGrid>
       <TravelPortalGrid travelData={data.slice(10, 20)} title={""}>
         <h1 className="scroll-m-20 text-2xl font-bold tracking-tight mb-3">
           Food & Drinks
@@ -36,6 +30,12 @@ export default function ResultsPage() {
           80 Places for Food & Drinks
         </h4>
       </TravelPortalGrid>
+      <TravelGrid travelData={data?.slice(10, 15)} title={""}>
+        <h1 className="scroll-m-20 text-2xl font-bold tracking-tight mb-3">
+          Attractions
+        </h1>
+        <FilterClaude filters={filters} />
+      </TravelGrid>
       <TravelPortalGrid travelData={data.slice(19, 25)} title={""}>
         <h1 className="scroll-m-20 text-2xl font-bold tracking-tight mb-3">
           Near by destinations

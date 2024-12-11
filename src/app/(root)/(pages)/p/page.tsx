@@ -2,6 +2,9 @@ import ImageGallery from "@/components/common/ImageGallery";
 import RecentSuggestions from "@/components/common/RecentSuggestions";
 import { breadcrumbLinks } from "@/mock/_breadcrumbLinks";
 import { travelData } from "@/mock/_travelData";
+import TourDetails from "./tour-details";
+import Reviews from "./reviews";
+import BentoGrid from "./BentoGrid";
 
 const P = () => {
   const pricing = {
@@ -20,7 +23,7 @@ const P = () => {
   };
 
   return (
-    <div className="container mx-auto min-h-screen">
+    <div className="container mx-auto min-h-screen mb-3">
       <RecentSuggestions
         breadcrumbLinks={breadcrumbLinks}
         title="Recent suggestions for you"
@@ -36,6 +39,9 @@ const P = () => {
         pricing={pricing}
         bookingProvider={bookingProvider}
       />
+      <TourDetails />
+      <BentoGrid />
+      <Reviews />
     </div>
   );
 };

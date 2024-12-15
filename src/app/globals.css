@@ -69,4 +69,12 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  .n {
+    @apply bg-red-400
+  }
+
+  .n1 {
+    @apply bg-blue-400
+  }
 }

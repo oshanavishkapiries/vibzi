@@ -5,7 +5,8 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import OptimizedImage from "../TravelCarousel/OptimizedImage";
+import OptimizedImage from "@/components/common/TravelCarousel/OptimizedImage";
+
 
 interface ImageGalleryProps {
   images: {

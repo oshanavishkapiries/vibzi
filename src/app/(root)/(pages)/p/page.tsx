@@ -1,10 +1,10 @@
-import ImageGallery from "@/components/common/ImageGallery";
-import RecentSuggestions from "@/components/common/RecentSuggestions";
 import { breadcrumbLinks } from "@/mock/_breadcrumbLinks";
 import { travelData } from "@/mock/_travelData";
-import TourDetails from "./tour-details";
-import Reviews from "./reviews";
-import BentoGrid from "./BentoGrid";
+import TourDetails from "../../../../components/sections/DetailPage/tour-details";
+import Reviews from "../../../../components/sections/DetailPage/reviews";
+import BentoGrid from "../../../../components/sections/DetailPage/BentoGrid";
+import RecentSuggestions from "@/components/sections/DetailPage/RecentSuggestions";
+import ImageGallery from "@/components/sections/DetailPage/ImageGallery";
 
 const P = () => {
   const pricing = {

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 // import { useWindowSize } from "@/hooks/useWindowSize";
 import React from "react";
@@ -10,15 +10,14 @@ export default function MainLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   // const size = useWindowSize()
 
   return (
     <>
       {/* <div className="fixed top-0 left-0 z-50 bg-white">   DEV: {size}  </div> */}
-      <Header/>
+      <Header />
       {children}
-      <Footer/>
+      <Footer />
     </>
   );
 }

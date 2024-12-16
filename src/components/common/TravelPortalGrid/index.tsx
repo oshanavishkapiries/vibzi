@@ -31,6 +31,7 @@ export default function TravelPortalGrid(
                     : travelData.map((item, index) => (
                         <div key={index} className="w-full">
                             <TravelCard
+                                id = {item.id}
                                 imageSrc={item.image_url}
                                 rating={item.rating}
                                 reviews={item.reviews}

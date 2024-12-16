@@ -48,6 +48,7 @@ export function TravelCarousel({
                   className="w-full basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
                 >
                   <TravelCard
+                    id={item.id}
                     imageSrc={item.image_url}
                     rating={item.rating}
                     reviews={item.reviews}

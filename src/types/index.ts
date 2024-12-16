@@ -1,6 +1,7 @@
 import { DateRange } from "react-day-picker";
 
 export type ITravelData = {
+  id:string
   image_url: string;
   title: string;
   sub_title: string;
@@ -25,3 +26,9 @@ export type DestinationListProps = {
   onSelect: (item: Destination) => void;
   show: boolean;
 };
+
+export interface SearchState {
+  startDate: string;
+  endDate: string;
+  destinationId: string;
+}

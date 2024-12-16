@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-export default function FilterClaude({ filters }: { filters: string[] }) {
+export default function FilterClaude({ filters , className }: { filters: string[] , className?: string }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
@@ -40,7 +40,7 @@ export default function FilterClaude({ filters }: { filters: string[] }) {
   }, []);
 
   return (
-    <div className="relative py-2 scrollbar-hide">
+    <div className={`relative py-2 scrollbar-hide ${className}`}>
       {showLeftArrow && (
         <Button
           variant="outline"

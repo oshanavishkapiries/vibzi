@@ -1,3 +1,4 @@
+"use client";
 import { breadcrumbLinks } from "@/mock/_breadcrumbLinks";
 import { travelData } from "@/mock/_travelData";
 import TourDetails from "../../../../components/sections/DetailPage/tour-details";
@@ -5,8 +6,26 @@ import Reviews from "../../../../components/sections/DetailPage/reviews";
 import BentoGrid from "../../../../components/sections/DetailPage/BentoGrid";
 import RecentSuggestions from "@/components/sections/DetailPage/RecentSuggestions";
 import ImageGallery from "@/components/sections/DetailPage/ImageGallery";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useProductByIdQuery } from "@/services/productSlice";
 
 const P = () => {
+  const searchParams = useSearchParams();
+
+  const [state, setState] = useState<any>({
+    id: "",
+  });
+
+  useEffect(() => {
+    const id = searchParams.get("id") || "";
+    setState({ id });
+  }, [searchParams]);
+
+  const { data: ProductData } = useProductByIdQuery(state.id);
+
+  console.log(ProductData);
+
   const pricing = {
     price: "$76.10",
     priceNote: "per person",
@@ -39,7 +58,7 @@ const P = () => {
         pricing={pricing}
         bookingProvider={bookingProvider}
       />
-      <TourDetails />
+      <TourDetails textData={ProductData}/>
       <BentoGrid />
       <Reviews />
     </div>

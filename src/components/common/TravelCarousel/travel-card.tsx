@@ -11,6 +11,7 @@ import OptimizedImage from "./OptimizedImage";
 import Link from "next/link";
 
 interface TravelCardProps {
+  id: string;
   imageSrc: string;
   rating: number;
   reviews: number;
@@ -19,6 +20,7 @@ interface TravelCardProps {
 }
 
 export function TravelCard({
+  id,
   imageSrc,
   rating,
   reviews,
@@ -26,7 +28,7 @@ export function TravelCard({
   price,
 }: TravelCardProps) {
   return (
-    <Link href={"/p/"}>
+    <Link href={`/detail/?id=${id}`}>
       <Card className="overflow-hidden border-none shadow-none rounded-none cursor-pointer">
         <CardHeader className="p-0">
           <AspectRatio ratio={3 / 4}>

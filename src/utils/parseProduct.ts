@@ -1,19 +1,24 @@
-import { ITravelData } from "@/types";
+export function parseProduct(response: any) {
+  if (!response || !response.data || !response.data.products) {
+    return [];
+  }
 
-export const parseProduct = (product: any): ITravelData => {
-    const image_url = product.images?.[0]?.variants?.[0]?.url || '';
-    const title = product.title || '';
-    const sub_title = product.description?.split('\n')[0] || '';
-    const price = product.pricing?.summary?.price?.toFixed(2) || '0.00';
-    const rating = product.reviews?.averageReviews || 0;
-    const reviews = product.reviews?.totalReviews || 0;
+  return response.data.products.map((product: any) => {
+    const imageUrl =
+      product.images?.[0]?.variants?.find(
+        (variant: any) => variant.width === 200 && variant.height === 200
+      )?.url || "";
 
     return {
-        image_url,
-        title,
-        sub_title,
-        price,
-        rating,
-        reviews
+      id: product.productCode || "",
+      image_url: imageUrl,
+      title: product.title || "",
+      sub_title: product.description?.split("\n")[0] || "",
+      price: `${product.pricing?.summary?.price || 0} ${
+        product.pricing?.currency || ""
+      }`.trim(),
+      rating: product.reviews?.averageReviews || 0,
+      reviews: product.reviews?.totalReviews || 0,
     };
-};
+  });
+}

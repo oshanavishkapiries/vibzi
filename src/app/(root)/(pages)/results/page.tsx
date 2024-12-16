@@ -1,63 +1,95 @@
 "use client";
-
-import TravelPortalGrid from "@/components/common/TravelPortalGrid";
 import { useEffect, useState } from "react";
-import { ITravelData } from "@/types";
-import { TravelGrid } from "@/components/common/TravelGrid";
-import FilterClaude from "@/components/common/FilterClaude";
-import { filters } from "@/mock/_filterData";
-import { resultData } from "@/mock/_resultData";
 import { useSearchParams } from "next/navigation";
-import { getProductByDesAndDate } from "@/api/call/product/getProductByDesAndDate";
+import TravelPortalGrid from "@/components/common/TravelPortalGrid";
+import FilterClaude from "@/components/common/FilterClaude";
+import { useSearchProductsQuery } from "@/services/productSlice";
+import { filters } from "@/mock/_filterData";
+import { SearchState } from "@/types";
+import { parseDateToISO } from "@/utils/parseDateToISO";
+import { DEFAULT_SEARCH_PARAMS } from "@/constants/initStates";
+import { parseProduct } from "@/utils/parseProduct";
+import { useInView } from "react-intersection-observer";
+import TravelCardSkeleton from "@/components/common/TravelCarousel/travel-card-skeleton";
 
 export default function ResultsPage() {
-  const [data, setdata] = useState<ITravelData[]>([]);
   const searchParams = useSearchParams();
+  const { ref, inView } = useInView();
 
-  const destination_id = searchParams.get("des_id") || "";
-  const fromDate = searchParams.get("from") || "";
-  const toDate = searchParams.get("to") || "";
+  const [state, setState] = useState<SearchState>({
+    startDate: "",
+    endDate: "",
+    destinationId: "",
+  });
 
-  const fetchData = async () => {
-    const res = await getProductByDesAndDate(destination_id, fromDate, toDate);
-    setdata(res);
-  };
+  const [page, setPage] = useState(1);
+  const [allProducts, setAllProducts] = useState<any[]>([]);
 
   useEffect(() => {
-    fetchData();
-  }, [destination_id, fromDate, toDate]);
+    const destinationId = searchParams.get("des_id") || "";
+    const startDate = searchParams.get("from") || "";
+    const endDate = searchParams.get("to") || "";
+    setState({ startDate, endDate, destinationId });
+  }, [searchParams]);
 
-  console.log("data======>", data);
+  const queryParams = {
+    ...DEFAULT_SEARCH_PARAMS,
+    startDate: parseDateToISO(
+      state.startDate || DEFAULT_SEARCH_PARAMS.startDate
+    ),
+    endDate: parseDateToISO(state.endDate || DEFAULT_SEARCH_PARAMS.endDate),
+    destinationId: state.destinationId,
+    page,
+    size: 10,
+  };
+
+  const {
+    data: searchResults,
+    isFetching,
+    isError,
+  } = useSearchProductsQuery(queryParams);
+
+  useEffect(() => {
+    if (searchResults) {
+      const parsedProducts = parseProduct(searchResults);
+
+      setAllProducts((prev) =>
+        page === 1 ? parsedProducts : [...prev, ...parsedProducts]
+      );
+    }
+  }, [searchResults, page]);
+
+  useEffect(() => {
+    if (inView && !isFetching) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  }, [inView, isFetching]);
 
   return (
-    <div className="container mx-auto min-h-screen">
-      <TravelPortalGrid
-        travelData={[]}
-        title={"2,000 Things to Do in Bangkok"}
-      />
-      {/* <TravelPortalGrid travelData={data.slice(10, 20)} title={""}>
-        <h1 className="scroll-m-20 text-2xl font-bold tracking-tight mb-3">
-          Food & Drinks
-        </h1>
-        <FilterClaude filters={filters} />
-        <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-3">
-          80 Places for Food & Drinks
-        </h4>
-      </TravelPortalGrid>
-      <TravelGrid travelData={data?.slice(10, 15)} title={""}>
-        <h1 className="scroll-m-20 text-2xl font-bold tracking-tight mb-3">
-          Attractions
-        </h1>
-        <FilterClaude filters={filters} />
-      </TravelGrid>
-      <TravelPortalGrid travelData={data.slice(19, 25)} title={""}>
-        <h1 className="scroll-m-20 text-2xl font-bold tracking-tight mb-3">
-          Near by destinations
-        </h1>
-        <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-3">
-          50 near by destinations
-        </h4>
-      </TravelPortalGrid> */}
+    <div className="container mb-8 mx-auto min-h-screen">
+      <FilterClaude className="mx-[30px] md:mx-[60px]" filters={filters} />
+
+      {!isError ? (
+        <TravelPortalGrid travelData={allProducts} title={``} />
+      ) : (
+        <div className="w-full px-[30px] md:px-[60px] py-3">
+          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-3">
+            No results found
+          </h4>
+        </div>
+      )}
+
+      <div
+        ref={ref}
+        className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 px-[30px] md:px-[60px] py-3"
+      >
+        {isFetching &&
+          Array.from({ length: 10 }).map((_, index) => (
+            <div key={`skeleton-${index}`} className="w-full">
+              <TravelCardSkeleton />
+            </div>
+          ))}
+      </div>
     </div>
   );
 }

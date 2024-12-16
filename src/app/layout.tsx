@@ -1,6 +1,9 @@
+
 import type { Metadata } from "next";
 import "./globals.css";
 
+
+import ReduxProvider from "./(root)/reduxProvider";
 
 export const metadata: Metadata = {
   title: "VIBZI",
@@ -15,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {children}
+        <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>
   );

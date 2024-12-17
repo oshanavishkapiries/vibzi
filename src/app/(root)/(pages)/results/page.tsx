@@ -12,6 +12,7 @@ import { parseProduct } from "@/utils/parseProduct";
 import { useInView } from "react-intersection-observer";
 import TravelCardSkeleton from "@/components/common/TravelCarousel/travel-card-skeleton";
 
+
 export default function ResultsPage() {
   const searchParams = useSearchParams();
   const { ref, inView } = useInView();
@@ -60,10 +61,10 @@ export default function ResultsPage() {
   }, [searchResults, page]);
 
   useEffect(() => {
-    if (inView && !isFetching) {
+    if (inView && !isFetching && !isError) {
       setPage((prevPage) => prevPage + 1);
     }
-  }, [inView, isFetching]);
+  }, [inView, isFetching , isError]);
 
   return (
     <div className="container mb-8 mx-auto min-h-screen">
@@ -79,8 +80,7 @@ export default function ResultsPage() {
         </div>
       )}
 
-      <div
-        ref={ref}
+      <div ref={ref}
         className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 px-[30px] md:px-[60px] py-3"
       >
         {isFetching &&

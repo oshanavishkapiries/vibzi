@@ -1,11 +1,11 @@
 "use client";
-import { breadcrumbLinks } from "@/mock/_breadcrumbLinks";
-import { travelData } from "@/mock/_travelData";
+//import { breadcrumbLinks } from "@/mock/_breadcrumbLinks";
+//import { travelData } from "@/mock/_travelData";
 import TourDetails from "../../../../components/sections/DetailPage/tour-details";
 import Reviews from "../../../../components/sections/DetailPage/reviews";
 import BentoGrid from "../../../../components/sections/DetailPage/BentoGrid";
-import RecentSuggestions from "@/components/sections/DetailPage/RecentSuggestions";
-import ImageGallery from "@/components/sections/DetailPage/ImageGallery";
+//import RecentSuggestions from "@/components/sections/DetailPage/RecentSuggestions";
+//import ImageGallery from "@/components/sections/DetailPage/ImageGallery";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useProductByIdQuery } from "@/services/productSlice";
@@ -26,24 +26,24 @@ const P = () => {
 
   console.log(ProductData);
 
-  const pricing = {
-    price: "$76.10",
-    priceNote: "per person",
-    cancellationPolicy: "Free cancellation + Unlimited reschedule",
-    cancellationDetail:
-      "up to 24 hours before the experience starts (local time)",
-  };
+  // const pricing = {
+  //   price: "$76.10",
+  //   priceNote: "per person",
+  //   cancellationPolicy: "Free cancellation + Unlimited reschedule",
+  //   cancellationDetail:
+  //     "up to 24 hours before the experience starts (local time)",
+  // };
 
-  const bookingProvider = {
-    logoSrc: "https://shorturl.at/i9EFb",
-    name: "Viator",
-    bookNowButtonLabel: "Reserve Now",
-    poweredByLogoSrc: "https://shorturl.at/i9EFb",
-  };
+  // const bookingProvider = {
+  //   logoSrc: "https://shorturl.at/i9EFb",
+  //   name: "Viator",
+  //   bookNowButtonLabel: "Reserve Now",
+  //   poweredByLogoSrc: "https://shorturl.at/i9EFb",
+  // };
 
   return (
     <div className="container mx-auto min-h-screen mb-3">
-      <RecentSuggestions
+      {/* <RecentSuggestions
         breadcrumbLinks={breadcrumbLinks}
         title="Recent suggestions for you"
         reviews={250}
@@ -57,7 +57,7 @@ const P = () => {
         }))}
         pricing={pricing}
         bookingProvider={bookingProvider}
-      />
+      /> */}
       <TourDetails textData={ProductData}/>
       <BentoGrid />
       <Reviews />

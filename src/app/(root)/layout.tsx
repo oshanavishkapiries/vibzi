@@ -14,15 +14,15 @@ export default function MainLayout({
   const size = useWindowSize();
 
   return (
-    <Suspense fallback={<div>Loading layout...</div>}>
+    <Suspense fallback={<></>}>
       <div className="fixed top-0 left-0 z-[100] bg-white">DEV: {size}</div>
-      <Suspense fallback={<div>Loading header...</div>}>
+      <Suspense fallback={<></>}>
         <Header />
       </Suspense>
       <main>
-        <Suspense fallback={<div>Loading content...</div>}>{children}</Suspense>
+        <Suspense fallback={<></>}>{children}</Suspense>
       </main>
-      <Suspense fallback={<div>Loading footer...</div>}>
+      <Suspense fallback={<></>}>
         <Footer />
       </Suspense>
     </Suspense>

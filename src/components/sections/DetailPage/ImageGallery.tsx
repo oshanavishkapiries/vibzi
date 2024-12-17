@@ -51,7 +51,7 @@ export default function ImageGallery({
                 "ring-2 ring-offset-2 ring-offset-gray-700 ring-white"
             )}
           >
-            <OptimizedImage src={image.src} alt={image.alt} />
+            <OptimizedImage src={image?.src} alt={image?.alt} />
           </button>
         ))}
         {showMoreCount > 0 && (
@@ -75,9 +75,9 @@ export default function ImageGallery({
           )}
         >
           <OptimizedImage
-            key={images[selectedImage].src}
-            src={images[selectedImage].src}
-            alt={images[selectedImage].alt}
+            key={images[selectedImage]?.src}
+            src={images[selectedImage]?.src}
+            alt={images[selectedImage]?.alt}
           />
         </div>
       </div>

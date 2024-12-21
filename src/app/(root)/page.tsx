@@ -1,6 +1,6 @@
 "use client";
 
-import Banner from "@/components/common/Banner";
+//import Banner from "@/components/common/Banner";
 import FAQSection from "@/components/common/FAQSection";
 import FilterClaude from "@/components/common/FilterClaude";
 import { TravelCarousel } from "@/components/common/TravelCarousel";
@@ -29,7 +29,7 @@ export default function Home() {
             Trending on Vibzi
           </h1>
         </TravelCarousel>
-        <Banner />
+        {/* <Banner /> */}
         <TravelGrid travelData={data} title={""}>
           <h1 className="scroll-m-20 text-2xl font-bold tracking-tight mb-3">
             Popular Destinations

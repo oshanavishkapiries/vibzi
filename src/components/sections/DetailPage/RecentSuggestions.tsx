@@ -1,5 +1,4 @@
 import { Star, StarHalf } from "lucide-react";
-
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,70 +13,61 @@ type BreadcrumbLinkType = {
 };
 
 type RecentSuggestionsProps = {
-  breadcrumbLinks: BreadcrumbLinkType[];
-  title: string;
-  reviews: number;
-  rating: number;
-  location: string;
+  breadcrumbLinks?: BreadcrumbLinkType[];
+  title?: string;
+  reviews?: string;
+  rating?: string;
+  location?: string;
+  isLoading?: boolean;
 };
 
 export default function RecentSuggestions({
-  breadcrumbLinks,
-  title,
-  reviews,
-  rating,
-  location,
+  breadcrumbLinks = [],
+  title = "",
+  reviews = "",
+  rating = "",
+  location = "",
+  isLoading = false,
 }: RecentSuggestionsProps) {
-  const { fullStars, halfStar, emptyStars } = calculateStarRatings(rating);
+  const { fullStars, halfStar, emptyStars } = calculateStarRatings(
+    parseInt(rating)
+  );
 
   return (
     <Card className="border-0 shadow-none py-2 px-[30px] md:px-[60px]">
       <CardContent className="p-0">
-        <Breadcrumb className="mb-4">
-          {breadcrumbLinks.map((link, index) => (
-            <BreadcrumbItem key={index}>
-              <BreadcrumbLink
-                href={link.href}
-                className={`text-sm text-muted-foreground hover:text-foreground ${
-                  index == breadcrumbLinks.length - 1 ? "text-foreground" : ""
-                }`}
-              >
-                {`${index !== 0 ? " / " : ""}${link.label}`}
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-          ))}
-        </Breadcrumb>
-        <div className="space-y-2">
-          <h1 className="text-2xl font-bold tracking-tight">{title}</h1>
-          <div className="flex items-center gap-2">
-            <div className="flex">
-              {Array(fullStars)
-                .fill(null)
-                .map((_, i) => (
-                  <Star
-                    key={`full-${i}`}
-                    className="w-4 h-4 fill-primary text-primary"
-                  />
+        {!isLoading && (
+          <Breadcrumb className="mb-4">
+            {breadcrumbLinks.map((link, index) => (
+              <BreadcrumbItem key={index}>
+                <BreadcrumbLink href={link.href}>{link.label}</BreadcrumbLink>
+              </BreadcrumbItem>
+            ))}
+          </Breadcrumb>
+        )}
+
+        {!isLoading && (
+          <>
+            <h1 className="text-2xl font-semibold mb-4">{title}</h1>
+            <div className="flex items-center gap-4">
+              <div className="flex">
+                {[...Array(fullStars)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-primary text-primary" />
                 ))}
-              {halfStar && (
-                <StarHalf className="w-4 h-4 fill-primary text-primary" />
-              )}
-              {Array(emptyStars)
-                .fill(null)
-                .map((_, i) => (
-                  <Star
-                    key={`empty-${i}`}
-                    className="w-4 h-4 text-muted-foreground"
-                  />
+                {halfStar && (
+                  <StarHalf className="w-4 h-4 fill-primary text-primary" />
+                )}
+                {[...Array(emptyStars)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 text-muted-foreground" />
                 ))}
+              </div>
+              <span className="text-sm text-muted-foreground">
+                {reviews} reviews
+              </span>
+              <span className="text-sm text-muted-foreground">{location}</span>
             </div>
-            <span className="text-sm text-muted-foreground">
-              {reviews} Reviews
-            </span>
-            <span className="text-sm text-muted-foreground">•</span>
-            <span className="text-sm text-muted-foreground">{location}</span>
-          </div>
-        </div>
+          </>
+        )}
       </CardContent>
     </Card>
   );

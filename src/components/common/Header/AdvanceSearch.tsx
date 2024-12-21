@@ -16,36 +16,7 @@ import { Input } from "@/components/ui/input";
 import { DestinationListProps, State } from "@/types";
 import { useSuggestDestinationQuery } from "@/services/destinationSlice";
 
-const DestinationList: React.FC<DestinationListProps> = ({
-  destinations,
-  onSelect,
-  show,
-}) => {
-  return (
-    <div
-      className={`w-full ${
-        destinations?.length > 0 && show ? `h-[300px]` : "h-[0px]"
-      } rounded-xl overflow-hidden absolute left-0 right-0 top-0 z-[-1] px-3 bg-background shadow-md transition-all duration-500`}
-    >
-      {destinations?.slice(0, 5).map((item, index) => (
-        <h1
-          key={index}
-          onClick={() => onSelect(item)}
-          className={`flex items-center gap-2  p-2 hover:bg-gray-100 text-base font-semibold text-muted-foreground cursor-pointer ${
-            index === 0 && "mt-[80px]"
-          }`}
-        >
-          <Navigation className="text-muted-foreground w-4 h-4" /> {item.name}
-        </h1>
-      ))}
-    </div>
-  );
-};
-
-export function AdvanceSearch({}: //isCollepsed = false,
-{
-  isCollepsed?: boolean;
-}) {
+export function AdvanceSearch({}: { isCollepsed?: boolean }) {
   const [state, setState] = useState<State>({
     date: undefined,
     destination: "",
@@ -53,7 +24,8 @@ export function AdvanceSearch({}: //isCollepsed = false,
   });
 
   const [debouncedDestination, setDebouncedDestination] = useState("");
-  const [isInputFocused, setIsInputFocused] = useState(false);
+  const [isForcus, setForcus] = useState(false);
+  const [isClicked, setClicked] = useState(false);
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -65,13 +37,6 @@ export function AdvanceSearch({}: //isCollepsed = false,
       clearTimeout(handler);
     };
   }, [state.destination]);
-
-  const { data: destinationList = [], isFetching } = useSuggestDestinationQuery(
-    debouncedDestination,
-    {
-      skip: !debouncedDestination,
-    }
-  );
 
   useEffect(() => {
     const des = searchParams.get("des");
@@ -90,31 +55,18 @@ export function AdvanceSearch({}: //isCollepsed = false,
     }
   }, [searchParams]);
 
+  const { data: destinationList = [], isFetching } = useSuggestDestinationQuery(
+    debouncedDestination,
+    {
+      skip: !debouncedDestination,
+    }
+  );
+
   const handleSearch = () => {
     const from = state.date?.from ? format(state.date.from, "yyyy-MM-dd") : "";
     const to = state.date?.to ? format(state.date.to, "yyyy-MM-dd") : "";
     window.location.href = `/results?des=${state.destination}&des_id=${state.destinationId}&from=${from}&to=${to}`;
   };
-
-  // === framer motion animation proparties === start
-  const containerVariants = {
-    hidden: { opacity: 0, scale: 0.95 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-        staggerChildren: 0.15,
-      },
-    },
-  };
-
-  const childVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-  };
-  // === framer motion animation proparties === end
 
   return (
     <motion.div
@@ -129,11 +81,14 @@ export function AdvanceSearch({}: //isCollepsed = false,
           placeholder="Enter your destination"
           className={`py-6 rounded-full font-semibold text-muted-foreground`}
           value={state.destination}
-          onFocus={() => setIsInputFocused(true)}
-          onBlur={() => setIsInputFocused(false)}
-          onChange={(e) =>
-            setState((prev) => ({ ...prev, destination: e.target.value }))
-          }
+          onChange={(e) => {
+            setState((prev) => ({ ...prev, destination: e.target.value }));
+            setClicked(false);
+          }}
+          onFocus={() => setForcus(true)}
+          onBlur={() => setTimeout(() => {
+            setForcus(false)
+          }, 500)}
         />
       </motion.div>
       <motion.div className="flex gap-3" variants={childVariants}>
@@ -147,19 +102,6 @@ export function AdvanceSearch({}: //isCollepsed = false,
               }
             >
               <CalendarIcon className="text-muted-foreground" />
-
-              {state.date?.from && (
-                <span className="text-base font-semibold text-muted-foreground">
-                  {state.date.to ? (
-                    <>
-                      {format(state.date.from, "LLL dd")} -{" "}
-                      {format(state.date.to, "LLL dd")}
-                    </>
-                  ) : (
-                    <>{format(state.date.from, "LLL dd")}</>
-                  )}
-                </span>
-              )}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-full p-0 rounded-2xl" align="center">
@@ -186,15 +128,59 @@ export function AdvanceSearch({}: //isCollepsed = false,
       </motion.div>
       <DestinationList
         destinations={destinationList.data}
-        onSelect={(item) =>
+        onSelect={(item: any) => {
           setState({
             destination: item.name,
             destinationId: item.destinationId,
             date: state.date,
-          })
-        }
-        show={isInputFocused && debouncedDestination.length > 0}
+          });
+          setClicked(true);
+        }}
+        show={destinationList?.data?.length && !isClicked && isForcus && state.destination.length > 0}
       />
     </motion.div>
   );
 }
+
+const DestinationList: React.FC<DestinationListProps> = ({
+  destinations,
+  onSelect,
+  show,
+}) => {
+  if (!show) return null;
+  return (
+    <div
+      className={`w-full h-auto
+      } rounded-xl overflow-hidden absolute top-[80px] left-0 right-0 z-[-1] p-3 bg-background shadow-md transition-all duration-500`}
+    >
+      {destinations?.slice(0, 5).map((item, index) => (
+        <h1
+          key={index}
+          onClick={() => onSelect(item)}
+          className={`flex items-center gap-2 p-2 hover:bg-gray-100 text-base font-semibold text-muted-foreground cursor-pointer`}
+        >
+          <Navigation className="text-muted-foreground w-4 h-4" /> {item.name}
+        </h1>
+      ))}
+    </div>
+  );
+};
+
+// aniamtion variants
+const containerVariants = {
+  hidden: { opacity: 0, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const childVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+};

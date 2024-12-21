@@ -10,6 +10,34 @@ export type ITravelData = {
   reviews: number;
 };
 
+export interface IParseProductDeatils {
+  title: string;
+  productCode: string;
+  description: string;
+  language: string;
+  timeZone: string;
+  reviews:{
+    totalReviews:string;
+    averageReviews:string;
+  },
+  images: { small: string; big: string }[];
+  inclusions: string[];
+  exclusions: string[];
+  additionalInfo: string[];
+  pricing: {
+    price: string;
+    priceNote: string;
+    cancellationPolicy: string;
+    cancellationDetail: string;
+  };
+  bookingProvider: {
+    logoSrc: string;
+    name: string;
+    bookNowButtonLabel: string;
+    poweredByLogoSrc: string;
+  };
+}
+
 export type Destination = {
   name: string;
   destinationId: string;
@@ -31,4 +59,5 @@ export interface SearchState {
   startDate: string;
   endDate: string;
   destinationId: string;
+  page: number;
 }

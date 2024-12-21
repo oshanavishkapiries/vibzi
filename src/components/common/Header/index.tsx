@@ -1,26 +1,24 @@
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
-import { AdvanceSearch } from "./AdvanceSearch";
+import React from "react";
+//import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { useScrollPosition } from "@/hooks/useScrollPosition";
+//import { useScrollPosition } from "@/hooks/useScrollPosition";
 import Link from "next/link";
+import { AdvanceSearch } from "./AdvanceSearch";
 
 const Header = () => {
-  const scrollPosition = useScrollPosition();
-  const path = usePathname();
-  const [isScrolled, setIsScrolled] = useState(false);
+  //const scrollPosition = useScrollPosition();
+  //const path = usePathname();
+  // const [isScrolled, setIsScrolled] = useState(false);
 
-  useEffect(() => {
-    setIsScrolled(scrollPosition > 0 || path === "/detail");
-  }, [scrollPosition, path]);
+  // useEffect(() => {
+  //   setIsScrolled(scrollPosition > 0 || path === "/detail");
+  // }, [scrollPosition, path]);
 
   return (
     <div
-      className={cn(`bg-background w-full h-auto sticky top-0 z-50 flex flex-row justify-between items-center px-[60px] py-3 transition-all duration-500`,{
-        "shadow-md": isScrolled,
-        "shadow-none": !isScrolled,
-      })}
+      className={cn(`bg-background w-full h-auto sticky top-0 z-50 flex flex-row justify-between items-center 
+        px-[60px] py-3 transition-all duration-500`)}
     >
       <Link href="/" className={"cursor-pointer"}>
         <Image

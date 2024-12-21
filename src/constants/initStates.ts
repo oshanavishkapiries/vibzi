@@ -11,5 +11,5 @@ export const DEFAULT_SEARCH_PARAMS = {
   highestPrice: 0,
   lowestPrice: 0,
   page: 1,
-  size: 10,
+  size: 15,
 };

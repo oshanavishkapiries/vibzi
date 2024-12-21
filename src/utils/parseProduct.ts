@@ -6,7 +6,7 @@ export function parseProduct(response: any) {
   return response.data.products.map((product: any) => {
     const imageUrl =
       product.images?.[0]?.variants?.find(
-        (variant: any) => variant.width === 200 && variant.height === 200
+        (variant: any) => variant.width === 400 && variant.height === 400
       )?.url || "";
 
     return {

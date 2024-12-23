@@ -60,4 +60,5 @@ export interface SearchState {
   endDate: string;
   destinationId: string;
   page: number;
+  destination: string;
 }

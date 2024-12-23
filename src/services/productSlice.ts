@@ -4,7 +4,7 @@ export const productSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     searchProducts: builder.query({
       query: (data) => ({
-        url: `/provider-service/product/search?provider=VIATOR`,
+        url: `/provider-service/product/${data?.destinationId ? "search":"search-free-text"}?provider=VIATOR`,
         method: "POST",
         body: data,
       }),

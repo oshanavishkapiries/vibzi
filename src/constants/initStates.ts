@@ -13,3 +13,14 @@ export const DEFAULT_SEARCH_PARAMS = {
   page: 1,
   size: 15,
 };
+
+export const DEFAULT_SEARCH_STATE_FREE_TEXT = {
+  startDate: new Date().toISOString().split("T")[0],
+  endDate: new Date().toISOString().split("T")[0],
+  searchQuery: "",
+  products: true,
+  attraction: false,
+  destination: false,
+  page: 1,
+  size: 15,
+};

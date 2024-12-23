@@ -7,9 +7,13 @@ import TravelPortalGrid from "@/components/common/TravelPortalGrid";
 import { useSearchProductsQuery } from "@/services/productSlice";
 import { SearchState } from "@/types";
 import { parseDateToISO } from "@/utils/parseDateToISO";
-import { DEFAULT_SEARCH_PARAMS } from "@/constants/initStates";
+import {
+  DEFAULT_SEARCH_PARAMS,
+  DEFAULT_SEARCH_STATE_FREE_TEXT,
+} from "@/constants/initStates";
 import { parseProduct } from "@/utils/parseProduct";
 import Pagination from "@/components/sections/resultPage/Pagination";
+import FoodandDrinkSection from "@/components/sections/resultPage/FoodandDrinkSection";
 
 export default function ResultsPage() {
   const searchParams = useSearchParams();
@@ -18,7 +22,8 @@ export default function ResultsPage() {
     startDate: "",
     endDate: "",
     destinationId: "",
-    page: 1
+    page: 1,
+    destination: "",
   });
 
   const [allProducts, setAllProducts] = useState<any[]>([]);
@@ -28,7 +33,8 @@ export default function ResultsPage() {
     const startDate = searchParams.get("from") || "";
     const endDate = searchParams.get("to") || "";
     const page = parseInt(searchParams.get("page") || "1");
-    setState({ startDate, endDate, destinationId, page });
+    const destination = searchParams.get("des") || "";
+    setState({ startDate, endDate, destinationId, page, destination });
   }, [searchParams]);
 
   const queryParams = {
@@ -38,14 +44,29 @@ export default function ResultsPage() {
     ),
     endDate: parseDateToISO(state.endDate || DEFAULT_SEARCH_PARAMS.endDate),
     destinationId: state.destinationId,
-    page: state.page - 1 
+    searchQuery: state.destination,
+    page: state.page - 1,
+  };
+
+  const queryParamsFreeText = {
+    ...DEFAULT_SEARCH_STATE_FREE_TEXT,
+    startDate: parseDateToISO(
+      state.startDate || DEFAULT_SEARCH_STATE_FREE_TEXT.startDate
+    ),
+    endDate: parseDateToISO(
+      state.endDate || DEFAULT_SEARCH_STATE_FREE_TEXT.endDate
+    ),
+    searchQuery: state.destination,
+    page: state.page,
   };
 
   const {
     data: searchResults,
     isFetching,
     isError,
-  } = useSearchProductsQuery(queryParams);
+  } = useSearchProductsQuery(
+    state.destinationId ? queryParams : queryParamsFreeText
+  );
 
   useEffect(() => {
     if (searchResults) {
@@ -58,7 +79,8 @@ export default function ResultsPage() {
   }, [searchResults, isFetching]);
 
   const router = useRouter();
-  const handlePageChange = (newPage : any) => {
+
+  const handlePageChange = (newPage: any) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", newPage.toString());
     router.push(`?${params.toString()}`);
@@ -66,22 +88,26 @@ export default function ResultsPage() {
 
   return (
     <div className="container mb-8 mx-auto min-h-screen">
-    {!isError ? (
-      <>
-        <TravelPortalGrid travelData={allProducts} title={``} />
-        <Pagination
-          currentPage={state.page}
-          totalPages={searchResults?.data?.totalCount || 1}
-          onPageChange={handlePageChange}
-        />
-      </>
-    ) : (
-      <div className="w-full px-[30px] md:px-[60px] py-3">
-        <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-3">
-          No results found
-        </h4>
-      </div>
-    )}
-  </div>
+      {!isError ? (
+        <>
+          <TravelPortalGrid travelData={allProducts} title={``} />
+          {allProducts.length > 0 && (
+            <Pagination
+              currentPage={state.page}
+              totalPages={searchResults?.data?.totalCount || 1}
+              onPageChange={handlePageChange}
+            />
+          )}
+        </>
+      ) : (
+        <div className="w-full px-[30px] md:px-[60px] py-3">
+          <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-3">
+            No results found
+          </h4>
+        </div>
+      )}
+
+      <FoodandDrinkSection state={state} />
+    </div>
   );
 }

@@ -53,13 +53,16 @@ export default function TourDetails({ textData, isLoading }: TourDetailsProps) {
           ) : (
             <>
               <p>{textData.description || "No description available"}</p>
-              {textData.additionalInfo && textData.additionalInfo.length > 0 && (
-                <ul className="space-y-2 list-disc pl-6">
-                  {textData.additionalInfo.map((info: string, index: number) => (
-                    <li key={index}>{info}</li>
-                  ))}
-                </ul>
-              )}
+              {textData.additionalInfo &&
+                textData.additionalInfo.length > 0 && (
+                  <ul className="space-y-2 list-disc pl-6">
+                    {textData.additionalInfo.map(
+                      (info: string, index: number) => (
+                        <li key={index}>{info}</li>
+                      )
+                    )}
+                  </ul>
+                )}
             </>
           )}
         </CardContent>
@@ -67,31 +70,59 @@ export default function TourDetails({ textData, isLoading }: TourDetailsProps) {
 
       {/* What's Included */}
       <Card className="shadow-none border-none">
-        <CardHeader>
-          <CardTitle>What's Included</CardTitle>
-        </CardHeader>
         <CardContent>
-          <div className="grid gap-2">
-            {isLoading ? (
-              Array.from({ length: 4 }).map((_, index) => (
-                <Skeleton key={index} className="h-4 w-64" />
-              ))
-            ) : (
-              <>
-                {textData.inclusions.map((item: string, index: number) => (
-                  <div key={index} className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-green-500" />
-                    <span>{item}</span>
+          <div className="grid grid-cols-2 gap-4">
+            {/* Inclusions Section */}
+            <div>
+              {textData?.inclusions.length > 0 && (
+                <>
+                  <h3 className="font-semibold text-lg mb-2">Inclusions</h3>
+                  <div className="grid gap-2">
+                    {isLoading
+                      ? Array.from({ length: 4 }).map((_, index) => (
+                          <Skeleton key={index} className="h-4 w-64" />
+                        ))
+                      : textData.inclusions.map(
+                          (item: string, index: number) => (
+                            <div
+                              key={index}
+                              className="flex items-center gap-2"
+                            >
+                              <Check className="h-4 w-4 text-green-500" />
+                              <span>{item}</span>
+                            </div>
+                          )
+                        )}
                   </div>
-                ))}
-                {textData.exclusions.map((item: string, index: number) => (
-                  <div key={index} className="flex items-center gap-2">
-                    <X className="h-4 w-4 text-red-500" />
-                    <span>{item}</span>
+                </>
+              )}
+            </div>
+
+            {/* Exclusions Section */}
+            <div>
+              {textData?.exclusions.length > 0 && (
+                <>
+                  <h3 className="font-semibold text-lg mb-2">Exclusions</h3>
+                  <div className="grid gap-2">
+                    {isLoading
+                      ? Array.from({ length: 4 }).map((_, index) => (
+                          <Skeleton key={index} className="h-4 w-64" />
+                        ))
+                      : textData.exclusions.map(
+                          (item: string, index: number) => (
+                            <div
+                              key={index}
+                              className="flex items-center gap-2"
+                            >
+                              <X className="h-4 w-4 text-red-500" />
+                              <span>{item}</span>
+                            </div>
+                          )
+                        )}
                   </div>
-                ))}
-              </>
-            )}
+                </>
+              )}
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -142,7 +173,6 @@ export default function TourDetails({ textData, isLoading }: TourDetailsProps) {
           )}
         </CardContent>
       </Card> */}
-
     </div>
   );
 }

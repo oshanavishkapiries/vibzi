@@ -16,7 +16,7 @@ export default function TravelPortalGrid(
     const skeletonCards = Array.from({length: 15});
 
     return (
-        <div className="w-full px-[30px] md:px-[60px] py-3">
+        <div className="w-full py-3">
             <h4 className="scroll-m-20 text-xl font-semibold tracking-tight mb-3">
                 {title}
             </h4>

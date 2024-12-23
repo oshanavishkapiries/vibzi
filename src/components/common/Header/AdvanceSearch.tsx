@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { DestinationListProps, State } from "@/types";
 import { useSuggestDestinationQuery } from "@/services/destinationSlice";
+import { useRouter } from "next/navigation";
 
 export function AdvanceSearch({}: { isCollepsed?: boolean }) {
   const [state, setState] = useState<State>({
@@ -27,6 +28,7 @@ export function AdvanceSearch({}: { isCollepsed?: boolean }) {
   const [isForcus, setForcus] = useState(false);
   const [isClicked, setClicked] = useState(false);
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -65,7 +67,9 @@ export function AdvanceSearch({}: { isCollepsed?: boolean }) {
   const handleSearch = () => {
     const from = state.date?.from ? format(state.date.from, "yyyy-MM-dd") : "";
     const to = state.date?.to ? format(state.date.to, "yyyy-MM-dd") : "";
-    window.location.href = `/results?des=${state.destination}&des_id=${state.destinationId}&from=${from}&to=${to}`;
+    router.push(
+      `/results?des=${state.destination}&des_id=${state.destinationId}&from=${from}&to=${to}`
+    );
   };
 
   return (
@@ -86,9 +90,11 @@ export function AdvanceSearch({}: { isCollepsed?: boolean }) {
             setClicked(false);
           }}
           onFocus={() => setForcus(true)}
-          onBlur={() => setTimeout(() => {
-            setForcus(false)
-          }, 500)}
+          onBlur={() =>
+            setTimeout(() => {
+              setForcus(false);
+            }, 500)
+          }
         />
       </motion.div>
       <motion.div className="flex gap-3" variants={childVariants}>
@@ -136,7 +142,12 @@ export function AdvanceSearch({}: { isCollepsed?: boolean }) {
           });
           setClicked(true);
         }}
-        show={destinationList?.data?.length && !isClicked && isForcus && state.destination.length > 0}
+        show={
+          destinationList?.data?.length &&
+          !isClicked &&
+          isForcus &&
+          state.destination.length > 0
+        }
       />
     </motion.div>
   );

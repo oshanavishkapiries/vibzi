@@ -1,21 +1,12 @@
 import { DateRange } from "react-day-picker";
 
-export type ITravelData = {
-  id:string
-  image_url: string;
-  title: string;
-  sub_title: string;
-  price: string;
-  rating: number;
-  reviews: number;
-};
-
 export interface IParseProductDeatils {
   title: string;
   productCode: string;
   description: string;
   language: string;
   timeZone: string;
+  productUrl:string
   reviews:{
     totalReviews:string;
     averageReviews:string;

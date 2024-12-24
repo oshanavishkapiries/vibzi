@@ -8,7 +8,13 @@ export const destinationSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    popularDestination:builder.query({
+      query: () => ({
+        url: `/provider-service/destinations`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useSuggestDestinationQuery } = destinationSlice;
+export const { useSuggestDestinationQuery, usePopularDestinationQuery } = destinationSlice;

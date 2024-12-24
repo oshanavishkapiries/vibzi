@@ -11,7 +11,7 @@ type TourDetailsProps = {
 
 export default function TourDetails({ textData, isLoading }: TourDetailsProps) {
   return (
-    <div className="max-w-7xl mx-auto space-y-6 py-2 px-[30px] md:px-[60px]">
+    <div className="max-w-7xl mx-auto space-y-6 py-2 ">
       {/* Tour Quick Info */}
       <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
         {isLoading ? (

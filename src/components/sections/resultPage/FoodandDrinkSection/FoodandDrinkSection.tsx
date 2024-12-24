@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import ProductGrid from "./ProductGrid";
-import Pagination from "./Pagination";
+import ProductGrid, { ProductGridSkelton } from "./ProductGrid";
+import Pagination from "../Pagination";
 import { DEFAULT_SEARCH_PARAMS } from "@/constants/initStates";
 import { parseDateToISO } from "@/utils/parseDateToISO";
 import { useSearchProductsQuery } from "@/services/productSlice";
-import TravelGridCardSkeleton from "@/components/common/TravelGrid/travel-grid-card-skeleton";
 
 const FoodAndDrinkSection = (props: any) => {
   const [page, setPage] = useState(1);
@@ -24,28 +23,15 @@ const FoodAndDrinkSection = (props: any) => {
     tags: [21911],
   };
 
-  const {
-    data: searchResults,
-    isFetching,
-    isError,
-  } = useSearchProductsQuery(queryParams);
+  const { data: searchResults, isFetching , isError } =
+    useSearchProductsQuery(queryParams);
 
   if (isFetching) {
-    return (
-      <>
-        <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {Array.from({ length: 15 }).map((_, index) => (
-            <div key={`skeleton-${index}`} className="w-full">
-              <TravelGridCardSkeleton />
-            </div>
-          ))}
-        </div>
-      </>
-    );
+    return <ProductGridSkelton />;
   }
 
-  if (isError || !searchResults?.data?.products?.length) {
-    return <div></div>;
+  if(isError || !(searchResults?.data?.products?.length > 0)){
+    return <></>;
   }
 
   return (

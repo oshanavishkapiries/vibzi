@@ -6,12 +6,14 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import OptimizedImage from "@/components/common/TravelCarousel/OptimizedImage";
+import OptimizedImage from "@/components/common/OptimizedImage";
+import Link from "next/link";
 
 type ImageGalleryProps = {
   images: any;
   pricing: any;
   bookingProvider: any;
+  productUrl: any;
   isLoading: boolean;
 };
 
@@ -19,6 +21,7 @@ export default function ImageGallery({
   images,
   pricing,
   bookingProvider,
+  productUrl,
   isLoading = false,
 }: ImageGalleryProps) {
   const [selectedImage, setSelectedImage] = React.useState(0);
@@ -27,7 +30,7 @@ export default function ImageGallery({
   const showMoreCount = images?.length - maxThumbnails;
 
   return (
-    <div className="grid grid-cols-1 gap-4 lg:grid-cols-[100px_1fr_300px] lg:gap-6 py-2 px-[30px] md:px-[60px]">
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-[100px_1fr_300px] lg:gap-6 py-2 ">
       {/* Thumbnail sidebar */}
       <div className="order-2 flex gap-2 overflow-auto lg:order-1 lg:flex-col lg:overflow-visible p-1">
         {isLoading
@@ -51,14 +54,16 @@ export default function ImageGallery({
               </button>
             ))}
         {!isLoading && showMoreCount > 0 && (
-          <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md bg-black/50 lg:h-[100px] lg:w-[100px]">
-            <div
-              className="absolute inset-0 flex items-center justify-center text-xl font-medium text-white bg-black/70"
-              onClick={() => setSelectedImage(maxThumbnails)}
-            >
-              +{showMoreCount}
+          <Link href={"#TravelerPhotos"}>
+            <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md bg-black/50 lg:h-[100px] lg:w-[100px]">
+              <div
+                className="absolute inset-0 flex items-center justify-center text-xl font-medium text-white bg-black/70"
+                onClick={() => setSelectedImage(maxThumbnails)}
+              >
+                +{showMoreCount}
+              </div>
             </div>
-          </div>
+          </Link>
         )}
       </div>
 
@@ -141,9 +146,12 @@ export default function ImageGallery({
                   className="h-3 w-auto"
                 />
               </div>
-              <Button className="w-full bg-[#004F32] hover:bg-[#004F32]/90">
-                {bookingProvider.bookNowButtonLabel}
-              </Button>
+              <Link target="blanck" href={productUrl} className="w-full">
+                <Button className="w-full bg-[#004F32] hover:bg-[#004F32]/90">
+                  {bookingProvider.bookNowButtonLabel}
+                </Button>
+              </Link>
+
               <div className="space-y-2 rounded-lg bg-muted/50 p-4">
                 <p className="font-medium">{pricing.cancellationPolicy}</p>
                 <p className="text-sm text-muted-foreground">

@@ -21,7 +21,7 @@ export default function Reviews({ reviews, isLoading }: ReviewsProps) {
 
   console.log(reviews);
   return (
-    <div className="max-w-7xl mx-auto py-2 px-[30px] md:px-[60px]">
+    <div className="max-w-7xl mx-auto py-2 ">
       <Card className="max-w-3xl mx-auto shadow-none border-none">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">

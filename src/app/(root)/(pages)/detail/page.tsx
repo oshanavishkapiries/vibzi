@@ -1,6 +1,5 @@
 "use client";
 import TourDetails from "../../../../components/sections/DetailPage/tour-details";
-//import Reviews from "../../../../components/sections/DetailPage/reviews";
 import BentoGrid from "../../../../components/sections/DetailPage/BentoGrid";
 import RecentSuggestions from "@/components/sections/DetailPage/RecentSuggestions";
 import ImageGallery from "@/components/sections/DetailPage/ImageGallery";
@@ -8,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useProductByIdQuery } from "@/services/productSlice";
 import { parseProductDeatils } from "@/utils/parseProductDeatils";
+import Reviews from "@/components/sections/DetailPage/reviews";
 
 const DetailPage = () => {
   const searchParams = useSearchParams();
@@ -25,7 +25,7 @@ const DetailPage = () => {
   const ProductData = Product ? parseProductDeatils(Product) : null;
 
   return (
-    <div className="container mx-auto min-h-screen mb-3">
+    <div className="container px-3 mx-auto min-h-screen mb-3">
       <RecentSuggestions
         isLoading={!ProductData}
         breadcrumbLinks={[]}
@@ -38,11 +38,12 @@ const DetailPage = () => {
         images={ProductData?.images}
         pricing={ProductData?.pricing}
         bookingProvider={ProductData?.bookingProvider}
+        productUrl={ProductData?.productUrl}
         isLoading={!ProductData}
       />
       <TourDetails isLoading={!ProductData} textData={ProductData} />
       <BentoGrid isLoading={!ProductData} images={ProductData?.images} />;
-      {/* <Reviews isLoading={!ProductData} reviews={ProductData?.reviews} /> */}
+      <Reviews isLoading={!ProductData} reviews={ProductData?.reviews} />
     </div>
   );
 };

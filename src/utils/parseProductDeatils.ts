@@ -7,6 +7,7 @@ export function parseProductDeatils(json: any): IParseProductDeatils {
     description: json.data.description || "",
     language: json.data.language || "",
     timeZone: json.data.timeZone || "",
+    productUrl:json.data.productUrl || "",
     reviews: {
       totalReviews: json.data.reviews.totalReviews,
       averageReviews: json.data.reviews.averageReviews,

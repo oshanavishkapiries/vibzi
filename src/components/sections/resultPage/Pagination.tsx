@@ -18,7 +18,7 @@ const Pagination: React.FC<PaginationProps> = ({
     const range = [];
     const rangeWithDots = [];
 
-    // Always show first page
+   
     range.push(1);
 
     for (let i = currentPage - delta; i <= currentPage + delta; i++) {
@@ -27,7 +27,7 @@ const Pagination: React.FC<PaginationProps> = ({
       }
     }
 
-    // Always show last page
+   
     if (totalPages > 1) {
       range.push(totalPages);
     }

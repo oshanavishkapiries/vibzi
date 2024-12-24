@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 
 export default function Banner() {
   return (
-    <div className="w-full px-[30px] md:px-[60px]">
+    <div className="w-full ">
       <div className="w-full bg-primary/25 p-4 rounded-lg shadow-md flex flex-col md:flex-row gap-4 items-center">
         <div className="w-full h-full lg:w-1/3">
           <Image

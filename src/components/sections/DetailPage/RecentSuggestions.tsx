@@ -34,7 +34,7 @@ export default function RecentSuggestions({
   );
 
   return (
-    <Card className="border-0 shadow-none py-2 px-[30px] md:px-[60px]">
+    <Card className="border-0 shadow-none py-2 ">
       <CardContent className="p-0">
         {!isLoading && (
           <Breadcrumb className="mb-4">

@@ -28,7 +28,7 @@ import {
   
   export default function FAQSection() {
     return (
-      <div className="w-full py-8 px-[30px] md:px-[60px]">
+      <div className="w-full py-8 ">
         <h2 className="text-2xl font-bold mb-6">FAQ</h2>
         <Accordion type="single" collapsible className="w-full max-w-2xl mx-auto">
           {faqData.map((faq) => (

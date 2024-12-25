@@ -82,7 +82,7 @@ export function AdvanceSearch({}: { isCollepsed?: boolean }) {
       <motion.div className="flex-grow relative" variants={childVariants}>
         <Input
           type="text"
-          placeholder="Enter your destination"
+          placeholder="Search destination"
           className={`py-6 rounded-full font-semibold text-muted-foreground`}
           value={state.destination}
           onChange={(e) => {

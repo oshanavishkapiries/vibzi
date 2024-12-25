@@ -6,6 +6,7 @@ import { SearchState } from "@/types";
 import FoodandDrinkSection from "@/components/sections/resultPage/FoodandDrinkSection/FoodandDrinkSection";
 import DestinatioDetails from "@/components/sections/resultPage/DestinationDetails/DestinatioDetails";
 import { useRouter } from "next/navigation";
+import FilterMenu from "@/components/sections/resultPage/FilterMenu";
 
 export default function ResultsPage() {
   const searchParams = useSearchParams();
@@ -36,6 +37,7 @@ export default function ResultsPage() {
 
   return (
     <div className="container px-3 mx-auto min-h-screen mb-8">
+      <FilterMenu />
       <DestinatioDetails state={state} onPageChange={handlePageChange} />
       <FoodandDrinkSection state={state} />
     </div>

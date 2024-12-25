@@ -1,4 +1,3 @@
-
 import React, { Suspense } from "react";
 
 import Footer from "@/components/common/Footer";
@@ -9,8 +8,6 @@ export default function MainLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
-
   return (
     <Suspense fallback={<></>}>
       <Suspense fallback={<></>}>

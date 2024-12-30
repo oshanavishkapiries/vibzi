@@ -30,17 +30,17 @@ const FoodAndDrinkSection = (props: any) => {
     return <ProductGridSkelton />;
   }
 
-  if(isError || !(searchResults?.data?.products?.length > 0)){
+  if(isError || !(searchResults?.data?.products?.results?.length > 0)){
     return <></>;
   }
 
   return (
     <div className="food-drink-section">
       <h2 className="text-2xl font-bold mb-4">Food and Drink Experiences</h2>
-      <ProductGrid products={searchResults.data.products} />
+      <ProductGrid products={searchResults.data.products.results} />
       <Pagination
         currentPage={page}
-        totalPages={searchResults.data.totalCount}
+        totalPages={searchResults?.data?.products?.totalCount}
         onPageChange={(newPage) => setPage(newPage)}
       />
     </div>

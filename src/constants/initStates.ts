@@ -19,7 +19,7 @@ export const DEFAULT_SEARCH_STATE_FREE_TEXT = {
   endDate: new Date().toISOString().split("T")[0],
   searchQuery: "",
   products: true,
-  attraction: false,
+  attraction: true,
   destination: false,
   page: 1,
   size: 15,

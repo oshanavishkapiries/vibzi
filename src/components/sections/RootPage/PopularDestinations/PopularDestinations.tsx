@@ -33,18 +33,19 @@ const PopularDestinations = () => {
           <Link
             key={destination.id}
             href={`/results?des=${destination.name}&des_id=${destination.destinationId}`}
-            className="overflow-hidden"
+            className="relative overflow-hidden group rounded-lg"
           >
             <div className="w-full aspect-video">
               <OptimizedImage
                 src={destination.imageUrl}
                 alt={destination.name}
+              
               />
-            </div>
-
-            <div className="p-4">
-              <h3 className="text-lg font-semibold">{destination.name}</h3>
-              <p className="text-sm text-gray-600">{destination.type}</p>
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-all duration-300"></div>
+              <div className="absolute inset-0 p-4 flex flex-col justify-end">
+                <h3 className="text-lg font-semibold text-white">{destination.name}</h3>
+                <p className="text-sm text-gray-200">{destination.type}</p>
+              </div>
             </div>
           </Link>
         ))}

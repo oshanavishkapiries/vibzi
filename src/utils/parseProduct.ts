@@ -1,9 +1,9 @@
 export function parseProduct(response: any) {
-  if (!response || !response.data || !response.data.products) {
+  if (!response || !response.data || !response?.data?.products) {
     return [];
   }
 
-  return response.data.products.map((product: any) => {
+  return response.data.products.results.map((product: any) => {
     const imageUrl =
       product.images?.[0]?.variants?.find(
         (variant: any) => variant.width === 400 && variant.height === 400

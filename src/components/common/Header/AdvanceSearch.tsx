@@ -27,6 +27,7 @@ export function AdvanceSearch({}: { isCollepsed?: boolean }) {
   const [debouncedDestination, setDebouncedDestination] = useState("");
   const [isForcus, setForcus] = useState(false);
   const [isClicked, setClicked] = useState(false);
+  const [error, setError] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -65,6 +66,12 @@ export function AdvanceSearch({}: { isCollepsed?: boolean }) {
   );
 
   const handleSearch = () => {
+    if (!state.destination.trim()) {
+      setError(true);
+      return;
+    }
+    
+    setError(false);
     const from = state.date?.from ? format(state.date.from, "yyyy-MM-dd") : "";
     const to = state.date?.to ? format(state.date.to, "yyyy-MM-dd") : "";
     router.push(
@@ -83,19 +90,26 @@ export function AdvanceSearch({}: { isCollepsed?: boolean }) {
         <Input
           type="text"
           placeholder="Search destination"
-          className={`py-6 rounded-full font-semibold text-muted-foreground`}
+          className={`py-6 rounded-full font-semibold text-muted-foreground ${
+            error ? 'border-red-500 focus:ring-red-500' : ''
+          }`}
           value={state.destination}
           onChange={(e) => {
             setState((prev) => ({ ...prev, destination: e.target.value }));
             setClicked(false);
+            setError(false);
           }}
-          onFocus={() => setForcus(true)}
+          onFocus={() => {
+            setForcus(true);
+            setError(false);
+          }}
           onBlur={() =>
             setTimeout(() => {
               setForcus(false);
             }, 500)
           }
         />
+        
       </motion.div>
       <motion.div className="flex gap-3" variants={childVariants}>
         <Popover>

@@ -29,8 +29,8 @@ export function parseProductDeatils(json: any): IParseProductDeatils {
       (info: any) => info.description || ""
     ),
     pricing: {
-      price: json.data.pricing.netPrice?.toString() || "",
-      priceNote: json.data.pricing.summary || "",
+      price: json.data.pricing.netPrice || "",
+      priceNote: json.data.pricing.currency || "",
       cancellationPolicy: json.data.cancellationPolicy?.type || "",
       cancellationDetail: json.data.cancellationPolicy?.description || "",
     },

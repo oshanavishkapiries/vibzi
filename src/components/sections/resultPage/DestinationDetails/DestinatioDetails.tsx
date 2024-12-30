@@ -51,6 +51,8 @@ const DestinatioDetails = (props: any) => {
     setAllProducts(parsedProducts);
   }, [searchResults]);
 
+  console.log("allProducts", allProducts);
+
   if (isFetching) {
     return <DestinationGridSkelton />;
   }
@@ -66,7 +68,7 @@ const DestinatioDetails = (props: any) => {
       <DestinationGrid products={allProducts} />
       <Pagination
         currentPage={props.state.page}
-        totalPages={searchResults?.data?.totalCount || 1}
+        totalPages={searchResults?.data?.products?.totalCount || 1}
         onPageChange={props.onPageChange}
       />
     </div>

@@ -11,9 +11,10 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ChevronDown } from "lucide-react";
+import FilterDialog from "./FilterDialog";
 
 export default function FilterMenu() {
-  const [priceRange, setPriceRange] = React.useState([1, 100]);
+  const [value, setValue] = React.useState([25, 75]);
   const [timeOfDay, setTimeOfDay] = React.useState<string[]>([]);
   const [languages, setLanguages] = React.useState<string[]>([]);
 
@@ -25,7 +26,7 @@ export default function FilterMenu() {
     "Tours",
     "Sightseeing",
     "Wellness",
-    "Sports",   
+    "Sports",
   ];
 
   const timeSlots = [
@@ -68,8 +69,8 @@ export default function FilterMenu() {
                 The average price of an experience is $50.
               </p>
               <Slider
-                value={priceRange}
-                onValueChange={setPriceRange}
+                value={value}
+                onValueChange={setValue}
                 max={100}
                 min={1}
                 step={1}
@@ -77,15 +78,15 @@ export default function FilterMenu() {
               <div className="flex justify-between">
                 <div className="text-sm">
                   Minimum
-                  <div className="text-lg font-bold">${priceRange[0]}</div>
+                  <div className="text-lg font-bold">${value[0]}</div>
                 </div>
                 <div className="text-sm text-right">
                   Maximum
-                  <div className="text-lg font-bold">${priceRange[1]}+</div>
+                  <div className="text-lg font-bold">${value[1]}+</div>
                 </div>
               </div>
               <div className="flex justify-between pt-4">
-                <Button variant="ghost" onClick={() => setPriceRange([1, 100])}>
+                <Button variant="ghost" onClick={() => setValue([1, 100])}>
                   Clear
                 </Button>
                 <Button>Save</Button>
@@ -182,27 +183,14 @@ export default function FilterMenu() {
         <ScrollArea className="w-px flex-1">
           <div className="flex space-x-2">
             {categories.map((category, index) => (
-              <Button
-                key={index}
-                variant="outline"
-                className="w-full"
-              >
+              <Button key={index} variant="outline" className="w-full">
                 {category}
               </Button>
             ))}
           </div>
         </ScrollArea>
 
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="outline" className="gap-2">
-              Filters <ChevronDown className="h-4 w-4" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-80">
-             no content
-          </PopoverContent>
-        </Popover>
+        <FilterDialog />
       </div>
     </div>
   );

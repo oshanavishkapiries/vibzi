@@ -3,9 +3,7 @@
 import React, { useState } from "react";
 
 import Pagination from "../Pagination";
-import {
-  DEFAULT_SEARCH_STATE_FREE_TEXT,
-} from "@/constants/initStates";
+import { DEFAULT_SEARCH_STATE_FREE_TEXT } from "@/constants/initStates";
 import { parseDateToISO } from "@/utils/parseDateToISO";
 import { useSearchProductsQuery } from "@/services/productSlice";
 import AttractionsGrid, { AttractionsGridSkelton } from "./AttractionsGrid";
@@ -22,7 +20,7 @@ const AttractionsSection = (props: any) => {
       props.state.endDate || DEFAULT_SEARCH_STATE_FREE_TEXT.endDate
     ),
     searchQuery: props.state.destination,
-    page,
+    page: page,
   };
 
   const {
@@ -45,7 +43,7 @@ const AttractionsSection = (props: any) => {
       <AttractionsGrid products={searchResults.data.attractions.results} />
       <Pagination
         currentPage={page}
-        totalPages={searchResults?.data?.attractions?.totalCount}
+        totalCount={searchResults?.data?.attractions?.totalCount}
         onPageChange={(newPage) => setPage(newPage)}
       />
     </div>

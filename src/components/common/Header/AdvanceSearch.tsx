@@ -65,19 +65,22 @@ export function AdvanceSearch({}: { isCollepsed?: boolean }) {
     }
   );
 
-  const handleSearch = () => {
-    if (!state.destination.trim()) {
-      setError(true);
-      return;
+  const handleSearch = (e: any) => {
+    if (!e.key || e.key === "Enter") {
+      if (!state.destination.trim()) {
+        setError(true);
+        console.log("Destination is required.");
+        return;
+      }
+      setError(false);
+      const from = state.date?.from ? format(state.date.from, "yyyy-MM-dd") : "";
+      const to = state.date?.to ? format(state.date.to, "yyyy-MM-dd") : "";
+      const searchURL = `/results?des=${state.destination}&des_id=${state.destinationId}&from=${from}&to=${to}`;
+      console.log("Navigating to:", searchURL);
+      router.push(searchURL);
     }
-    
-    setError(false);
-    const from = state.date?.from ? format(state.date.from, "yyyy-MM-dd") : "";
-    const to = state.date?.to ? format(state.date.to, "yyyy-MM-dd") : "";
-    router.push(
-      `/results?des=${state.destination}&des_id=${state.destinationId}&from=${from}&to=${to}`
-    );
   };
+  
 
   return (
     <motion.div
@@ -108,6 +111,7 @@ export function AdvanceSearch({}: { isCollepsed?: boolean }) {
               setForcus(false);
             }, 500)
           }
+          onKeyDown={handleSearch}
         />
         
       </motion.div>
@@ -209,3 +213,4 @@ const childVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
 };
+

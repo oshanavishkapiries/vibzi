@@ -10,6 +10,10 @@ export interface IParseProductDeatils {
   reviews:{
     totalReviews:string;
     averageReviews:string;
+    ratings : {
+      stars: number;
+      count: number;
+    }[]
   },
   images: { small: string; big: string }[];
   inclusions: string[];
@@ -52,4 +56,10 @@ export interface SearchState {
   destinationId: string;
   page: number;
   destination: string;
+  categoryId?: string;
+  priceFrom?: string;
+  priceTo?: string;
+  duration?: string;
+  rating?: string;
+  flag?: string;
 }

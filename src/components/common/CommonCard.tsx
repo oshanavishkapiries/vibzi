@@ -29,7 +29,7 @@ export function CommonCard({
   price,
 }: TravelCardProps) {
   return (
-    <Link prefetch={true} href={`/detail/?id=${id}`}>
+    <Link prefetch={true} target="_blank" href={`/detail/?id=${id}`}>
       <Card className="overflow-hidden border-none shadow-none rounded-none cursor-pointer">
         <CardHeader className="p-0">
           <AspectRatio ratio={3 / 4}>
@@ -37,7 +37,7 @@ export function CommonCard({
           </AspectRatio>
         </CardHeader>
 
-        <CardContent className="p-4 ps-0">
+        <CardContent className="p-4 ps-0 pb-2">
           <div className="flex items-center justify-start gap-3 mb-2">
             <Badge variant="secondary" className="flex items-center gap-1">
               <Star className="h-3 w-3 fill-primary text-primary" />
@@ -47,7 +47,7 @@ export function CommonCard({
               ({reviews.toLocaleString()} reviews)
             </span>
           </div>
-          <h3 className="font-semibold text-md truncate">{title}</h3>
+          <h3 className="font-semibold text-lg truncate">{title}</h3>
         </CardContent>
 
         <CardFooter className="p-4 pt-0 ps-0">

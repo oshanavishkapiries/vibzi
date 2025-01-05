@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 export default function Banner() {
   return (
     <div className="w-full ">
-      <div className="w-full bg-primary/25 p-4 rounded-lg shadow-md flex flex-col md:flex-row gap-4 items-center">
+      <div className="w-full bg-[#EDEFEF] p-4 rounded-lg shadow-md flex flex-col md:flex-row gap-4 items-center">
         <div className="w-full h-full lg:w-1/3">
           <Image
             src="https://t3.ftcdn.net/jpg/03/82/24/44/360_F_382244401_FNIivSDbE7ojw5sT70WYVgmFsw2R7DHD.webp"

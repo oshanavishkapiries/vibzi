@@ -9,6 +9,7 @@ import { parseDateToISO } from "@/utils/parseDateToISO";
 import { useSearchProductsQuery } from "@/services/productSlice";
 import { parseProduct } from "@/utils/parseProduct";
 import DestinationGrid, { DestinationGridSkelton } from "./DestinationGrid";
+import NotFound from "@/components/common/NotFound";
 
 const DestinatioDetails = (props: any) => {
   const [allProducts, setAllProducts] = useState<any[]>([]);
@@ -24,6 +25,22 @@ const DestinatioDetails = (props: any) => {
     destinationId: props.state.destinationId,
     searchQuery: props.state.destination,
     page: props.state.page - 1,
+    tags: props.state.categoryId ? [props.state.categoryId] : null,
+    flags: props.state.flag ? [props.state.flag] : null,
+    highestPrice: props.state.priceTo ? props.state.priceTo : 0,
+    lowestPrice: props.state.priceFrom ? props.state.priceFrom : 0,
+    durationInMinutes: props.state.duration
+      ? {
+          from: props.state.duration.split("-")[0],
+          to: props.state.duration.split("-")[1],
+        }
+      : null,
+    rating: props.state.rating
+      ? {
+          from: 1,
+          to: props.state.rating,
+        }
+      : null,
   };
 
   const queryParamsFreeText = {
@@ -51,24 +68,25 @@ const DestinatioDetails = (props: any) => {
     setAllProducts(parsedProducts);
   }, [searchResults]);
 
-  console.log("allProducts", allProducts);
-
   if (isFetching) {
     return <DestinationGridSkelton />;
   }
 
   if (isError || !(allProducts.length > 0)) {
-    return <></>;
+    return <NotFound title="No Destination Found" />;
   }
 
   const destination = props?.state?.destination;
+
   return (
     <div className="food-drink-section">
-      <h2 className="text-2xl font-bold mb-4">{ destination && `Things to Do in ${destination}`}</h2>
+      <h2 className="text-2xl font-bold mb-4">
+        {destination && `Things to Do in ${destination}`}
+      </h2>
       <DestinationGrid products={allProducts} />
       <Pagination
         currentPage={props.state.page}
-        totalPages={searchResults?.data?.products?.totalCount || 1}
+        totalCount={searchResults?.data?.products?.totalCount}
         onPageChange={props.onPageChange}
       />
     </div>

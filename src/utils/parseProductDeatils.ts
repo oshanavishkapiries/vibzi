@@ -11,6 +11,7 @@ export function parseProductDeatils(json: any): IParseProductDeatils {
     reviews: {
       totalReviews: json.data.reviews.totalReviews,
       averageReviews: json.data.reviews.averageReviews,
+      ratings: json.data.reviews.ratings || [],
     },
     images: (json.data.images || []).map((image: any) => {
       const smallImage =

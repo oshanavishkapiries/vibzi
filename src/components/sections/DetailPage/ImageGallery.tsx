@@ -30,7 +30,7 @@ export default function ImageGallery({
   const showMoreCount = images?.length - maxThumbnails;
 
   return (
-    <div className="grid grid-cols-1 gap-4 lg:grid-cols-[100px_1fr_300px] lg:gap-6 py-2 ">
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-[100px_1fr_300px] lg:gap-6 py-2 relative">
       {/* Thumbnail sidebar */}
       <div className="order-2 flex gap-2 overflow-auto lg:order-1 lg:flex-col lg:overflow-visible p-1">
         {isLoading
@@ -92,8 +92,9 @@ export default function ImageGallery({
       </div>
 
       {/* Booking card */}
-      <Card className="order-3">
-        <CardContent className="p-6">
+      <Card className="order-3 flex flex-col justify-between">
+        <div className="w-full h-full flex justify-center items-center">
+           <CardContent className="p-6">
           {isLoading ? (
             <div className="space-y-4">
               <Skeleton className="h-4 w-32" />
@@ -117,10 +118,9 @@ export default function ImageGallery({
                 <div className="flex items-baseline justify-between">
                   <div className="space-y-1">
                     <p className="text-2xl font-semibold">
-                      From {pricing.price}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
+                      From {pricing.price} {"("}
                       {pricing.priceNote}
+                      {")"}
                     </p>
                   </div>
                 </div>
@@ -131,12 +131,14 @@ export default function ImageGallery({
             </div>
           )}
         </CardContent>
+        </div>
+       
         <CardFooter className="flex flex-col gap-4 p-6 pt-0">
           {isLoading ? (
             <Skeleton className="h-10 w-full rounded" />
           ) : (
             <>
-              <div className="space-y-2 flex flex-row gap-2 items-center">
+              <div className="flex flex-row gap-2 items-center">
                 <p className="text-sm font-semibold">Book this item on</p>
                 <Image
                   src={"https://shorturl.at/jRKEv"}

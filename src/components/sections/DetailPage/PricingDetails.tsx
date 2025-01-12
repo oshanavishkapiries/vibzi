@@ -29,7 +29,9 @@ const PricingDetails: React.FC<PricingDetailsProps> = ({
 }) => {
   if (loading) {
     return (
-      <div className={`w-full space-y-6 p-4 rounded-xl border bg-card text-card-foreground shadow ${className}`}>
+      <div
+        className={`w-full space-y-6 p-4 rounded-xl border bg-card text-card-foreground shadow ${className}`}
+      >
         <div className="space-y-2">
           <div className="h-5 bg-gray-300 rounded w-3/4 animate-pulse"></div>
           <div className="h-5 bg-gray-300 rounded w-1/2 animate-pulse"></div>
@@ -44,12 +46,19 @@ const PricingDetails: React.FC<PricingDetailsProps> = ({
   }
 
   return (
-    <div className={`w-full space-y-6 p-4 rounded-xl border bg-card text-card-foreground shadow ${className}`}>
+    <div
+      className={`w-full space-y-6 p-4 rounded-xl border bg-card text-card-foreground shadow ${className}`}
+    >
       {/* Pricing Section */}
       <div className="space-y-2">
-        <div className="flex items-baseline gap-1">
-          <span className="text-2xl font-semibold">from {currency}</span>
-          <span className="text-3xl font-bold">{Number(price).toFixed(2)}</span>
+        <div className="flex flex-col items-baseline gap-1">
+          <div className="flex items-baseline gap-1">
+            <span className="text-2xl font-semibold">from {currency}</span>
+            <span className="text-3xl font-bold">
+              {Number(price).toFixed(2)}
+            </span>
+          </div>
+
           {perPerson && (
             <span className="text-base text-muted-foreground">per person</span>
           )}

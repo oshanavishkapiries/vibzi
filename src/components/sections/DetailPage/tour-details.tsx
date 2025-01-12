@@ -119,7 +119,7 @@ export default function TourDetails({ textData, isLoading }: TourDetailsProps) {
           <PricingDetails
             className={`top-[280px] left-0 sticky transform -translate-y-[15%]`}
             price={textData?.pricing?.price || ""}
-            currency={"USD"}
+            currency={textData?.pricing?.priceNote || ""}
             perPerson={true}
             productLink={textData?.productUrl || ""}
             cancellationPolicy={textData?.pricing?.cancellationPolicy || ""}

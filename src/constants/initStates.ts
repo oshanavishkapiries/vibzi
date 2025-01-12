@@ -1,6 +1,6 @@
 export const DEFAULT_SEARCH_PARAMS = {
   startDate: new Date().toISOString().split("T")[0],
-  endDate: new Date().toISOString().split("T")[0],
+  endDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split("T")[0],
   destinationId: "",
   tags: null,
   flags: null,
@@ -16,11 +16,11 @@ export const DEFAULT_SEARCH_PARAMS = {
 
 export const DEFAULT_SEARCH_STATE_FREE_TEXT = {
   startDate: new Date().toISOString().split("T")[0],
-  endDate: new Date().toISOString().split("T")[0],
+  endDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split("T")[0],
   searchQuery: "",
   products: true,
-  attraction: true,
-  destination: false,
+  attraction: false,
+  destination: true,
   page: 1,
   size: 15,
 };

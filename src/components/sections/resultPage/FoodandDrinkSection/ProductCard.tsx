@@ -36,7 +36,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <CardHeader className="relative p-0 w-full aspect-square">
           <OptimizedImage src={imageUrl} alt={product.title} />
         </CardHeader>
-        <CardContent className="p-4">
+        <CardContent className="p-4 ps-1">
           <div className="flex items-center text-sm text-muted-foreground mb-2">
             <Badge variant="secondary" className="flex items-center gap-1">
               <Star className="h-3 w-3 fill-primary text-primary" />
@@ -46,13 +46,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               ({product.reviews.totalReviews.toLocaleString()} reviews)
             </span>
           </div>
-          <h3 className="font-semibold text-lg line-clamp-2 mb-2 truncate">
+          <h3 className="font-semibold text-base line-clamp-2 mb-2 truncate">
             {product.title}
           </h3>
-          <p className="text-base font-medium">
+          <p className="text-sm font-medium">
             From {product.pricing.currency} {product.pricing.summary.price}
           </p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-xs text-muted-foreground">
             Price varies by group size
           </p>
         </CardContent>

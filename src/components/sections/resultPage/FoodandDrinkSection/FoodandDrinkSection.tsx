@@ -37,8 +37,8 @@ const FoodAndDrinkSection = (props: any) => {
 
 
   return (
-    <div className="food-drink-section">
-      <h2 className="text-2xl font-bold mb-4">Food and Drink Experiences</h2>
+    <div className="max-w-7xl mx-auto">
+      <h2 className="text-xl font-bold mb-4">Food and Drink Experiences</h2>
       <ProductGrid products={searchResults.data.products.results} />
       <Pagination
         currentPage={page}

@@ -69,18 +69,17 @@ export function AdvanceSearch({}: { isCollepsed?: boolean }) {
     if (!e.key || e.key === "Enter") {
       if (!state.destination.trim()) {
         setError(true);
-        console.log("Destination is required.");
         return;
       }
       setError(false);
-      const from = state.date?.from ? format(state.date.from, "yyyy-MM-dd") : "";
+      const from = state.date?.from
+        ? format(state.date.from, "yyyy-MM-dd")
+        : "";
       const to = state.date?.to ? format(state.date.to, "yyyy-MM-dd") : "";
       const searchURL = `/results?des=${state.destination}&des_id=${state.destinationId}&from=${from}&to=${to}`;
-      console.log("Navigating to:", searchURL);
       router.push(searchURL);
     }
   };
-  
 
   return (
     <motion.div
@@ -94,7 +93,7 @@ export function AdvanceSearch({}: { isCollepsed?: boolean }) {
           type="text"
           placeholder="Search destination"
           className={`py-6 rounded-full font-semibold text-muted-foreground ${
-            error ? 'border-red-500 focus:ring-red-500' : ''
+            error ? "border-red-500 focus:ring-red-500" : ""
           }`}
           value={state.destination}
           onChange={(e) => {
@@ -113,7 +112,6 @@ export function AdvanceSearch({}: { isCollepsed?: boolean }) {
           }
           onKeyDown={handleSearch}
         />
-        
       </motion.div>
       <motion.div className="flex gap-3" variants={childVariants}>
         <Popover>
@@ -213,4 +211,3 @@ const childVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
 };
-

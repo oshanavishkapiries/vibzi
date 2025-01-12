@@ -37,7 +37,7 @@ export function CommonCard({
           </AspectRatio>
         </CardHeader>
 
-        <CardContent className="p-4 ps-0 pb-2">
+        <CardContent className="p-4 ps-1 pb-2">
           <div className="flex items-center justify-start gap-3 mb-2">
             <Badge variant="secondary" className="flex items-center gap-1">
               <Star className="h-3 w-3 fill-primary text-primary" />
@@ -47,10 +47,10 @@ export function CommonCard({
               ({reviews.toLocaleString()} reviews)
             </span>
           </div>
-          <h3 className="font-semibold text-lg truncate">{title}</h3>
+          <h3 className="font-semibold text-base truncate">{title}</h3>
         </CardContent>
 
-        <CardFooter className="p-4 pt-0 ps-0">
+        <CardFooter className="p-4 pt-0 ps-1">
           <p className="text-sm">
             from <span className="font-semibold">{price.toLocaleString()}</span>{" "}
             / Person
@@ -72,10 +72,6 @@ export const CommonCardSkelton = () => {
 
       <CardContent className="p-4 ps-0">
         <div className="flex items-center justify-start gap-3 mb-2">
-          <Badge variant="secondary" className="flex items-center gap-1">
-            <Skeleton className="h-3 w-3" />
-            <Skeleton className="w-8 h-4" />
-          </Badge>
           <Skeleton className="w-16 h-4" />
         </div>
         <Skeleton className="w-3/4 h-5 mb-2" />

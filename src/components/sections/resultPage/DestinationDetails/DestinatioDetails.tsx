@@ -23,12 +23,11 @@ const DestinatioDetails = (props: any) => {
       props.state.endDate || DEFAULT_SEARCH_PARAMS.endDate
     ),
     destinationId: props.state.destinationId,
-    searchQuery: props.state.destination,
     page: props.state.page - 1,
     tags: props.state.categoryId ? [props.state.categoryId] : null,
     flags: props.state.flag ? [props.state.flag] : null,
-    highestPrice: props.state.priceTo ? props.state.priceTo : 0,
-    lowestPrice: props.state.priceFrom ? props.state.priceFrom : 0,
+    highestPrice: props.state.priceTo ? parseFloat(props.state.priceTo) : 0,
+    lowestPrice: props.state.priceFrom ? parseFloat(props.state.priceFrom) : 0,
     durationInMinutes: props.state.duration
       ? {
           from: props.state.duration.split("-")[0],
@@ -66,6 +65,7 @@ const DestinatioDetails = (props: any) => {
   useEffect(() => {
     const parsedProducts = parseProduct(searchResults);
     setAllProducts(parsedProducts);
+    console.log("renderd");
   }, [searchResults]);
 
   if (isFetching) {
@@ -79,8 +79,8 @@ const DestinatioDetails = (props: any) => {
   const destination = props?.state?.destination;
 
   return (
-    <div className="food-drink-section">
-      <h2 className="text-2xl font-bold mb-4">
+    <div className="max-w-7xl mx-auto">
+      <h2 className="text-xl font-bold mb-4">
         {destination && `Things to Do in ${destination}`}
       </h2>
       <DestinationGrid products={allProducts} />

@@ -27,6 +27,8 @@ export default function ResultsPage() {
     flag: "",
   });
 
+
+
   useEffect(() => {
     const destinationId = searchParams.get("des_id") || "";
     const startDate = searchParams.get("from") || "";
@@ -54,6 +56,8 @@ export default function ResultsPage() {
       flag,
     });
   }, [searchParams]);
+
+ 
 
   const handlePageChange = (newPage: number) => {
     const params = new URLSearchParams(searchParams);

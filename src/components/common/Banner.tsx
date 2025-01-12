@@ -15,7 +15,7 @@ export default function Banner() {
           />
         </div>
         <div className="w-full lg:w-2/3 flex flex-col justify-center">
-          <h2 className="text-2xl font-semibold text-gray-900">
+          <h2 className="text-xl font-semibold text-gray-900">
             Find best experiences on Vibzi
           </h2>
           <p className="text-gray-600 my-3 mr-8">

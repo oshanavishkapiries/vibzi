@@ -21,6 +21,8 @@ const AttractionsSection = (props: any) => {
     ),
     searchQuery: props.state.destination,
     page: page,
+    attraction: true,
+    destination: false,
   };
 
   const {
@@ -38,8 +40,8 @@ const AttractionsSection = (props: any) => {
   }
 
   return (
-    <div className="food-drink-section">
-      <h2 className="text-2xl font-bold mb-4">Attractions</h2>
+    <div className="max-w-7xl mx-auto">
+      <h2 className="text-xl font-bold mb-4">Attractions</h2>
       <AttractionsGrid products={searchResults.data.attractions.results} />
       <Pagination
         currentPage={page}

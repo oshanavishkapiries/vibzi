@@ -59,7 +59,7 @@ const AttractionsCard: React.FC<AttractionsCardProps> = ({ product }) => {
               )}
             </div>
           </div>
-          <h3 className="font-semibold text-lg line-clamp-2 mb-2">
+          <h3 className="font-semibold text-base line-clamp-2 mb-2">
             {product.name}
           </h3>
           <div className="flex items-center gap-1 text-muted-foreground mb-2">
@@ -67,7 +67,7 @@ const AttractionsCard: React.FC<AttractionsCardProps> = ({ product }) => {
             <span className="text-sm">{product.destinationName}</span>
           </div>
           <div 
-            className="text-sm text-muted-foreground line-clamp-3"
+            className="text-xs text-muted-foreground line-clamp-3"
             dangerouslySetInnerHTML={{ __html: product.description }}
           />
         </CardContent>

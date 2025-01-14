@@ -1,4 +1,6 @@
 import TimeLine from "@/components/sections/mytripPage/TimeLine";
+import TravelCard from "@/components/sections/mytripPage/TravelCard";
+import TripCard from "@/components/sections/mytripPage/TripCard";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -9,16 +11,52 @@ import React from "react";
 
 const MyTrips = () => {
   const dates = ["13", "14", "15", "16", "17", "18", "19"];
+  const trips = [
+    {
+      id: 1,
+      title: "The Grand Palace",
+      description: "This is a trip to Vietnam description",
+      src: "/1.jpg",
+    },
+    {
+      id: 2,
+      title: "Ha Long Bay",
+      description: "Discover the beauty of Ha Long Bay",
+      src: "/2.jpg",
+    },
+    {
+      id: 3,
+      title: "Hoi An",
+      description: "Experience the charm of Hoi An",
+      src: "/3.jpg",
+    },
+    {
+      id: 4,
+      title: "Ho Chi Minh City",
+      description: "Explore the vibrant city life",
+      src: "/4.jpg",
+    },
+    {
+      id: 5,
+      title: "Mekong Delta",
+      description: "Cruise through the Mekong Delta",
+      src: "/5.jpg",
+    },
+    {
+      id: 6,
+      title: "Sapa",
+      description: "Enjoy the scenic mountains of Sapa",
+      src: "/6.jpg",
+    },
+  ];
+
+  //const trips: any[]= [];
 
   return (
     <div className="container px-3 mx-auto min-h-screen mb-8">
       {/* header */}
       <div className="w-full max-w-7xl mx-auto h-full flex justify-between items-center py-4">
         <h1 className="text-2xl font-semibold">My Trips</h1>
-        <Button variant="outline" className="gap-2">
-          <Plus className="h-4 w-4" />
-          Create a new trip
-        </Button>
       </div>
 
       {/* main content */}
@@ -26,21 +64,12 @@ const MyTrips = () => {
         {/* side left */}
         <div className="w-full h-full col-span-2 ">
           {/* trip-card */}
-          <div className="relative overflow-hidden rounded-lg">
-            <div className="relative overflow-hidden rounded-lg h-[250px] md:h-[350px]">
-              <Image
-                src="/2.jpg"
-                alt="Vietnam coastline"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-0 p-6 text-white">
-                <h2 className="text-2xl font-bold mb-2">Trip to Vietnam</h2>
-                <p className="text-sm">Jan 13 - Jan 20</p>
-              </div>
-            </div>
-          </div>
+          <TravelCard
+            src="/2.jpg"
+            alt="Vietnam coastline"
+            title="Trip to Vietnam"
+            dateRange="Jan 13 - Jan 20"
+          />
           {/* description */}
           <p className="text-sm text-muted-foreground mt-4">
             This is travel to vietnam description
@@ -95,27 +124,20 @@ const MyTrips = () => {
 
         {/* side right */}
         <div className="w-full h-full col-span-1 pl-4">
+          <Button variant="outline" className="w-full mb-2 h-16">
+            <Plus className="h-4 w-4" />
+            Create a new trip
+          </Button>
           {/* trip-list-card */}
-          <div className="grid gap-4">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <Card key={i} className="p-2">
-                <div className="flex gap-4">
-                  <div className="relative h-28 w-40 flex-shrink-0">
-                    <Image
-                      src={`/${i}.jpg`}
-                      alt="The Grand Palace"
-                      fill
-                      className="object-cover rounded-lg"
-                    />
-                  </div>
-                  <div>
-                    <h4 className="font-medium">The Grand Palace</h4>
-                    <p className="text-sm text-muted-foreground">
-                      this is travel to vietnam description
-                    </p>
-                  </div>
-                </div>
-              </Card>
+          <div className="grid gap-2">
+            {trips?.map((trip) => (
+              <TripCard
+                key={trip.id}
+                src={trip.src}
+                alt={trip.title}
+                title={trip.title}
+                description={trip.description}
+              />
             ))}
           </div>
         </div>

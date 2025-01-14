@@ -4,6 +4,7 @@ import { IParseProductDeatils } from "@/types";
 import ShowAllImage from "./ShowAllImage";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
+import TicketInfo from "./TicketInfo";
 
 const VillaCard: React.FC<{
   data: IParseProductDeatils | null;
@@ -71,13 +72,15 @@ const VillaCard: React.FC<{
         {!isLoading && <ShowAllImage images={data?.images} />}
       </div>
 
+      <TicketInfo />
+
       {/* Details Section */}
       <div className="space-y-2">
         <h2 className="text-xl font-medium">
           {isLoading ? (
             <div className="h-5 bg-gray-300 rounded-md w-2/3 animate-pulse"></div>
           ) : (
-            `Entire villa in ${data?.timeZone}`
+            `${data?.timeZone}`
           )}
         </h2>
 

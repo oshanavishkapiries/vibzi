@@ -50,9 +50,9 @@ const Header = () => {
           >
             <Button
               variant="outline"
-              className={`m-1 rounded-full shadow-md hover:scale-105 ${
+              className={`m-1 rounded-full shadow-none border-none hover:scale-105 ${
                 path === "/my-trips" &&
-                "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground"
+                "bg-secondary"
               }`}
             >
               <Map /> My Trips

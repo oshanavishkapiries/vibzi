@@ -2,11 +2,9 @@ import TimeLine from "@/components/sections/mytripPage/TimeLine";
 import TravelCard from "@/components/sections/mytripPage/TravelCard";
 import TripCard from "@/components/sections/mytripPage/TripCard";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus } from "lucide-react";
-import Image from "next/image";
 import React from "react";
 
 const MyTrips = () => {
@@ -24,33 +22,8 @@ const MyTrips = () => {
       description: "Discover the beauty of Ha Long Bay",
       src: "/2.jpg",
     },
-    {
-      id: 3,
-      title: "Hoi An",
-      description: "Experience the charm of Hoi An",
-      src: "/3.jpg",
-    },
-    {
-      id: 4,
-      title: "Ho Chi Minh City",
-      description: "Explore the vibrant city life",
-      src: "/4.jpg",
-    },
-    {
-      id: 5,
-      title: "Mekong Delta",
-      description: "Cruise through the Mekong Delta",
-      src: "/5.jpg",
-    },
-    {
-      id: 6,
-      title: "Sapa",
-      description: "Enjoy the scenic mountains of Sapa",
-      src: "/6.jpg",
-    },
   ];
 
-  //const trips: any[]= [];
 
   return (
     <div className="container px-3 mx-auto min-h-screen mb-8">
@@ -76,7 +49,7 @@ const MyTrips = () => {
           </p>
           {/* tabs */}
           <Tabs defaultValue="itinerary" className="w-full mt-4">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="bg-background">
               <TabsTrigger value="checklist">Checklist</TabsTrigger>
               <TabsTrigger value="itinerary">Itinerary</TabsTrigger>
               <TabsTrigger value="attachments">Attachments</TabsTrigger>
@@ -89,7 +62,7 @@ const MyTrips = () => {
                   <Button
                     key={date}
                     variant="outline"
-                    className="rounded-full min-w-[80px]"
+                    className="rounded-full border-2 border-primary min-w-[80px]"
                   >
                     Jan {date}
                   </Button>
@@ -120,7 +93,7 @@ const MyTrips = () => {
               attachments
             </TabsContent>
           </Tabs>
-        </div>
+        </div>    
 
         {/* side right */}
         <div className="w-full h-full col-span-1 pl-4">

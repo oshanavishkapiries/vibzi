@@ -9,9 +9,9 @@ interface ITripCardProps {
 
 const TripCard = ({ src, alt, title, description }: ITripCardProps) => {
   return (
-    <div className="p-2 rounded-lg shadow-md bg-white">
+    <div className="p-2 rounded-lg hover:shadow-md bg-white">
       <div className="flex gap-4">
-        <div className="relative h-28 w-40 flex-shrink-0">
+        <div className="relative h-24 w-40 flex-shrink-0">
           <Image
             src={src}
             alt={alt}

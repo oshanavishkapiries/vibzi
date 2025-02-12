@@ -1,3 +1,4 @@
+import { Calendar } from 'lucide-react';
 import Image from 'next/image';
 
 interface ITravelCardProps {
@@ -20,7 +21,7 @@ const TravelCard = ({ src, alt, title, dateRange }: ITravelCardProps) => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         <div className="absolute bottom-0 p-6 text-white">
           <h2 className="text-2xl font-bold mb-2">{title}</h2>
-          <p className="text-sm">{dateRange}</p>
+          <p className="text-sm flex flex-row gap-2 align-center"> <Calendar className='w-4 h-4' />{dateRange}</p>
         </div>
       </div>
     </div>

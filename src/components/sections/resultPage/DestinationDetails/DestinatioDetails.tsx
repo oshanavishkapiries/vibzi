@@ -65,7 +65,6 @@ const DestinatioDetails = (props: any) => {
   useEffect(() => {
     const parsedProducts = parseProduct(searchResults);
     setAllProducts(parsedProducts);
-    console.log("renderd");
   }, [searchResults]);
 
   if (isFetching) {

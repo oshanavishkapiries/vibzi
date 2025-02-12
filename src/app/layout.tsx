@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import ReduxProvider from "./(root)/reduxProvider";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Vibzi - Plan your next trip now",
@@ -43,6 +44,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <Toaster position="bottom-right" />
         <ReduxProvider>{children}</ReduxProvider>
       </body>
       {/*<GoogleAnalytics gaId="G-QVML00G8X9" />*/}

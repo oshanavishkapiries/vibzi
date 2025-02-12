@@ -1,0 +1,115 @@
+"use client";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { useState } from "react";
+import { Textarea } from "@/components/ui/textarea";
+import { useSelector } from "react-redux";
+import { useUpdateTripPlanItineraryMutation } from "@/services/trip/itenerySlice";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
+
+const AddNote = ({ children }: { children: React.ReactNode }) => {
+  const [formData, setFormData] = useState({
+    note: "",
+  });
+
+  const [isOpen, setIsOpen] = useState(false);
+  const itinerary = useSelector((state: any) => state.meta.trip.itinerary);
+  const it_id = itinerary?.id;
+  const selectedDate = useSelector((state: any) => state.meta.trip.select_date);
+  const [updateItinerary, { isLoading }] = useUpdateTripPlanItineraryMutation();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!itinerary || !selectedDate) return;
+
+    const obj = {
+      position: itinerary.itinerary[selectedDate].length + 1,
+      date: selectedDate,
+      type: "note",
+      details: {
+        title: "Note",
+        customFields: { ...formData },
+      },
+    };
+    const updatedItinerary = {
+      ...itinerary,
+      itinerary: {
+        ...itinerary.itinerary,
+        [selectedDate]: [...itinerary.itinerary[selectedDate], obj],
+      },
+    };
+
+    try {
+      await updateItinerary({ id: it_id, data: updatedItinerary }).unwrap();
+      toast.success("Note added successfully.");
+      setIsOpen(false);
+    } catch (error) {
+      console.log('error: ', error);
+      toast.error("Failed to add note. Please try again.");
+    }
+  };
+
+  const handleClear = () => {
+    setFormData({
+      note: "",
+    });
+  };
+
+  return (
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <SheetTrigger asChild onClick={() => setIsOpen(true)}>
+        {children}
+      </SheetTrigger>
+      <SheetContent>
+        <SheetHeader>
+          <div className="flex items-center justify-between">
+            <SheetTitle className="text-xl font-semibold">Add a Note</SheetTitle>
+          </div>
+          <p className="text-sm text-muted-foreground">Add a note for your trip</p>
+        </SheetHeader>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="note">
+              Note <span className="text-red-500">*</span>
+            </Label>
+            <Textarea
+              id="note"
+              placeholder="Write your note here..."
+              value={formData.note}
+              onChange={(e) =>
+                setFormData({ ...formData, note: e.target.value })
+              }
+              className="resize-none min-h-[200px]"
+              required
+            />
+          </div>
+          <div className="flex justify-between pt-4">
+            <Button type="button" variant="outline" onClick={handleClear}>
+              Clear
+            </Button>
+            <Button
+              type="submit"
+              className="bg-[#0B4D4A] hover:bg-[#0B4D4A]/90"
+            >
+              {isLoading ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                "Add to trip"
+              )}
+            </Button>
+          </div>
+        </form>
+      </SheetContent>
+    </Sheet>
+  );
+};
+
+export default AddNote;

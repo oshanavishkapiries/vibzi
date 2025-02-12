@@ -1,120 +1,104 @@
-import TimeLine from "@/components/sections/mytripPage/TimeLine";
-import TravelCard from "@/components/sections/mytripPage/TravelCard";
+"use client";
+import { CreateTripDialog } from "@/components/sections/mytripPage/create-trip-dialog";
 import TripCard from "@/components/sections/mytripPage/TripCard";
+import Tripsection from "@/components/sections/mytripPage/Tripsection";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus } from "lucide-react";
-import React from "react";
+import { setTrip_Id, setTripId } from "@/features/metaSlice";
+import { useSearchTripPlansQuery } from "@/services/trip/tripPlanSlice";
+import { parseTrips } from "@/utils/tripUtils/tripDataFunction";
+import { Loader2, Plus } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const MyTrips = () => {
-  const dates = ["13", "14", "15", "16", "17", "18", "19"];
-  const trips = [
-    {
-      id: 1,
-      title: "The Grand Palace",
-      description: "This is a trip to Vietnam description",
-      src: "/1.jpg",
-    },
-    {
-      id: 2,
-      title: "Ha Long Bay",
-      description: "Discover the beauty of Ha Long Bay",
-      src: "/2.jpg",
-    },
-  ];
+  const { data: trips, isLoading } = useSearchTripPlansQuery({
+    userId: "1234",
+    title: "",
+    destinationName: "",
+    page: 0,
+    size: 10,
+  });
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const tripsData = parseTrips(trips);
+  const tripId = searchParams.get("id");
+  const trip_Id = searchParams.get("tripId");
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (tripsData.length > 0 && !tripId) {
+      router.push(
+        `/my-trips?id=${tripsData[0].id}&tripId=${tripsData[0]?.tripId}`
+      );
+    }
+    dispatch(setTripId(tripId || ""));
+    dispatch(setTrip_Id(trip_Id || ""));
+  }, [tripsData, tripId, trip_Id, router]);
+
+  const handleCardClick = (id: string, tripId: string) => {
+    dispatch(setTripId(id));
+    dispatch(setTrip_Id(tripId));
+    router.push(`/my-trips?id=${id}&tripId=${tripId}`);
+  };
+
+  const storeState = useSelector((state) => state);
+
+  console.log("redux-store", storeState);
 
   return (
-    <div className="container px-3 mx-auto min-h-screen mb-8">
-      {/* header */}
-      <div className="w-full max-w-7xl mx-auto h-full flex justify-between items-center py-4">
-        <h1 className="text-2xl font-semibold">My Trips</h1>
-      </div>
+    <div
+      className={`container px-3 mx-auto min-h-[500px] mb-8 ${
+        tripsData.length === 0 || isLoading
+          ? "flex justify-center items-center"
+          : ""
+      }`}
+    >
+      {isLoading && (
+        <div className="w-full h-full flex flex-col items-center justify-center p-6 cursor-pointer shadow-none border-none">
+          <Loader2 className="w-15 h-15 animate-spin" />
+        </div>
+      )}
 
-      {/* main content */}
-      <div className="max-w-7xl mx-auto w-full h-full grid grid-cols-3">
-        {/* side left */}
-        <div className="w-full h-full col-span-2 ">
-          {/* trip-card */}
-          <TravelCard
-            src="/2.jpg"
-            alt="Vietnam coastline"
-            title="Trip to Vietnam"
-            dateRange="Jan 13 - Jan 20"
-          />
-          {/* description */}
-          <p className="text-sm text-muted-foreground mt-4">
-            This is travel to vietnam description
-          </p>
-          {/* tabs */}
-          <Tabs defaultValue="itinerary" className="w-full mt-4">
-            <TabsList className="bg-background">
-              <TabsTrigger value="checklist">Checklist</TabsTrigger>
-              <TabsTrigger value="itinerary">Itinerary</TabsTrigger>
-              <TabsTrigger value="attachments">Attachments</TabsTrigger>
-            </TabsList>
-            <TabsContent value="itinerary" className="space-y-6">
-              {/* itinerary */}
-              {/* date range */}
-              <div className="flex gap-2 overflow-x-auto py-4">
-                {dates.map((date) => (
-                  <Button
-                    key={date}
-                    variant="outline"
-                    className="rounded-full border-2 border-primary min-w-[80px]"
-                  >
-                    Jan {date}
-                  </Button>
-                ))}
-              </div>
-              {/* timeline */}
-              <TimeLine />
-            </TabsContent>
-            <TabsContent value="checklist" className="space-y-6">
-              {/* checklist */}
-              {/* checkbox */}
-              <div className="flex items-center space-x-2 mt-4">
-                <Checkbox id="terms" />
-                <label
-                  htmlFor="terms"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Book flight tickets
-                </label>
-              </div>
-              {/* add btn */}
-              <Button variant="outline" className="gap-2">
-                <Plus className="h-4 w-4" />
-                Add
-              </Button>
-            </TabsContent>
-            <TabsContent value="attachments" className="space-y-6">
-              attachments
-            </TabsContent>
-          </Tabs>
-        </div>    
-
-        {/* side right */}
-        <div className="w-full h-full col-span-1 pl-4">
-          <Button variant="outline" className="w-full mb-2 h-16">
+      {tripsData.length === 0 && !isLoading && (
+        <CreateTripDialog>
+          <Button variant="outline" className="w-[240px] mb-2 h-16">
             <Plus className="h-4 w-4" />
             Create a new trip
           </Button>
-          {/* trip-list-card */}
-          <div className="grid gap-2">
-            {trips?.map((trip) => (
-              <TripCard
-                key={trip.id}
-                src={trip.src}
-                alt={trip.title}
-                title={trip.title}
-                description={trip.description}
-              />
-            ))}
+        </CreateTripDialog>
+      )}
+
+      {tripsData.length > 0 && !isLoading && (
+        <div className="max-w-7xl mx-auto w-full min-h-[500px] grid grid-cols-3">
+          <div className="w-full h-full col-span-2 ">
+            <Tripsection />
+          </div>
+
+          <div className="w-full h-full col-span-1 pl-4">
+            <CreateTripDialog>
+              <Button variant="outline" className="w-full mb-2 h-16">
+                <Plus className="h-4 w-4" />
+                Create a new trip
+              </Button>
+            </CreateTripDialog>
+            <div className="grid gap-2">
+              {tripsData?.map((trip: any) => (
+                <TripCard
+                  key={trip.id}
+                  id={trip.id}
+                  src={trip.src}
+                  alt={trip.title}
+                  title={trip.title}
+                  description={trip.description}
+                  onClick={() => handleCardClick(trip.id, trip.tripId)}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

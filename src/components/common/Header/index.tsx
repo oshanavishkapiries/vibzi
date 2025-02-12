@@ -6,7 +6,6 @@ import { useScrollPosition } from "@/hooks/useScrollPosition";
 import Link from "next/link";
 import { AdvanceSearch } from "./AdvanceSearch";
 import Profile from "./Profile";
-import { Map } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Header = () => {
@@ -55,7 +54,7 @@ const Header = () => {
                 "bg-secondary"
               }`}
             >
-              <Map /> My Trips
+              My Trips
             </Button>
           </Link>
           <Profile />

@@ -8,6 +8,7 @@ const ReduxProvider = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
+  
   return <Provider store={store}>{children}</Provider>;
 };
 

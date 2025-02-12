@@ -6,15 +6,15 @@ export interface IParseProductDeatils {
   description: string;
   language: string;
   timeZone: string;
-  productUrl:string
-  reviews:{
-    totalReviews:string;
-    averageReviews:string;
-    ratings : {
+  productUrl: string;
+  reviews: {
+    totalReviews: string;
+    averageReviews: string;
+    ratings: {
       stars: number;
       count: number;
-    }[]
-  },
+    }[];
+  };
   images: { small: string; big: string }[];
   inclusions: string[];
   exclusions: string[];
@@ -63,3 +63,13 @@ export interface SearchState {
   rating?: string;
   flag?: string;
 }
+
+export interface TimelineItem {
+  type: "activity" | "restaurant" | "hotel" | "flight" | "note";
+  dates?: string;
+  details: {
+    title: string;
+    customFields: any;
+  };
+}
+

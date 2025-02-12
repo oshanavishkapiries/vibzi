@@ -9,6 +9,7 @@ export default function MainLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <Suspense fallback={<></>}>
       <Suspense fallback={<></>}>

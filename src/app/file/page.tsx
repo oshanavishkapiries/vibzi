@@ -1,7 +1,11 @@
-'use client';
-import { useSearchParams } from 'next/navigation';
-import React, { useEffect, useState, Suspense } from 'react';
-import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+import React, { Suspense } from "react";
+import type { Metadata } from "next";
+import FilePageContent from "./FilePageContent";
+
+export const metadata: Metadata = {
+  title: "Vibzi - File Viewer",
+  description: "Vibzi - File Viewer",
+};
 
 const FilePage = () => {
   return (
@@ -11,35 +15,6 @@ const FilePage = () => {
   );
 };
 
-const FilePageContent = () => {
-  const searchParams = useSearchParams();
-  const [docs, setDocs] = useState<{ uri: string }[]>([]);
 
-  useEffect(() => {
-    const url = searchParams.get('url');
-    if (url) {
-      setDocs([{ uri: url }]);
-    }
-  }, [searchParams]);
-
-  return (
-    <div className="w-full h-screen">
-      {docs.length > 0 && (
-        <DocViewer
-          documents={docs}
-          pluginRenderers={DocViewerRenderers}
-          style={{ height: '100%' }}
-          config={{
-            header: {
-              disableHeader: false,
-              disableFileName: false,
-              retainURLParams: true
-            }
-          }}
-        />
-      )}
-    </div>
-  );
-};
 
 export default FilePage;

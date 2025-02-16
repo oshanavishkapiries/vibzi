@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 import AWSProvider from "@/components/common/authProvider";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://vibzi.co"),
   title: "Vibzi - Plan your next trip now",
   description:
     "Vibzi is a travel planning platform dedicated to helping travelers discover the best experiences, restaurants, and hidden gems at their destinations. With a customer-driven approach, we continuously enhance and add new features based on user feedback, ensuring that our app meets the evolving needs of modern travelers. Our goal is to provide personalized, intuitive solutions that make every journey seamless and unforgettable.",

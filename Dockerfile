@@ -1,36 +1,25 @@
-# Use the official Node.js image from the Docker Hub
 FROM node:22-alpine AS builder
 
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json (or yarn.lock)
 COPY package.json package-lock.json ./
 
-# Install dependencies
 RUN npm install --legacy-peer-deps
 
-# Copy the rest of the application code
 COPY . .
 
-# Build the application
-RUN npm run build 
+RUN npm run build
 
-# Use a smaller image for the final stage
 FROM node:22-alpine AS runner
 
-# Set the working directory
 WORKDIR /app
 
-# Copy only the necessary files from the builder stage
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/package-lock.json ./package-lock.json
 COPY --from=builder /app/node_modules ./node_modules
 
-# Expose the port the app runs on
 EXPOSE 3000
 
-# Command to run the application
-CMD ["npm", "start"]
+CMD ["sh", "-c", "echo \"NEXT_PUBLIC_COGNITO_AUTHORITY=$NEXT_PUBLIC_COGNITO_AUTHORITY\nNEXT_PUBLIC_COGNITO_CLIENT_ID=$NEXT_PUBLIC_COGNITO_CLIENT_ID\nNEXT_PUBLIC_COGNITO_REDIRECT_URI=$NEXT_PUBLIC_COGNITO_REDIRECT_URI\nNEXT_PUBLIC_COGNITO_RESPONSE_TYPE=$NEXT_PUBLIC_COGNITO_RESPONSE_TYPE\nNEXT_PUBLIC_COGNITO_SCOPE=$NEXT_PUBLIC_COGNITO_SCOPE\nNEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL\nNEXT_PUBLIC_API_URL_2=$NEXT_PUBLIC_API_URL_2\" > .env && npm start"]

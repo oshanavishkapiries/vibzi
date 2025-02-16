@@ -2,7 +2,7 @@
 import TourDetails from "../../../../components/sections/DetailPage/tour-details";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useProductByIdQuery } from "@/services/productSlice";
+import { useProductByIdQuery } from "@/services/product/productSlice";
 import { parseProductDeatils } from "@/utils/parseProductDeatils";
 import Reviews from "@/components/sections/DetailPage/reviews";
 import VillaCard from "@/components/sections/DetailPage/detailsHero/VillaCard";

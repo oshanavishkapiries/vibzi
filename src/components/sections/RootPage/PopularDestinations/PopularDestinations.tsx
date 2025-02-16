@@ -1,6 +1,6 @@
 "use client";
 import OptimizedImage from "@/components/common/OptimizedImage";
-import { usePopularDestinationQuery } from "@/services/destinationSlice";
+import { usePopularDestinationQuery } from "@/services/product/destinationSlice";
 import Link from "next/link";
 import React from "react";
 

@@ -31,18 +31,7 @@ const Itinerary = () => {
 
   const items: TimelineItem[] = data?.itinerary[selectedDate] || [];
 
-  console.log("data", data?.itinerary[selectedDate]);
-
-  // export interface TimelineItem {
-  //   type: "activity" | "restaurant" | "hotel" | "flight";
-  //   title: string;
-  //   time?: string;
-  //   location?: string;
-  //   dates?: string;
-  //   checkIn?: string;
-  //   flightDetails?: string;
-  //   route?: string;
-  // }
+  
 
   return (
     <>

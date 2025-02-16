@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Trash } from "lucide-react";
+import { Plus, Trash, File } from "lucide-react";
 import { toast } from "sonner";
 import {
   useUploadAttachmentMutation,
@@ -7,32 +7,57 @@ import {
   useDeleteAttachmentMutation,
 } from "@/services/trip/attachmentSlice";
 import { useSelector } from "react-redux";
-import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+import Image from "next/image";
+
+const getFileIcon = (filename: string) => {
+  const extension = filename.split(".").pop()?.toLowerCase();
+
+  switch (extension) {
+    case "pdf":
+      return (
+        <Image
+          alt="pdf"
+          width={48}
+          height={48}
+          src="/file_icon/pdf.png"
+          className="w-12 h-12"
+        />
+      );
+    case "doc":
+    case "docx":
+      return (
+        <Image
+          alt="doc"
+          width={48}
+          height={48}
+          src="/file_icon/docs.png"
+          className="w-12 h-12"
+        />
+      );
+    case "txt":
+      return (
+        <Image
+          alt="txt"
+          width={48}
+          height={48}
+          src="/file_icon/txt.png"
+          className="w-12 h-12"
+        />
+      );
+    default:
+      return <File className="w-12 h-12 text-gray-500" />;
+  }
+};
 
 const FileAttachments = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [fileToDelete, setFileToDelete] = useState<string | null>(null);
-  const [selectedFile, setSelectedFile] = useState<string>("");
-  const [isViewerOpen, setIsViewerOpen] = useState(false);
   const tripId = useSelector((state: any) => state.meta.trip.tripId);
   const [uploadAttachment] = useUploadAttachmentMutation();
   const { data: attachmentData, isLoading: isLoadingAttachments } =
     useGetAttachmentsByTripIdQuery(tripId);
   const [deleteAttachment] = useDeleteAttachmentMutation();
-
-  console.log('selectedFile: ', selectedFile);
-
-  const SUPPORTED_FILE_TYPES = [
-    "html",
-    "jpeg",
-    "jpg",
-    "pdf",
-    "png",
-    "txt",
-    "xlsx",
-    "plain",
-  ];
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -47,11 +72,6 @@ const FileAttachments = () => {
       formData.append("title", "boarding pass");
 
       Array.from(newFiles).forEach((file) => {
-        if (!SUPPORTED_FILE_TYPES.includes(file.type.split("/")[1])) {
-          
-          toast.error(`Unsupported file format: ${file.name}`);
-          return;
-        }
         formData.append("files", file);
       });
 
@@ -79,15 +99,8 @@ const FileAttachments = () => {
     }
   };
 
-  const openFileViewer = (fileUrl: string, fileType: string) => {
-    console.log("fileType: ", fileType);
-
-    if (!SUPPORTED_FILE_TYPES.includes(fileType)) {
-      toast.error("Unsupported file format");
-      return;
-    }
-    setSelectedFile(fileUrl);
-    setIsViewerOpen(true);
+  const openFileInNewTab = (fileUrl: string) => {
+    window.open(fileUrl, "_blank");
   };
 
   if (isLoadingAttachments) {
@@ -102,100 +115,57 @@ const FileAttachments = () => {
 
   return (
     <div className="w-full border rounded-lg p-6">
-      {/* File Upload Section */}
-      <h2 className="text-xl font-semibold mb-4">Add Attachments</h2>
-      <label className="border-2 border-dashed rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50">
-        <div className="w-8 h-8 mb-2 text-gray-400">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 4v16m8-8H4"
-            />
-          </svg>
-        </div>
-        <p className="text-gray-500">Click to upload</p>
-        <input
-          type="file"
-          className="hidden"
-          multiple
-          onChange={handleFileChange}
-          disabled={isUploading}
-        />
-      </label>
-
       {/* Uploaded Files Section */}
-      {attachmentData && (
-        <div className="mt-4">
-          <h3 className="text-lg font-medium mb-2">Uploaded Files</h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
-            {attachmentData?.attachments.map((file) => (
-              <div
-                key={file.key}
-                className="relative w-full aspect-square border rounded-lg overflow-hidden group"
+      <div className="mt-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
+          <label className="relative w-full bg-gray-100 aspect-square border rounded-lg overflow-hidden group cursor-pointer flex items-center justify-center">
+            <Plus className="w-8 h-8 text-gray-500" />
+            <input
+              type="file"
+              className="hidden"
+              multiple
+              onChange={handleFileChange}
+              disabled={isUploading}
+            />
+          </label>
+
+          {attachmentData?.attachments.map((file) => (
+            <div
+              key={file.key}
+              className="relative w-full aspect-square border rounded-lg overflow-hidden group"
+            >
+              {file.fileUrl.match(/\.(jpg|jpeg|png|gif)$/i) ? (
+                <img
+                  src={file.fileUrl}
+                  alt={file.originalFilename}
+                  className="w-full h-full object-cover cursor-pointer"
+                  onClick={() => openFileInNewTab("/file?url=" + file.fileUrl)}
+                />
+              ) : (
+                <div
+                  className="w-full h-full flex flex-col items-center justify-center p-2 cursor-pointer"
+                  onClick={() => openFileInNewTab("/file?url=" + file.fileUrl)}
+                >
+                  {getFileIcon(file.originalFilename)}
+                  <span className="text-xs text-gray-500 truncate mt-2 max-w-full px-2">
+                    {file.originalFilename}
+                  </span>
+                </div>
+              )}
+              <button
+                onClick={() => {
+                  setFileToDelete(file.key);
+                  setDeleteDialogOpen(true);
+                }}
+                className="absolute bottom-1 right-1 p-1 rounded-full bg-white shadow-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-50"
+                disabled={isUploading}
               >
-                {file.fileUrl.match(/\.(jpg|jpeg|png|gif)$/i) ? (
-                  <img
-                    src={file.fileUrl}
-                    alt={file.originalFilename}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center p-2">
-                    <span className="text-sm text-gray-500 truncate">
-                      {file.originalFilename}
-                    </span>
-                  </div>
-                )}
-                <button
-                  onClick={() =>
-                    openFileViewer(file.fileUrl, file.key.split(".")[1])
-                  }
-                  className="absolute top-1 right-1 p-1 rounded-full bg-white shadow-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-blue-50"
-                  disabled={isUploading}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    className="w-4 h-4 text-blue-500"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 12c0 1.657-1.343 3-3 3s-3-1.343-3-3 1.343-3 3-3 3 1.343 3 3z"
-                    />
-                  </svg>
-                </button>
-                <button
-                  onClick={() => {
-                    setFileToDelete(file.key);
-                    setDeleteDialogOpen(true);
-                  }}
-                  className="absolute bottom-1 right-1 p-1 rounded-full bg-white shadow-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-50"
-                  disabled={isUploading}
-                >
-                  <Trash className="w-4 h-4 text-red-500" />
-                </button>
-              </div>
-            ))}
-          </div>
+                <Trash className="w-4 h-4 text-red-500" />
+              </button>
+            </div>
+          ))}
         </div>
-      )}
+      </div>
 
       {/* Uploading Progress Indicator */}
       {isUploading && (
@@ -243,44 +213,6 @@ const FileAttachments = () => {
           </div>
         </div>
       </div>
-
-      {/* File Viewer Popup */}
-      {isViewerOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
-          <div className="w-full h-full bg-white rounded-lg shadow-lg relative">
-            <button
-              onClick={() => setIsViewerOpen(false)}
-              className="absolute top-2 right-2 p-2 bg-gray-200 rounded-full hover:bg-gray-300"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="w-4 h-4 text-gray-700"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-            <DocViewer
-              pluginRenderers={DocViewerRenderers}
-              documents={[{ uri: selectedFile }]}
-              config={{
-                header: {
-                  disableHeader: true,
-                  disableFileName: true,
-                },
-              }}
-              style={{ width: "100%", height: "100%" }}
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 };

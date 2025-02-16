@@ -1,4 +1,5 @@
 "use client";
+import AuthMiddleware from "@/components/common/AuthMiddleware";
 import { CreateTripDialog } from "@/components/sections/mytripPage/create-trip-dialog";
 import TripCard from "@/components/sections/mytripPage/TripCard";
 import Tripsection from "@/components/sections/mytripPage/Tripsection";
@@ -12,19 +13,20 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const MyTrips = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const tripId = searchParams.get("id");
+  const trip_Id = searchParams.get("tripId");
+  const user = useSelector((state: any) => state.meta.user);
+  console.log("user", user);
   const { data: trips, isLoading } = useSearchTripPlansQuery({
-    userId: "1234",
+    userId: user?.id,
     title: "",
     destinationName: "",
     page: 0,
     size: 10,
   });
-  const router = useRouter();
-  const searchParams = useSearchParams();
   const tripsData = parseTrips(trips);
-  const tripId = searchParams.get("id");
-  const trip_Id = searchParams.get("tripId");
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -48,58 +50,60 @@ const MyTrips = () => {
   console.log("redux-store", storeState);
 
   return (
-    <div
-      className={`container px-3 mx-auto min-h-[500px] mb-8 ${
-        tripsData.length === 0 || isLoading
-          ? "flex justify-center items-center"
-          : ""
-      }`}
-    >
-      {isLoading && (
-        <div className="w-full h-full flex flex-col items-center justify-center p-6 cursor-pointer shadow-none border-none">
-          <Loader2 className="w-15 h-15 animate-spin" />
-        </div>
-      )}
-
-      {tripsData.length === 0 && !isLoading && (
-        <CreateTripDialog>
-          <Button variant="outline" className="w-[240px] mb-2 h-16">
-            <Plus className="h-4 w-4" />
-            Create a new trip
-          </Button>
-        </CreateTripDialog>
-      )}
-
-      {tripsData.length > 0 && !isLoading && (
-        <div className="max-w-7xl mx-auto w-full min-h-[500px] grid grid-cols-3">
-          <div className="w-full h-full col-span-2 ">
-            <Tripsection />
+    <AuthMiddleware>
+      <div
+        className={`container px-3 mx-auto min-h-[500px] mb-8 ${
+          tripsData.length === 0 || isLoading
+            ? "flex justify-center items-center"
+            : ""
+        }`}
+      >
+        {isLoading && (
+          <div className="w-full h-full flex flex-col items-center justify-center p-6 cursor-pointer shadow-none border-none">
+            <Loader2 className="w-15 h-15 animate-spin" />
           </div>
+        )}
 
-          <div className="w-full h-full col-span-1 pl-4">
-            <CreateTripDialog>
-              <Button variant="outline" className="w-full mb-2 h-16">
-                <Plus className="h-4 w-4" />
-                Create a new trip
-              </Button>
-            </CreateTripDialog>
-            <div className="grid gap-2">
-              {tripsData?.map((trip: any) => (
-                <TripCard
-                  key={trip.id}
-                  id={trip.id}
-                  src={trip.src}
-                  alt={trip.title}
-                  title={trip.title}
-                  description={trip.description}
-                  onClick={() => handleCardClick(trip.id, trip.tripId)}
-                />
-              ))}
+        {tripsData.length === 0 && !isLoading && (
+          <CreateTripDialog>
+            <Button variant="outline" className="w-[240px] mb-2 h-16">
+              <Plus className="h-4 w-4" />
+              Create a new trip
+            </Button>
+          </CreateTripDialog>
+        )}
+
+        {tripsData.length > 0 && !isLoading && (
+          <div className="max-w-7xl mx-auto w-full min-h-[500px] grid grid-cols-3">
+            <div className="w-full h-full col-span-2 ">
+              <Tripsection />
+            </div>
+
+            <div className="w-full h-full col-span-1 pl-4">
+              <CreateTripDialog>
+                <Button variant="outline" className="w-full mb-2 h-16">
+                  <Plus className="h-4 w-4" />
+                  Create a new trip
+                </Button>
+              </CreateTripDialog>
+              <div className="grid gap-2">
+                {tripsData?.map((trip: any) => (
+                  <TripCard
+                    key={trip.id}
+                    id={trip.id}
+                    src={trip.src}
+                    alt={trip.title}
+                    title={trip.title}
+                    description={trip.description}
+                    onClick={() => handleCardClick(trip.id, trip.tripId)}
+                  />
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </AuthMiddleware>
   );
 };
 

@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useGetTripPlanByIdQuery } from "@/services/trip/tripPlanSlice";
 import { Pencil } from "lucide-react";
 import { useSelector } from "react-redux";
+import { EditDescriptionDialog } from "./edit-description-dialog";
 
 const Tripsection = () => {
   const id = useSelector((state: any) => state.meta.trip.id);
@@ -35,10 +36,11 @@ const Tripsection = () => {
         <p className="text-sm text-muted-foreground">
           {tripPlan?.description || "No description available"}
         </p>
-
-        <Button className="ml-2" variant="ghost" size="sm">
-          <Pencil className="h-4 w-4 mr-1" />
-        </Button>
+        <EditDescriptionDialog>
+          <Button variant="ghost" size="sm">
+            <Pencil className="h-4 w-4 mr-1" />
+          </Button>
+        </EditDescriptionDialog>
       </div>
       <Tabs defaultValue="itinerary" className="w-full mt-4">
         <TabsList className="bg-background">

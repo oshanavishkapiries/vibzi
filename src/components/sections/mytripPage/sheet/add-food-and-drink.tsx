@@ -17,13 +17,14 @@ import { useSelector } from "react-redux";
 import { useUpdateTripPlanItineraryMutation } from "@/services/trip/itenerySlice";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { TimePicker } from "@/components/ui/time-picker";
 
 const AddFoodAndDrink = ({ children }: { children: React.ReactNode }) => {
   const [formData, setFormData] = useState({
     activityName: "",
     booked: "no",
-    startTime: "12:00 PM",
-    endTime: "12:00 PM",
+    startTime: new Date(),
+    endTime: new Date(),
     link: "",
     note: "",
   });
@@ -72,8 +73,8 @@ const AddFoodAndDrink = ({ children }: { children: React.ReactNode }) => {
     setFormData({
       activityName: "",
       booked: "no",
-      startTime: "12:00 PM",
-      endTime: "12:00 PM",
+      startTime: new Date(),
+      endTime: new Date(),
       link: "",
       note: "",
     });
@@ -129,24 +130,30 @@ const AddFoodAndDrink = ({ children }: { children: React.ReactNode }) => {
             </RadioGroup>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="startTime">Start Time</Label>
+            <div>
+              <Label>Start Time</Label>
               <Input
-                id="startTime"
-                value={formData.startTime}
-                onChange={(e) =>
-                  setFormData({ ...formData, startTime: e.target.value })
-                }
+                type="time"
+                value={formData.startTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })}
+                onChange={(e) => {
+                  const [hours, minutes] = e.target.value.split(':');
+                  const newDate = new Date(formData.startTime);
+                  newDate.setHours(parseInt(hours), parseInt(minutes));
+                  setFormData({ ...formData, startTime: newDate });
+                }}
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="endTime">End Time</Label>
+            <div>
+              <Label>End Time</Label>
               <Input
-                id="endTime"
-                value={formData.endTime}
-                onChange={(e) =>
-                  setFormData({ ...formData, endTime: e.target.value })
-                }
+                type="time"
+                value={formData.endTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })}
+                onChange={(e) => {
+                  const [hours, minutes] = e.target.value.split(':');
+                  const newDate = new Date(formData.endTime);
+                  newDate.setHours(parseInt(hours), parseInt(minutes));
+                  setFormData({ ...formData, endTime: newDate });
+                }}
               />
             </div>
           </div>

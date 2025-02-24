@@ -8,6 +8,7 @@ import { useGetTripPlanByIdQuery } from "@/services/trip/tripPlanSlice";
 import { Pencil } from "lucide-react";
 import { useSelector } from "react-redux";
 import { EditDescriptionDialog } from "./edit-description-dialog";
+import { formatDate } from "@/utils/tripUtils/formatDates";
 
 const Tripsection = () => {
   const id = useSelector((state: any) => state.meta.trip.id);
@@ -21,16 +22,13 @@ const Tripsection = () => {
   return (
     <div className="w-full h-auto flex flex-col">
       <TravelCard
-        src="/2.jpg"
+        src={tripPlan?.imageUrl || "/1.jpg"}
         alt={tripPlan?.destinationName || "Destination"}
         title={tripPlan?.title || "Trip Title"}
-        dateRange={`${tripPlan?.startDate.replace(
-          /(\d{4})-(\d{2})-(\d{2})/,
-          "$1 / $2 / $3"
-        )} - ${tripPlan?.endDate.replace(
-          /(\d{4})-(\d{2})-(\d{2})/,
-          "$1 / $2 / $3"
+        dateRange={`${formatDate(tripPlan?.startDate)} → ${formatDate(
+          tripPlan?.endDate
         )}`}
+        location={tripPlan?.destinationName || "Location"}
       />
       <div className="flex items-center mt-4">
         <p className="text-sm text-muted-foreground">

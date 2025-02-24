@@ -18,7 +18,7 @@ const MyTrips = () => {
   const tripId = searchParams.get("id");
   const trip_Id = searchParams.get("tripId");
   const user = useSelector((state: any) => state.meta.user);
-  console.log("user", user);
+
   const { data: trips, isLoading } = useSearchTripPlansQuery({
     userId: user?.id,
     title: "",
@@ -45,21 +45,17 @@ const MyTrips = () => {
     router.push(`/my-trips?id=${id}&tripId=${tripId}`);
   };
 
-  const storeState = useSelector((state) => state);
-
-  console.log("redux-store", storeState);
-
   return (
     <AuthMiddleware>
       <div
-        className={`container px-3 mx-auto min-h-[500px] mb-8 ${
+        className={`container px-3 mx-auto mb-8 ${
           tripsData.length === 0 || isLoading
             ? "flex justify-center items-center"
             : ""
         }`}
       >
         {isLoading && (
-          <div className="w-full h-full flex flex-col items-center justify-center p-6 cursor-pointer shadow-none border-none">
+          <div className="w-full min-h-[500px] flex flex-col items-center justify-center p-6 cursor-pointer shadow-none border-none">
             <Loader2 className="w-15 h-15 animate-spin" />
           </div>
         )}
@@ -74,7 +70,7 @@ const MyTrips = () => {
         )}
 
         {tripsData.length > 0 && !isLoading && (
-          <div className="max-w-7xl mx-auto w-full min-h-[500px] grid grid-cols-3">
+          <div className="max-w-7xl mx-auto w-full grid grid-cols-3">
             <div className="w-full h-full col-span-2 ">
               <Tripsection />
             </div>
@@ -91,7 +87,7 @@ const MyTrips = () => {
                   <TripCard
                     key={trip.id}
                     id={trip.id}
-                    src={trip.src}
+                    src={trip.imageUrl}
                     alt={trip.title}
                     title={trip.title}
                     description={trip.description}

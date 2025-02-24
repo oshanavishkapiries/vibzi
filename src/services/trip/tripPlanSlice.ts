@@ -10,6 +10,7 @@ interface TripPlan {
   description: string;
   userId: string;
   tripId:string;
+  imageUrl:string;
 }
 
 interface TripPlanSearchParams {

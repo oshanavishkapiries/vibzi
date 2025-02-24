@@ -22,6 +22,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { useSelector } from "react-redux";
 import { useUpdateTripPlanMutation } from "@/services/trip/tripPlanSlice";
 import { useGetTripPlanByIdQuery } from "@/services/trip/tripPlanSlice";
@@ -108,7 +109,11 @@ export function EditDescriptionDialog({ children }: { children: React.ReactNode 
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Input placeholder="Trip Description" {...field} />
+                    <Textarea 
+                      placeholder="Trip Description" 
+                      className="min-h-[100px]" 
+                      {...field} 
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -1,3 +1,5 @@
+
+
 export function parseTrips(response : any) {
     if (!response || !response.items) {
       return [];
@@ -7,6 +9,6 @@ export function parseTrips(response : any) {
       tripId:item.tripId,
       title: item.title,
       description: item.description,
-      src: `/2.jpg`,
+      imageUrl: item.imageUrl,
     }));
   }

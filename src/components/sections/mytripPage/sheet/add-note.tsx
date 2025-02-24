@@ -17,6 +17,7 @@ import { Loader2 } from "lucide-react";
 
 const AddNote = ({ children }: { children: React.ReactNode }) => {
   const [formData, setFormData] = useState({
+    title: "",
     note: "",
   });
 
@@ -35,7 +36,7 @@ const AddNote = ({ children }: { children: React.ReactNode }) => {
       date: selectedDate,
       type: "note",
       details: {
-        title: "Note",
+        title: formData.title,
         customFields: { ...formData },
       },
     };
@@ -59,6 +60,7 @@ const AddNote = ({ children }: { children: React.ReactNode }) => {
 
   const handleClear = () => {
     setFormData({
+      title: "",
       note: "",
     });
   };
@@ -76,6 +78,22 @@ const AddNote = ({ children }: { children: React.ReactNode }) => {
           <p className="text-sm text-muted-foreground">Add a note for your trip</p>
         </SheetHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="title">
+              Title <span className="text-red-500">*</span>
+            </Label>
+            <input
+              id="title"
+              type="text"
+              placeholder="Enter note title..."
+              value={formData.title}
+              onChange={(e) =>
+                setFormData({ ...formData, title: e.target.value })
+              }
+              className="w-full px-3 py-2 border rounded-md"
+              required
+            />
+          </div>
           <div className="space-y-2">
             <Label htmlFor="note">
               Note <span className="text-red-500">*</span>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Plus, Trash, File } from "lucide-react";
+import { Plus, Trash } from "lucide-react";
 import { toast } from "sonner";
 import {
   useUploadAttachmentMutation,
@@ -7,47 +7,7 @@ import {
   useDeleteAttachmentMutation,
 } from "@/services/trip/attachmentSlice";
 import { useSelector } from "react-redux";
-import Image from "next/image";
-
-const getFileIcon = (filename: string) => {
-  const extension = filename.split(".").pop()?.toLowerCase();
-
-  switch (extension) {
-    case "pdf":
-      return (
-        <Image
-          alt="pdf"
-          width={48}
-          height={48}
-          src="/file_icon/pdf.png"
-          className="w-12 h-12"
-        />
-      );
-    case "doc":
-    case "docx":
-      return (
-        <Image
-          alt="doc"
-          width={48}
-          height={48}
-          src="/file_icon/docs.png"
-          className="w-12 h-12"
-        />
-      );
-    case "txt":
-      return (
-        <Image
-          alt="txt"
-          width={48}
-          height={48}
-          src="/file_icon/txt.png"
-          className="w-12 h-12"
-        />
-      );
-    default:
-      return <File className="w-12 h-12 text-gray-500" />;
-  }
-};
+import { DefaultExtensionType, FileIcon, defaultStyles } from "react-file-icon";
 
 const FileAttachments = () => {
   const [isUploading, setIsUploading] = useState(false);
@@ -71,8 +31,27 @@ const FileAttachments = () => {
       formData.append("tripId", tripId);
       formData.append("title", "boarding pass");
 
+      const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/jpg",
+        "application/pdf",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/vnd.ms-excel",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "text/plain",
+      ];
+
       Array.from(newFiles).forEach((file) => {
-        formData.append("files", file);
+        if (allowedTypes.includes(file.type)) {
+          formData.append("files", file);
+        } else {
+          toast.error(
+            `File type ${file.type} is not supported. Please upload images or documents only.`
+          );
+        }
       });
 
       await uploadAttachment(formData).unwrap();
@@ -134,24 +113,34 @@ const FileAttachments = () => {
               key={file.key}
               className="relative w-full aspect-square border rounded-lg overflow-hidden group"
             >
-              {file.fileUrl.match(/\.(jpg|jpeg|png|gif)$/i) ? (
-                <img
-                  src={file.fileUrl}
-                  alt={file.originalFilename}
-                  className="w-full h-full object-cover cursor-pointer"
-                  onClick={() => openFileInNewTab("/file?url=" + file.fileUrl)}
-                />
-              ) : (
-                <div
-                  className="w-full h-full flex flex-col items-center justify-center p-2 cursor-pointer"
-                  onClick={() => openFileInNewTab("/file?url=" + file.fileUrl)}
-                >
-                  {getFileIcon(file.originalFilename)}
-                  <span className="text-xs text-gray-500 truncate mt-2 max-w-full px-2">
-                    {file.originalFilename}
-                  </span>
+              <div
+                className="w-full h-full flex flex-col p-2 cursor-pointer"
+                onClick={() => openFileInNewTab("/file?url=" + file.fileUrl)}
+              >
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="w-10 h-10">
+                    {
+                      <FileIcon
+                        extension={file.originalFilename
+                          .split(".")
+                          .pop()
+                          ?.toLowerCase()}
+                        {...defaultStyles[
+                          file.originalFilename
+                            .split(".")
+                            .pop()
+                            ?.toLowerCase() as DefaultExtensionType
+                        ]}
+                      />
+                    }
+                  </div>
                 </div>
-              )}
+
+                <span className="text-xs text-gray-500 truncate mt-2 max-w-full px-2">
+                  {file.originalFilename}
+                </span>
+              </div>
+
               <button
                 onClick={() => {
                   setFileToDelete(file.key);

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { Metadata } from "next";
 //import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 
@@ -45,13 +45,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+      </head>
       <body>
         <Toaster position="bottom-right" />
         <ReduxProvider>
           <AWSProvider>{children}</AWSProvider>
         </ReduxProvider>
       </body>
-      {/*<GoogleAnalytics gaId="G-QVML00G8X9" />*/}
+      {/* <GoogleAnalytics gaId="G-QVML00G8X9" /> */}
     </html>
   );
 }

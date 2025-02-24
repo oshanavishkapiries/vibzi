@@ -1,5 +1,6 @@
-import Image from "next/image"
-import { Button } from "@/components/ui/button"
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Banner() {
   return (
@@ -7,7 +8,7 @@ export default function Banner() {
       <div className="w-full bg-[#EDEFEF] p-4 rounded-lg shadow-md flex flex-col md:flex-row gap-4 items-center">
         <div className="w-full h-full lg:w-1/3">
           <Image
-            src="https://t3.ftcdn.net/jpg/03/82/24/44/360_F_382244401_FNIivSDbE7ojw5sT70WYVgmFsw2R7DHD.webp"
+            src="/banner_img.jpg"
             alt="banner img"
             className="rounded-lg object-cover w-full h-full"
             width={500}
@@ -16,18 +17,20 @@ export default function Banner() {
         </div>
         <div className="w-full lg:w-2/3 flex flex-col justify-center">
           <h2 className="text-xl font-semibold text-gray-900">
-            Find best experiences on Vibzi
+            Effortless Travel Planning at Your Fingertips!
           </h2>
           <p className="text-gray-600 my-3 mr-8">
-            Beaches are made up of a variety of materials, including sand, pebbles, rocks, seashell fragments, seaweed
-            Beaches are made up of a variety of materials
+            Flights, hotels, itineraries, transport, packing lists, and more
+            Vibzi keeps your entire trip in sync so you can focus
+            on the adventure
           </p>
-          <Button variant="default" className="self-start rounded-full">
-            Learn More
-          </Button>
+          <Link href="/my-trips">
+            <Button variant="default" className="self-start rounded-full">
+              Plan Your Trip
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
-  )
+  );
 }
-

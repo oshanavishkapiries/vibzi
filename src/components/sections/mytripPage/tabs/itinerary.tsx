@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TimeLine from "../TimeLine";
 import { TimelineItem } from "@/types";
 import { useGetTripPlanItineraryByIdQuery } from "@/services/trip/itenerySlice";
@@ -7,11 +7,14 @@ import { cn } from "@/lib/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { setitinerary, setTripDate } from "@/features/metaSlice";
 import { IteneryDateParser } from "@/utils/tripUtils/IteneryDateParser";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Itinerary = () => {
   const dispatch = useDispatch();
   const trip = useSelector((state: any) => state.meta.trip);
   const selectedDate = useSelector((state: any) => state.meta.trip.select_date);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [showScrollButtons, setShowScrollButtons] = useState(false);
 
   const { data } = useGetTripPlanItineraryByIdQuery(
     trip.tripId ? trip.tripId : ""
@@ -31,29 +34,82 @@ const Itinerary = () => {
 
   const items: TimelineItem[] = data?.itinerary[selectedDate] || [];
 
-  
+  const checkForOverflow = () => {
+    if (scrollContainerRef.current) {
+      const { scrollWidth, clientWidth } = scrollContainerRef.current;
+      setShowScrollButtons(scrollWidth > clientWidth);
+    }
+  };
+
+  useEffect(() => {
+    checkForOverflow();
+    window.addEventListener("resize", checkForOverflow);
+    return () => window.removeEventListener("resize", checkForOverflow);
+  }, [dates]);
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 200;
+      const newScrollPosition =
+        scrollContainerRef.current.scrollLeft +
+        (direction === "left" ? -scrollAmount : scrollAmount);
+
+      scrollContainerRef.current.scrollTo({
+        left: newScrollPosition,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
     <>
       {/* itinerary */}
       {/* date range */}
-      <div className="flex gap-2 overflow-x-auto py-4">
-        {dates.map((date) => {
-          return (
-            <Button
-              key={date}
-              variant="outline"
-              className={cn(
-                "rounded-full border-2 border-primary min-w-[80px] hover:bg-primary/25",
-                trip.select_date === date ? "bg-primary text-white" : ""
-              )}
-              onClick={() => dispatch(setTripDate(date))}
-            >
-              {IteneryDateParser(date).short}
-            </Button>
-          );
-        })}
+      <div className="relative">
+        {showScrollButtons && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="bg-background rounded-full border-2 border-primary absolute flex items-center justify-center left-0 top-1/2 -translate-y-1/2 z-10 "
+            onClick={() => scroll("left")}
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+        )}
+        <div className="flex items-center justify-between w-[90%] mx-auto">
+          <div
+            ref={scrollContainerRef}
+            className={"flex gap-2 overflow-x-auto scrollbar-hide py-4"}
+          >
+            {dates.map((date) => {
+              return (
+                <Button
+                  key={date}
+                  variant="outline"
+                  className={cn(
+                    "rounded-full border-2 border-primary min-w-[80px] hover:bg-primary/25",
+                    trip.select_date === date ? "bg-primary text-white" : ""
+                  )}
+                  onClick={() => dispatch(setTripDate(date))}
+                >
+                  {IteneryDateParser(date).short}
+                </Button>
+              );
+            })}
+          </div>
+        </div>
+        {showScrollButtons && (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="bg-background rounded-full border-2 border-primary absolute flex items-center justify-center right-0 top-1/2 -translate-y-1/2 z-10 "
+            onClick={() => scroll("right")}
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        )}
       </div>
+
       {trip.select_date && (
         <h2 className="font-semibold text-xl ms-4">
           {IteneryDateParser(trip.select_date).long}

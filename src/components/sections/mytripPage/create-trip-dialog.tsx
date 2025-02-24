@@ -37,8 +37,10 @@ const formSchema = z.object({
     .min(2, { message: "Trip name must be at least 2 characters." }),
   description: z.string().optional(),
   destination: z.string().min(2, { message: "Please select a destination." }),
-  startDate: z.date({ required_error: "Start date is required." }),
-  endDate: z.date({ required_error: "End date is required." }),
+  dateRange: z.object({
+    from: z.date(),
+    to: z.date(),
+  }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -64,10 +66,17 @@ export function CreateTripDialog({ children }: { children: React.ReactNode }) {
       tripName: "",
       description: "",
       destination: "",
-      startDate: new Date(),
-      endDate: new Date(),
+      dateRange: {
+        from: new Date(),
+        to: new Date(),
+      },
     },
   });
+
+  const imageUrl = () => {
+    return `/${Math.floor(Math.random() * 6) + 1}.jpg`;
+  };
+  
 
   const handleSubmit = async (values: FormValues) => {
     try {
@@ -80,12 +89,13 @@ export function CreateTripDialog({ children }: { children: React.ReactNode }) {
       }
       const tripData: any = {
         title: values.tripName,
-        startDate: format(values.startDate, "yyyy-MM-dd"),
-        endDate: format(values.endDate, "yyyy-MM-dd"),
+        startDate: format(values.dateRange.from, "yyyy-MM-dd"),
+        endDate: format(values.dateRange.to, "yyyy-MM-dd"),
         destinationId: selectedDestination.destinationId,
         destinationName: selectedDestination.name,
         description: values.description,
         userId: userId,
+        imageUrl: imageUrl(),
       };
       
       const res = await createTripPlan(tripData).unwrap();
@@ -106,26 +116,23 @@ export function CreateTripDialog({ children }: { children: React.ReactNode }) {
 
   const handleDestinationSelect = (destinationName: string) => {
     form.setValue("destination", destinationName);
-    setSearchTerm(""); // Clear suggestions dropdown
-    setIsDropdownOpen(false); // Close dropdown after selection
+    setSearchTerm(""); 
+    setIsDropdownOpen(false); 
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="w-full max-w-[600px]">
+      <DialogContent className="w-full max-w-[530px]">
         <DialogHeader>
           <DialogTitle>Create Trip</DialogTitle>
           <DialogDescription>
             Plan a new trip by entering basic details below.
           </DialogDescription>
         </DialogHeader>
-        <div className=" max-h-[70vh] overflow-y-auto scrollbar-hide">
+        <div className="max-h-[70vh] overflow-y-auto scrollbar-hide">
           <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(handleSubmit)}
-              className="space-y-6 p-2"
-            >
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 p-2">
               <FormField
                 control={form.control}
                 name="tripName"
@@ -200,47 +207,46 @@ export function CreateTripDialog({ children }: { children: React.ReactNode }) {
                   </FormItem>
                 )}
               />
-              <div className="grid grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="startDate"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Start Date</FormLabel>
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        disabled={(date) =>
-                          date < new Date() || date > new Date("2025-12-31")
-                        }
-                        initialFocus
-                      />
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="endDate"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>End Date</FormLabel>
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        disabled={(date) =>
-                          date < form.getValues("startDate") ||
-                          date > new Date("2025-12-31")
-                        }
-                        initialFocus
-                      />
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+              <FormField
+                control={form.control}
+                name="dateRange"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Date Range</FormLabel>
+                    <FormControl className="p-[0px]">
+                      <div className="rounded-md p-4">
+                        <div className="mb-2 text-sm text-muted-foreground">
+                          {field.value?.from ? (
+                            field.value.to ? (
+                              <>
+                                Selected: {format(field.value.from, "LLL dd, y")} -{" "}
+                                {format(field.value.to, "LLL dd, y")}
+                              </>
+                            ) : (
+                              `Start: ${format(field.value.from, "LLL dd, y")}`
+                            )
+                          ) : (
+                            "Select date range"
+                          )}
+                        </div>
+                        <Calendar
+                          mode="range"
+                   
+                          defaultMonth={field.value?.from}
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          numberOfMonths={2}
+                          disabled={(date) =>
+                            date < new Date() || date > new Date("2025-12-31")
+                          }
+                          className="flex justify-center items-center"
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <DialogFooter>
                 <Button type="submit" className="w-full" disabled={isCreating}>
                   {isCreating ? "Saving..." : "Create Trip"}

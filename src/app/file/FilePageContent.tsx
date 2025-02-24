@@ -19,7 +19,7 @@ const FilePageContent = () => {
     <div className="w-full h-screen">
       {docs.length > 0 && (
         <DocViewer
-          documents={docs}
+          documents={[{ uri: "https://obj-crt.s3.us-east-1.amazonaws.com/uploads/9fd65a03-912b-408e-a213-edb6ea8f2fc4-Welcome%20to%20Word.pdf" }]}
           pluginRenderers={DocViewerRenderers}
           style={{ height: "100%" }}
           config={{

@@ -22,9 +22,9 @@ const AddTransportation = ({ children }: { children: React.ReactNode }) => {
     type: "Flight",
     name: "",
     departureLocation: "",
-    departureTime: "",
+    departureTime: new Date(),
     arrivalLocation: "",
-    arrivalTime: "",
+    arrivalTime: new Date(),
     link: "",
     reservationNumber: "",
     note: "",
@@ -72,9 +72,9 @@ const AddTransportation = ({ children }: { children: React.ReactNode }) => {
       type: "Flight",
       name: "",
       departureLocation: "",
-      departureTime: "",
+      departureTime: new Date(),
       arrivalLocation: "",
-      arrivalTime: "",
+      arrivalTime: new Date(),
       link: "",
       reservationNumber: "",
       note: "",
@@ -142,14 +142,16 @@ const AddTransportation = ({ children }: { children: React.ReactNode }) => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="departureTime">Departure Time</Label>
+              <Label>Departure Time</Label>
               <Input
-                id="departureTime"
-                type="datetime-local"
-                value={formData.departureTime}
-                onChange={(e) =>
-                  setFormData({ ...formData, departureTime: e.target.value })
-                }
+                type="time"
+                value={formData.departureTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })}
+                onChange={(e) => {
+                  const [hours, minutes] = e.target.value.split(':');
+                  const newDate = new Date(formData.departureTime);
+                  newDate.setHours(parseInt(hours), parseInt(minutes));
+                  setFormData({ ...formData, departureTime: newDate });
+                }}
               />
             </div>
             <div className="space-y-2">
@@ -164,14 +166,16 @@ const AddTransportation = ({ children }: { children: React.ReactNode }) => {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="arrivalTime">Arrival Time</Label>
+              <Label>Arrival Time</Label>
               <Input
-                id="arrivalTime"
-                type="datetime-local"
-                value={formData.arrivalTime}
-                onChange={(e) =>
-                  setFormData({ ...formData, arrivalTime: e.target.value })
-                }
+                type="time"
+                value={formData.arrivalTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })}
+                onChange={(e) => {
+                  const [hours, minutes] = e.target.value.split(':');
+                  const newDate = new Date(formData.arrivalTime);
+                  newDate.setHours(parseInt(hours), parseInt(minutes));
+                  setFormData({ ...formData, arrivalTime: newDate });
+                }}
               />
             </div>
             <div className="space-y-2">

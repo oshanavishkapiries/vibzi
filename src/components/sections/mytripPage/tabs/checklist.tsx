@@ -5,11 +5,21 @@ import {
   useGetTripPlanChecklistByTripIdQuery,
   useUpdateTripPlanChecklistMutation,
 } from "@/services/trip/checklistSlice";
-import { Plus, Trash2 } from "lucide-react";
+import { Loader2, Plus, Trash2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "sonner";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const Checklist = () => {
   const tripId = useSelector((state: any) => state.meta.trip.tripId);
@@ -89,13 +99,35 @@ const Checklist = () => {
     refetch();
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-full">
+        <Loader2 className="w-4 h-4 animate-spin" />
+      </div>
+    );
 
   return (
     <div className="p-4">
+      <div className="mb-4 flex space-x-2">
+        <input
+          type="text"
+          value={newItemText}
+          onChange={(e) => setNewItemText(e.target.value)}
+          placeholder="Add new item..."
+          className="flex-1 px-3 py-2 border rounded-md"
+          onKeyPress={(e) => e.key === "Enter" && addItem()}
+        />
+        <Button variant="outline" className="gap-2" onClick={addItem}>
+          <Plus className="h-4 w-4" />
+          Add
+        </Button>
+      </div>
       <div className="space-y-3">
         {items.map((item) => (
-          <div key={item.id} className="flex items-center space-x-2 p-2 shadow-sm border w-full h-auto relative">
+          <div
+            key={item.id}
+            className="flex items-center space-x-2 p-2 shadow-sm border w-full h-auto relative"
+          >
             <Checkbox
               id={`item-${item.id}`}
               checked={item.isChecked}
@@ -111,11 +143,7 @@ const Checklist = () => {
             </label>
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="absolute right-2"
-                >
+                <Button variant="ghost" size="sm" className="absolute right-2">
                   <Trash2 className="h-4 w-4 text-red-500" />
                 </Button>
               </AlertDialogTrigger>
@@ -123,31 +151,23 @@ const Checklist = () => {
                 <AlertDialogHeader>
                   <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This action cannot be undone. The item will be permanently deleted.
+                    This action cannot be undone. The item will be permanently
+                    deleted.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction className="bg-red-500" onClick={() => deleteItem(item.id)}>Delete</AlertDialogAction>
+                  <AlertDialogAction
+                    className="bg-red-500"
+                    onClick={() => deleteItem(item.id)}
+                  >
+                    Delete
+                  </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
           </div>
         ))}
-      </div>
-      <div className="mt-4 flex space-x-2">
-        <input
-          type="text"
-          value={newItemText}
-          onChange={(e) => setNewItemText(e.target.value)}
-          placeholder="Add new item..."
-          className="flex-1 px-3 py-2 border rounded-md"
-          onKeyPress={(e) => e.key === "Enter" && addItem()}
-        />
-        <Button variant="outline" className="gap-2" onClick={addItem}>
-          <Plus className="h-4 w-4" />
-          Add
-        </Button>
       </div>
     </div>
   );

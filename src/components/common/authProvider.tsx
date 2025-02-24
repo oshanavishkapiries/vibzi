@@ -20,19 +20,32 @@ const StateProvider = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (auth.isAuthenticated && auth.user) {
-     
-      dispatch(
-        setUser({
-          id: auth.user.profile.sub || "",
-          name: (auth.user.profile["cognito:username"] as string) || "",
-          email: auth.user.profile.email || "",
-          picture: auth.user.profile.picture,
-        })
-      );
-    } else {
-      dispatch(setUser(null));
-    }
+    const handleAuthEvents = async () => {
+      if (auth.isAuthenticated && auth.user) {
+        dispatch(
+          setUser({
+            id: auth.user.profile.sub || "",
+            name: (auth.user.profile["cognito:username"] as string) || "",
+            email: auth.user.profile.email || "",
+            picture: auth.user.profile.picture,
+          })
+        );
+      } else {
+        dispatch(setUser(null));
+      }
+    };
+
+    handleAuthEvents();
+
+
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key?.startsWith('oidc.user:')) {
+        handleAuthEvents();
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
   }, [auth.isAuthenticated, auth.user, dispatch]);
 
   return <>{children}</>;

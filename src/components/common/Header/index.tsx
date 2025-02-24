@@ -54,7 +54,7 @@ const Header = () => {
                 "bg-secondary"
               }`}
             >
-              My Trips
+             Plan Your Trip <span className="text-[10px] bg-primary text-white px-[6px] py-[2px] animate-pulse rounded-full">New</span> 
             </Button>
           </Link>
           <Profile />

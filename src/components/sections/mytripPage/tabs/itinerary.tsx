@@ -76,7 +76,9 @@ const Itinerary = () => {
             <ChevronLeft className="h-4 w-4" />
           </Button>
         )}
-        <div className="flex items-center justify-between w-[90%] mx-auto">
+        <div className={
+          cn("flex items-center justify-between mx-auto", showScrollButtons ? "w-[90%]" : "w-[100%]" )
+        }>
           <div
             ref={scrollContainerRef}
             className={"flex gap-2 overflow-x-auto scrollbar-hide py-4"}

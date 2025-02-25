@@ -115,7 +115,7 @@ const FileAttachments = () => {
             >
               <div
                 className="w-full h-full flex flex-col p-2 cursor-pointer"
-                onClick={() => openFileInNewTab("/file?url=" + file.fileUrl)}
+                onClick={() => openFileInNewTab("/file?url=" + file.fileUrl + "&filename=" + file.originalFilename)}
               >
                 <div className="w-full h-full flex items-center justify-center">
                   <div className="w-10 h-10">

@@ -9,26 +9,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-//import { useRouter } from "next/navigation";
 import { LogIn } from "lucide-react";
 
 const Profile = () => {
   const auth = useAuth();
   const user = useSelector((state: any) => state.meta.user);
-  // const router = useRouter();
 
   const handleLogout = async () => {
     try {
-      // Clear local storage
       localStorage.clear();
-      // Sign out from auth provider
       await auth.removeUser();
       await auth.signoutRedirect({
         post_logout_redirect_uri: window.location.origin,
       });
     } catch (error) {
       console.error("Logout error:", error);
-      // Fallback logout
       window.location.href = "/";
     }
   };

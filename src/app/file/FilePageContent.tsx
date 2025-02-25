@@ -1,36 +1,56 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import DocViewer from "react-doc-viewer";
-import { DocViewerRenderers } from "react-doc-viewer";
+import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
+import 'react-pdf/dist/Page/TextLayer.css';
+import Image from "next/image";
 
 const FilePageContent = () => {
   const searchParams = useSearchParams();
-  const [docs, setDocs] = useState<{ uri: string }[]>([]);
+  const [fileUrl, setFileUrl] = useState<string>("");
+  const [fileName, setFileName] = useState<string>("");
 
   useEffect(() => {
     const url = searchParams.get("url");
+    const filename = searchParams.get("filename");
     if (url) {
-      setDocs([{ uri: url }]);
+      setFileUrl(url);
+    }
+    if (filename) {
+      setFileName(filename);
     }
   }, [searchParams]);
 
   return (
-    <div className="w-full h-screen">
-      {docs.length > 0 && (
-        <DocViewer
-          documents={[{ uri: "https://obj-crt.s3.us-east-1.amazonaws.com/uploads/9fd65a03-912b-408e-a213-edb6ea8f2fc4-Welcome%20to%20Word.pdf" }]}
-          pluginRenderers={DocViewerRenderers}
-          style={{ height: "100%" }}
-          config={{
-            header: {
-              disableHeader: false,
-              disableFileName: false,
-              retainURLParams: true,
-            },
-          }}
-        />
-      )}
+    <div className="flex flex-col w-full">
+      <div className="flex items-center justify-between p-4 border-b">
+        <div className="flex items-center gap-4">
+          <Image
+            src="/logo/logo-rbg.png"
+            alt="Logo"
+            width={60}
+            height={40}
+            className="object-contain"
+          />
+          <h1 className="text-xl font-semibold">{fileName}</h1>
+        </div>
+      </div>
+      
+      <div style={{ height: 'calc(100vh - 73px)', width: '100%' }}>
+        {fileUrl && (
+          <DocViewer
+            documents={[{ uri: fileUrl, fileName: fileName }]}
+            pluginRenderers={DocViewerRenderers}
+            config={{
+              header: {
+                disableHeader: true,
+                disableFileName: true,
+              },
+            }}
+            style={{ height: '100%' }}
+          />
+        )}
+      </div>
     </div>
   );
 };

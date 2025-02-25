@@ -12,6 +12,9 @@ export default function MainLayout({
 }>) {
 
   const auth = useAuth();
+
+ 
+
   return (
     <Suspense fallback={<></>}>
       <Suspense fallback={<></>}>

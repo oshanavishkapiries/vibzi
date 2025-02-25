@@ -35,7 +35,7 @@ const TermsAndConditions: React.FC = () => {
     checkTermsStatus();
   }, []);
 
-  const host = process.env.NEXT_PUBLIC_API_URL;
+  const host = process.env.NEXT_PUBLIC_API_URL_2;
 
   const client_url = process.env.NEXT_PUBLIC_COGNITO_AUTHORITY;
   const client_id = process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID;

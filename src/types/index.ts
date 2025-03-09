@@ -73,3 +73,27 @@ export interface TimelineItem {
   };
 }
 
+export interface AuthContextType {
+  signIn: (username: string, password: string) => Promise<void>;
+  signOut: () => Promise<void>;
+  signUp: (
+    username: string,
+    password: string,
+    email: string,
+    givenName: string,
+    familyName: string,
+    birthdate: string,
+    gender: string,
+    phoneNumber: string
+  ) => Promise<void>;
+  verifyEmail: (email: string, code: string, resend?: boolean) => Promise<void>;
+  forgotPassword: (email: string) => Promise<any>;
+  resetPassword: (
+    code: string,
+    newPassword: string
+  ) => Promise<any>;
+}
+
+export * from "./auth";
+export * from "./trip";
+export * from "./meta";

@@ -6,7 +6,7 @@ import {
   DEFAULT_SEARCH_STATE_FREE_TEXT,
 } from "@/constants/initStates";
 import { parseDateToISO } from "@/utils/parseDateToISO";
-import { useSearchProductsQuery } from "@/services/product/productSlice";
+import { useSearchProductsQuery } from "@/store/api/product/productSlice";
 import { parseProduct } from "@/utils/parseProduct";
 import DestinationGrid, { DestinationGridSkelton } from "./DestinationGrid";
 import NotFound from "@/components/common/NotFound";

@@ -1,25 +1,6 @@
-import { apiSlice1 } from "../apiSlice";
+import { apiSlice1 } from "../../slices/apiSlice";
+import type { TripPlan, TripPlanSearchParams } from "../../../types";
 
-interface TripPlan {
-  id:string;
-  title: string;
-  startDate: string;
-  endDate: string;
-  destinationId: number;
-  destinationName: string;
-  description: string;
-  userId: string;
-  tripId:string;
-  imageUrl:string;
-}
-
-interface TripPlanSearchParams {
-  title?: string;
-  destinationName?: string;
-  userId?: string;   
-  page?: number;     
-  size?: number;     
-}
 export const tripPlanSlice = apiSlice1.injectEndpoints({
   endpoints: (builder) => ({
     createTripPlan: builder.mutation<TripPlan, TripPlan>({
@@ -28,14 +9,14 @@ export const tripPlanSlice = apiSlice1.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ['trips'],
+      invalidatesTags: ["trips"],
     }),
     getTripPlanById: builder.query<TripPlan, string>({
       query: (id) => ({
         url: `/common-service/trip-plan/${id}`,
         method: "GET",
       }),
-      providesTags: ['trips-id'],
+      providesTags: ["trips-id"],
     }),
     searchTripPlans: builder.query<TripPlan[], TripPlanSearchParams>({
       query: (data) => ({
@@ -43,22 +24,25 @@ export const tripPlanSlice = apiSlice1.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      providesTags: ['trips'],
+      providesTags: ["trips"],
     }),
-    updateTripPlan: builder.mutation<TripPlan,{ id: string; data: Partial<TripPlan> }>({
+    updateTripPlan: builder.mutation<
+      TripPlan,
+      { id: string; data: Partial<TripPlan> }
+    >({
       query: ({ id, data }) => ({
         url: `/common-service/trip-plan/${id}`,
         method: "PUT",
         body: data,
       }),
-      invalidatesTags: ['trips','trips-id'],
+      invalidatesTags: ["trips", "trips-id"],
     }),
     deleteTripPlan: builder.mutation<void, string>({
       query: (id) => ({
         url: `/common-service/trip-plan/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ['trips'],
+      invalidatesTags: ["trips"],
     }),
   }),
 });

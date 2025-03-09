@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Banner() {
   return (
-    <div className="w-full ">
+    <div className="w-full my-8">
       <div className="w-full bg-[#EDEFEF] p-4 rounded-lg shadow-md flex flex-col md:flex-row gap-4 items-center">
         <div className="w-full h-full lg:w-1/3">
           <Image

@@ -35,25 +35,6 @@ const PrivacyPage = () => {
       {/* Main Content */}
       <div className="flex-grow bg-gray-50">
         <div className="max-w-4xl mx-auto p-6">
-          <div className="mb-8">
-            <p className="mb-4">
-              This Privacy Notice for Voyage Vibes (PVT) Ltd (&quot;we,&quot; &quot;us,&quot; or
-              &quot;our&quot;), describes how and why we might access, collect, store,
-              use, and/or share (&quot;process&quot;) your personal information when you
-              use our services (&quot;Services&quot;), including when you:
-            </p>
-            <ul className="list-disc pl-6 mb-4">
-              <li>
-                Visit our website at https://vibzi.co/, or any website of ours
-                that links to this Privacy Notice
-              </li>
-              <li>
-                Download and use our mobile application (Vibzi), or any other
-                application of ours that links to this Privacy Notice
-              </li>
-            </ul>
-          </div>
-
           <div className="space-y-4">
             {privacySections.map((section, index) => (
               <details
@@ -293,9 +274,9 @@ const privacySections = [
       <div>
         <p>
           Most web browsers and some mobile operating systems include a
-          Do-Not-Track (&quot;DNT&quot;) feature or setting. At this stage, no uniform
-          technology standard for recognizing and implementing DNT signals has
-          been finalized.
+          Do-Not-Track (&quot;DNT&quot;) feature or setting. At this stage, no
+          uniform technology standard for recognizing and implementing DNT
+          signals has been finalized.
         </p>
       </div>
     ),
@@ -312,8 +293,8 @@ const privacySections = [
         </p>
         <p>
           We may update this Privacy Notice from time to time. The updated
-          version will be indicated by an updated &quot;Revised&quot; date at the top of
-          this Privacy Notice.
+          version will be indicated by an updated &quot;Revised&quot; date at
+          the top of this Privacy Notice.
         </p>
       </div>
     ),

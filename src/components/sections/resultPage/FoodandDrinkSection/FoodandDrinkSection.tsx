@@ -5,7 +5,7 @@ import ProductGrid, { ProductGridSkelton } from "./ProductGrid";
 import Pagination from "../Pagination";
 import { DEFAULT_SEARCH_PARAMS } from "@/constants/initStates";
 import { parseDateToISO } from "@/utils/parseDateToISO";
-import { useSearchProductsQuery } from "@/services/product/productSlice";
+import { useSearchProductsQuery } from "@/store/api/product/productSlice";
 
 const FoodAndDrinkSection = (props: any) => {
   const [page, setPage] = useState(1);

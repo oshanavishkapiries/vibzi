@@ -4,7 +4,7 @@ import Itinerary from "@/components/sections/mytripPage/tabs/itinerary";
 import TravelCard from "@/components/sections/mytripPage/TravelCard";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useGetTripPlanByIdQuery } from "@/services/trip/tripPlanSlice";
+import { useGetTripPlanByIdQuery } from "@/store/api/trip/tripPlanSlice";
 import { Pencil } from "lucide-react";
 import { useSelector } from "react-redux";
 import { EditDescriptionDialog } from "./edit-description-dialog";

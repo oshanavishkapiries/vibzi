@@ -8,6 +8,7 @@ import DestinatioDetails from "@/components/sections/resultPage/DestinationDetai
 import { useRouter } from "next/navigation";
 import AttractionsSection from "@/components/sections/resultPage/AttractionsSection/AttractionsSection";
 import FilterCloud from "@/components/sections/resultPage/FilterCloud/FilterCloud";
+import { AdvanceSearch } from "@/components/common/Header/AdvanceSearch";
 
 export default function ResultsPage() {
   const searchParams = useSearchParams();
@@ -67,6 +68,9 @@ export default function ResultsPage() {
 
   return (
     <div className="container px-3 mx-auto min-h-screen mb-8">
+      <div className="flex flex-row justify-between items-center p-3 lg:hidden">
+        <AdvanceSearch />
+      </div>
       <FilterCloud />
       <DestinatioDetails state={state} onPageChange={handlePageChange} />
       <FoodandDrinkSection state={state} />

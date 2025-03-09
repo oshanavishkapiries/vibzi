@@ -1,16 +1,5 @@
-import { apiSlice1 } from "../apiSlice";
-
-interface ChecklistItem {
-  id?: string;
-  description: string;
-  isChecked?: boolean;
-}
-
-interface TripPlanChecklist {
-  id: string;
-  tripId: string;
-  checklist: ChecklistItem[];
-}
+import { apiSlice1 } from "../../slices/apiSlice";
+import type { TripPlanChecklist } from '../../../types';
 
 export const checklistSlice = apiSlice1.injectEndpoints({
   endpoints: (builder) => ({

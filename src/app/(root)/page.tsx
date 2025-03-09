@@ -1,7 +1,7 @@
 "use client";
 
-import Banner from "@/components/common/Banner";
-import FAQSection from "@/components/common/AccordionDemo";
+import Banner from "@/components/common/Home/Banner";
+import Faq from "@/components/common/Home/Faq";
 import { AdvanceSearch } from "@/components/common/Header/AdvanceSearch";
 import Carosel from "@/components/sections/RootPage/Carosel";
 import PopularDestinations from "@/components/sections/RootPage/PopularDestinations/PopularDestinations";
@@ -24,7 +24,7 @@ export default function Home() {
         {/* <PopularDestinations /> */}
         <Banner />
         <PopularDestinations />
-        <FAQSection />
+        <Faq />
       </div>
     </div>
   );

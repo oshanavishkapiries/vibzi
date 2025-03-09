@@ -1,6 +1,5 @@
 "use client";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useAuth } from "react-oidc-context";
 import { useSelector } from "react-redux";
 import {
   DropdownMenu,
@@ -10,40 +9,38 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { LogIn } from "lucide-react";
+import { useAuth } from "@/components/common/Auth/AuthProvider";
+import { useRouter } from "next/navigation";
+import { RootState } from "@/store/store";
+import SignInPopup from "../Auth/SignInPopup";
 
 const Profile = () => {
-  const auth = useAuth();
-  const user = useSelector((state: any) => state.meta.user);
+  const router = useRouter();
+  const { signOut } = useAuth();
+  const user = useSelector((state: RootState) => state.auth.user);
 
   const handleLogout = async () => {
     try {
-      localStorage.clear();
-      await auth.removeUser();
-      await auth.signoutRedirect({
-        post_logout_redirect_uri: window.location.origin,
-      });
+      await signOut();
+      router.push("/");
     } catch (error) {
       console.error("Logout error:", error);
-      window.location.href = "/";
     }
   };
 
   if (!user) {
     return (
-      <Button
-        className="rounded-full"
-        variant="outline"
-        onClick={() => auth.signinRedirect()}
-      >
-        <LogIn className="w-4 h-4" /> Sign In
-      </Button>
+      <SignInPopup>
+        <Button className="rounded-full" variant="outline">
+          <LogIn className="w-4 h-4" /> Sign In
+        </Button>
+      </SignInPopup>
     );
   }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        {/* {user.picture && <AvatarImage src={user.picture} alt={user.name} />} */}
         {user && (
           <Avatar>
             <AvatarFallback>
@@ -53,7 +50,6 @@ const Profile = () => {
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {/* <DropdownMenuItem className="font-medium">{user.name}</DropdownMenuItem> */}
         <DropdownMenuItem className="text-sm text-muted-foreground">
           {user.email}
         </DropdownMenuItem>

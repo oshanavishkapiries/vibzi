@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import Pagination from "../Pagination";
 import { DEFAULT_SEARCH_STATE_FREE_TEXT } from "@/constants/initStates";
 import { parseDateToISO } from "@/utils/parseDateToISO";
-import { useSearchProductsQuery } from "@/services/product/productSlice";
+import { useSearchProductsQuery } from "@/store/api/product/productSlice";
 import AttractionsGrid, { AttractionsGridSkelton } from "./AttractionsGrid";
 
 const AttractionsSection = (props: any) => {

@@ -1,23 +1,24 @@
 "use client";
-import AuthMiddleware from "@/components/common/AuthMiddleware";
+import AuthMiddleware from "@/components/common/Auth/AuthMiddleware";
 import { CreateTripDialog } from "@/components/sections/mytripPage/create-trip-dialog";
 import TripCard from "@/components/sections/mytripPage/TripCard";
 import Tripsection from "@/components/sections/mytripPage/Tripsection";
 import { Button } from "@/components/ui/button";
-import { setTrip_Id, setTripId } from "@/features/metaSlice";
-import { useSearchTripPlansQuery } from "@/services/trip/tripPlanSlice";
+import { setTrip_Id, setTripId , setTripDate } from "@/store/slices/metaSlice";
+import { useSearchTripPlansQuery } from "@/store/api/trip/tripPlanSlice";
 import { parseTrips } from "@/utils/tripUtils/tripDataFunction";
 import { Loader2, Plus } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import MobileBottomNav from "@/components/sections/mytripPage/MobileBottomNav";
 
 const MyTrips = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const tripId = searchParams.get("id");
   const trip_Id = searchParams.get("tripId");
-  const user = useSelector((state: any) => state.meta.user);
+  const user = useSelector((state: any) => state?.auth?.user);
 
   const { data: trips, isLoading } = useSearchTripPlansQuery({
     userId: user?.id,
@@ -30,18 +31,19 @@ const MyTrips = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (tripsData.length > 0 && !tripId) {
+    if (tripsData.length > 0 && !tripId && !trip_Id) {
       router.push(
         `/my-trips?id=${tripsData[0].id}&tripId=${tripsData[0]?.tripId}`
       );
     }
     dispatch(setTripId(tripId || ""));
     dispatch(setTrip_Id(trip_Id || ""));
-  }, [tripsData, tripId, trip_Id, router]);
+  }, [tripsData, tripId, trip_Id, router, dispatch]);
 
-  const handleCardClick = (id: string, tripId: string) => {
+  const handleCardClick = (id: string, tripId: string, startDate: string) => {
     dispatch(setTripId(id));
     dispatch(setTrip_Id(tripId));
+    dispatch(setTripDate(startDate));
     router.push(`/my-trips?id=${id}&tripId=${tripId}`);
   };
 
@@ -50,7 +52,7 @@ const MyTrips = () => {
       <div
         className={`container px-3 mx-auto mb-8 ${
           tripsData.length === 0 || isLoading
-            ? "flex justify-center items-center"
+            ? "flex justify-center items-center min-h-[500px]"
             : ""
         }`}
       >
@@ -70,12 +72,12 @@ const MyTrips = () => {
         )}
 
         {tripsData.length > 0 && !isLoading && (
-          <div className="max-w-7xl mx-auto w-full grid grid-cols-3">
+          <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3">
             <div className="w-full h-full col-span-2 ">
               <Tripsection />
             </div>
 
-            <div className="w-full h-full col-span-1 pl-4">
+            <div className="w-full h-full col-span-1 pl-4 max-lg:hidden">
               <CreateTripDialog>
                 <Button variant="outline" className="w-full mb-2 h-16">
                   <Plus className="h-4 w-4" />
@@ -91,7 +93,7 @@ const MyTrips = () => {
                     alt={trip.title}
                     title={trip.title}
                     description={trip.description}
-                    onClick={() => handleCardClick(trip.id, trip.tripId)}
+                    onClick={() => handleCardClick(trip.id, trip.tripId, trip.startDate)}
                   />
                 ))}
               </div>
@@ -99,6 +101,7 @@ const MyTrips = () => {
           </div>
         )}
       </div>
+      <MobileBottomNav />
     </AuthMiddleware>
   );
 };

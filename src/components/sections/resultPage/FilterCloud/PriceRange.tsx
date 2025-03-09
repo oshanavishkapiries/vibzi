@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -23,9 +23,9 @@ export function PriceRange({ min = 0, max = 1000, onChange }: PriceRangeProps) {
   const maxThumbRef = useRef<HTMLInputElement>(null);
   const rangeRef = useRef<HTMLDivElement>(null);
 
-  const getPercent = (value: number): number => {
+  const getPercent = useCallback((value: number): number => {
     return Math.round(((value - min) / (max - min)) * 100);
-  };
+  }, [min, max]);
 
   useEffect(() => {
     if (rangeRef.current) {
@@ -35,7 +35,7 @@ export function PriceRange({ min = 0, max = 1000, onChange }: PriceRangeProps) {
       rangeRef.current.style.left = `${minPercent}%`;
       rangeRef.current.style.width = `${maxPercent - minPercent}%`;
     }
-  }, [minVal, maxVal, min, max]);
+  }, [minVal, maxVal, min, max, getPercent]);
 
   const handleReset = () => {
     setMinVal(min);

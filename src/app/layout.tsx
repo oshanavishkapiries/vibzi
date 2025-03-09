@@ -4,7 +4,9 @@ import "./globals.css";
 
 import ReduxProvider from "./(root)/reduxProvider";
 import { Toaster } from "sonner";
-import AWSProvider from "@/components/common/authProvider";
+import AuthProvider from "@/components/common/Auth/AuthProvider";
+import "@/config/amplify";
+
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://vibzi.co"),
@@ -50,7 +52,7 @@ export default function RootLayout({
       <body>
         <Toaster position="bottom-right" />
         <ReduxProvider>
-          <AWSProvider>{children}</AWSProvider>
+          <AuthProvider>{children}</AuthProvider>
         </ReduxProvider>
       </body>
       {/* <GoogleAnalytics gaId="G-QVML00G8X9" /> */}

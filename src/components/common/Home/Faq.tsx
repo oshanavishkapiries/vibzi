@@ -56,9 +56,9 @@ const faqData = [
   },
 ];
 
-export default function AccordionDemo() {
+export default function Faq() {
   return (
-    <div className="space-y-4 mb-8">
+    <div className="space-y-4 my-8">
       <h2 className="text-xl font-bold">Frequently Asked Questions</h2>
       <Accordion
         type="single"

@@ -1,15 +1,5 @@
-import { apiSlice1 } from "../apiSlice";
-
-export interface AttachmentResponse {
-  id: string;
-  tripId: string;
-  title: string;
-  attachments: Array<{
-    key: string;
-    originalFilename: string;
-    fileUrl: string;
-  }>;
-}
+import { AttachmentResponse } from "@/types";
+import { apiSlice1 } from "../../slices/apiSlice";
 
 export const attachmentSlice = apiSlice1.injectEndpoints({
   endpoints: (builder) => ({

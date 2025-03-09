@@ -9,6 +9,7 @@ export function parseTrips(response : any) {
       tripId:item.tripId,
       title: item.title,
       description: item.description,
-      imageUrl: item.imageUrl,
+      imageUrl: item.imageUrl || "/1.jpg",
+      startDate: item.startDate,
     }));
   }

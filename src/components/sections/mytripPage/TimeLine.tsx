@@ -41,7 +41,7 @@ export default function TimeLine({ data }: { data: TimelineItem[] }) {
     }
   };
 
-  console.log("data", data);
+
 
   return (
     <div className="w-full">

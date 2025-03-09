@@ -24,8 +24,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useSelector } from "react-redux";
-import { useUpdateTripPlanMutation } from "@/services/trip/tripPlanSlice";
-import { useGetTripPlanByIdQuery } from "@/services/trip/tripPlanSlice";
+import { useUpdateTripPlanMutation } from "@/store/api/trip/tripPlanSlice";
+import { useGetTripPlanByIdQuery } from "@/store/api/trip/tripPlanSlice";
 
 const formSchema = z.object({
   title: z.string().min(2, {

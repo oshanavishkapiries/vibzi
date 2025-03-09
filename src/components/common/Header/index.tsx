@@ -36,7 +36,7 @@ const Header = () => {
         </Link>
 
         {path !== "/" && path !== "/my-trips" && (
-          <div className="h-auto w-full  lg:w-2/5  justify-center items-center">
+          <div className="h-auto w-full  lg:w-2/5  justify-center items-center max-lg:hidden">
             <AdvanceSearch />
           </div>
         )}

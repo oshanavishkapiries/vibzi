@@ -1,12 +1,15 @@
-import { AuthProviderProps } from "react-oidc-context";
+import { Amplify } from 'aws-amplify';
 
-const cognitoAuthConfig: AuthProviderProps = {
-  authority: process.env.NEXT_PUBLIC_COGNITO_AUTHORITY || "",
-  client_id: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID || "",
-  redirect_uri: typeof window !== "undefined" ? window.location.origin : "",
-  scope: process.env.NEXT_PUBLIC_COGNITO_SCOPE || "",
-  monitorSession: true,
-  loadUserInfo: true
+export const configureAmplify = () => {
+  Amplify.configure({
+    Auth: {
+      Cognito: {
+        userPoolId: process.env.NEXT_PUBLIC_COGNITO_USER_POOL_ID || '',
+        userPoolClientId: process.env.NEXT_PUBLIC_COGNITO_CLIENT_ID || '',
+        signUpVerificationMethod: 'code',
+      }
+    }
+  });
 };
 
-export default cognitoAuthConfig;
+export default configureAmplify;

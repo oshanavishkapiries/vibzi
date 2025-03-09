@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { DestinationListProps, State } from "@/types";
-import { useSuggestDestinationQuery } from "@/services/product/destinationSlice";
+import { useSuggestDestinationQuery } from "@/store/api/product/destinationSlice";
 import { useRouter } from "next/navigation";
 
 export function AdvanceSearch({}: { isCollepsed?: boolean }) {

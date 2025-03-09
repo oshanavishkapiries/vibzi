@@ -4,7 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import {
   useGetTripPlanChecklistByTripIdQuery,
   useUpdateTripPlanChecklistMutation,
-} from "@/services/trip/checklistSlice";
+} from "@/store/api/trip/checklistSlice";
 import { Loader2, Plus, Trash2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";

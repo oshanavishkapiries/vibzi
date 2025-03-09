@@ -2,10 +2,10 @@ import { Button } from "@/components/ui/button";
 import React, { useEffect, useRef, useState } from "react";
 import TimeLine from "../TimeLine";
 import { TimelineItem } from "@/types";
-import { useGetTripPlanItineraryByIdQuery } from "@/services/trip/itenerySlice";
+import { useGetTripPlanItineraryByIdQuery } from "@/store/api/trip/itenerySlice";
 import { cn } from "@/lib/utils";
 import { useDispatch, useSelector } from "react-redux";
-import { setitinerary, setTripDate } from "@/features/metaSlice";
+import { setitinerary, setTripDate } from "@/store/slices/metaSlice";
 import { IteneryDateParser } from "@/utils/tripUtils/IteneryDateParser";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -26,11 +26,11 @@ const Itinerary = () => {
     if (!trip.select_date) {
       dispatch(setTripDate(dates[0]));
     }
-  }, [dates]);
+  }, [dates, dispatch, trip.select_date]);
 
   useEffect(() => {
     dispatch(setitinerary(data));
-  }, [data]);
+  }, [data, dispatch]);
 
   const items: TimelineItem[] = data?.itinerary[selectedDate] || [];
 

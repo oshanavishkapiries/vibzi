@@ -25,9 +25,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useSuggestDestinationQuery } from "@/services/product/destinationSlice";
+import { useSuggestDestinationQuery } from "@/store/api/product/destinationSlice";
 import { Destination } from "@/types";
-import { useCreateTripPlanMutation } from "@/services/trip/tripPlanSlice";
+import { useCreateTripPlanMutation } from "@/store/api/trip/tripPlanSlice";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
 
@@ -58,7 +58,7 @@ export function CreateTripDialog({ children }: { children: React.ReactNode }) {
   );
   const [createTripPlan, { isLoading: isCreating }] =
     useCreateTripPlanMutation();
-  const userId = useSelector((state: any) => state.meta.user.id);
+  const userId = useSelector((state: any) => state?.auth?.user?.id);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),

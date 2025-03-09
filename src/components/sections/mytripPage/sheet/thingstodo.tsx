@@ -14,10 +14,9 @@ import { RadioGroup } from "@/components/ui/radio-group";
 import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { useSelector } from "react-redux";
-import { useUpdateTripPlanItineraryMutation } from "@/services/trip/itenerySlice";
+import { useUpdateTripPlanItineraryMutation } from "@/store/api/trip/itenerySlice";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
-import { TimePicker } from "@/components/ui/time-picker";
 
 const ThingsToDo = ({ children }: { children: React.ReactNode }) => {
   const [formData, setFormData] = useState({

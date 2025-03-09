@@ -2,10 +2,11 @@
 import TourDetails from "../../../../components/sections/DetailPage/tour-details";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useProductByIdQuery } from "@/services/product/productSlice";
+import { useProductByIdQuery } from "@/store/api/product/productSlice";
 import { parseProductDeatils } from "@/utils/parseProductDeatils";
 import Reviews from "@/components/sections/DetailPage/reviews";
 import VillaCard from "@/components/sections/DetailPage/detailsHero/VillaCard";
+import { AdvanceSearch } from "@/components/common/Header/AdvanceSearch";
 
 const DetailPage = () => {
   const searchParams = useSearchParams();
@@ -24,6 +25,9 @@ const DetailPage = () => {
 
   return (
     <div className="container px-3 mx-auto min-h-screen mb-3">
+      <div className="flex flex-row justify-between items-center p-3 lg:hidden">
+        <AdvanceSearch />
+      </div>
       <VillaCard isLoading={!ProductData} data={ProductData} />
       <TourDetails isLoading={!ProductData} textData={ProductData} />
       <Reviews isLoading={!ProductData} reviews={ProductData?.reviews} />

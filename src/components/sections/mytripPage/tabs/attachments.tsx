@@ -5,7 +5,7 @@ import {
   useUploadAttachmentMutation,
   useGetAttachmentsByTripIdQuery,
   useDeleteAttachmentMutation,
-} from "@/services/trip/attachmentSlice";
+} from "@/store/api/trip/attachmentSlice";
 import { useSelector } from "react-redux";
 import { DefaultExtensionType, FileIcon, defaultStyles } from "react-file-icon";
 

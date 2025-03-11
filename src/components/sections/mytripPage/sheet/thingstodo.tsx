@@ -17,19 +17,33 @@ import { useSelector } from "react-redux";
 import { useUpdateTripPlanItineraryMutation } from "@/store/api/trip/itenerySlice";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { TimelineItem } from "@/types";
 
-const ThingsToDo = ({ children }: { children: React.ReactNode }) => {
+const ThingsToDo = ({
+  children,
+  onUpdate,
+  editingItem,
+}: {
+  children?: React.ReactNode;
+  onUpdate?: (item: any) => Promise<void>;
+  editingItem?: TimelineItem | null;
+}) => {
   const [formData, setFormData] = useState({
-    activityName: "",
-    booked: "no",
-    startTime: new Date(),
-    endTime: new Date(),
-    link: "",
-    reservationNumber: "",
-    note: "",
+    activityName: editingItem?.details?.title || "",
+    booked: editingItem?.details?.customFields?.booked || "no",
+    startTime: editingItem?.details?.customFields?.startTime
+      ? new Date(editingItem.details.customFields.startTime)
+      : new Date(),
+    endTime: editingItem?.details?.customFields?.endTime
+      ? new Date(editingItem.details.customFields.endTime)
+      : new Date(),
+    link: editingItem?.details?.customFields?.link || "",
+    reservationNumber:
+      editingItem?.details?.customFields?.reservationNumber || "",
+    note: editingItem?.details?.customFields?.note || "",
   });
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(!!editingItem);
   const itinerary = useSelector((state: any) => state.meta.trip.itinerary);
   const it_id = itinerary?.id;
   const selectedDate = useSelector((state: any) => state.meta.trip.select_date);
@@ -40,7 +54,7 @@ const ThingsToDo = ({ children }: { children: React.ReactNode }) => {
     if (!itinerary || !selectedDate) return;
 
     const obj = {
-      position: itinerary.itinerary[selectedDate].length + 1,
+      position: itinerary.itinerary[selectedDate]?.length + 1 || 1,
       date: selectedDate,
       type: "activity",
       details: {
@@ -49,21 +63,25 @@ const ThingsToDo = ({ children }: { children: React.ReactNode }) => {
       },
     };
 
-    const updatedItinerary = {
-      ...itinerary,
-      itinerary: {
-        ...itinerary.itinerary,
-        [selectedDate]: [...itinerary.itinerary[selectedDate], obj],
-      },
-    };
+    if (editingItem && onUpdate) {
+      await onUpdate(obj);
+    } else {
+      const updatedItinerary = {
+        ...itinerary,
+        itinerary: {
+          ...itinerary.itinerary,
+          [selectedDate]: [...(itinerary.itinerary[selectedDate] || []), obj],
+        },
+      };
 
-    try {
-      await updateItinerary({ id: it_id, data: updatedItinerary }).unwrap();
-      toast.success("Things to do added successfully.");
-      setIsOpen(false);
-    } catch (error) {
-      console.log('error: ', error);
-      toast.error("Failed to add things to do. Please try again.");
+      try {
+        await updateItinerary({ id: it_id, data: updatedItinerary }).unwrap();
+        toast.success("Things to do added successfully.");
+        setIsOpen(false);
+      } catch (error) {
+        console.log("error: ", error);
+        toast.error("Failed to add things to do. Please try again.");
+      }
     }
   };
 
@@ -87,9 +105,15 @@ const ThingsToDo = ({ children }: { children: React.ReactNode }) => {
       <SheetContent>
         <SheetHeader>
           <div className="flex items-center justify-between">
-            <SheetTitle className="text-xl font-semibold">Add a things to do</SheetTitle>
+            <SheetTitle className="text-xl font-semibold">
+              {editingItem ? "Edit things to do" : "Add a things to do"}
+            </SheetTitle>
           </div>
-          <p className="text-sm text-muted-foreground">Add a description here</p>
+          <p className="text-sm text-muted-foreground">
+            {editingItem
+              ? "Edit your activity details"
+              : "Add a description here"}
+          </p>
         </SheetHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
@@ -129,9 +153,13 @@ const ThingsToDo = ({ children }: { children: React.ReactNode }) => {
               <Label>Start Time</Label>
               <Input
                 type="time"
-                value={formData.startTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })}
+                value={formData.startTime.toLocaleTimeString("en-US", {
+                  hour12: false,
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
                 onChange={(e) => {
-                  const [hours, minutes] = e.target.value.split(':');
+                  const [hours, minutes] = e.target.value.split(":");
                   const newDate = new Date(formData.startTime);
                   newDate.setHours(parseInt(hours), parseInt(minutes));
                   setFormData({ ...formData, startTime: newDate });
@@ -142,9 +170,13 @@ const ThingsToDo = ({ children }: { children: React.ReactNode }) => {
               <Label>End Time</Label>
               <Input
                 type="time"
-                value={formData.endTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })}
+                value={formData.endTime.toLocaleTimeString("en-US", {
+                  hour12: false,
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
                 onChange={(e) => {
-                  const [hours, minutes] = e.target.value.split(':');
+                  const [hours, minutes] = e.target.value.split(":");
                   const newDate = new Date(formData.endTime);
                   newDate.setHours(parseInt(hours), parseInt(minutes));
                   setFormData({ ...formData, endTime: newDate });
@@ -194,6 +226,8 @@ const ThingsToDo = ({ children }: { children: React.ReactNode }) => {
             >
               {isLoading ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
+              ) : editingItem ? (
+                "Update"
               ) : (
                 "Add to trip"
               )}

@@ -16,21 +16,30 @@ import { useSelector } from "react-redux";
 import { useUpdateTripPlanItineraryMutation } from "@/store/api/trip/itenerySlice";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { TimelineItem } from "@/types";
 
-const AddTransportation = ({ children }: { children: React.ReactNode }) => {
+const AddTransportation = ({ 
+  children,
+  onUpdate,
+  editingItem 
+}: { 
+  children?: React.ReactNode;
+  onUpdate?: (item:   any) => Promise<void>;
+  editingItem?: TimelineItem | null;
+}) => {
   const [formData, setFormData] = useState({
-    type: "Flight",
-    name: "",
-    departureLocation: "",
-    departureTime: new Date(),
-    arrivalLocation: "",
-    arrivalTime: new Date(),
-    link: "",
-    reservationNumber: "",
-    note: "",
+    type: editingItem?.details?.customFields?.type || "Flight",
+    name: editingItem?.details?.title || "",
+    departureLocation: editingItem?.details?.customFields?.departureLocation || "",
+    departureTime: editingItem?.details?.customFields?.departureTime ? new Date(editingItem.details.customFields.departureTime) : new Date(),
+    arrivalLocation: editingItem?.details?.customFields?.arrivalLocation || "",
+    arrivalTime: editingItem?.details?.customFields?.arrivalTime ? new Date(editingItem.details.customFields.arrivalTime) : new Date(),
+    link: editingItem?.details?.customFields?.link || "",
+    reservationNumber: editingItem?.details?.customFields?.reservationNumber || "",
+    note: editingItem?.details?.customFields?.note || "",
   });
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(!!editingItem);
   const itinerary = useSelector((state: any) => state.meta.trip.itinerary);
   const it_id = itinerary?.id;
   const selectedDate = useSelector((state: any) => state.meta.trip.select_date);
@@ -41,7 +50,7 @@ const AddTransportation = ({ children }: { children: React.ReactNode }) => {
     if (!itinerary || !selectedDate) return;
 
     const obj = {
-      position: itinerary.itinerary[selectedDate].length + 1,
+      position:  (itinerary.itinerary[selectedDate]?.length + 1) || 1,
       date: selectedDate,
       type: "flight",
       details: {
@@ -49,21 +58,27 @@ const AddTransportation = ({ children }: { children: React.ReactNode }) => {
         customFields: { ...formData },
       },
     };
-    const updatedItinerary = {
-      ...itinerary,
-      itinerary: {
-        ...itinerary.itinerary,
-        [selectedDate]: [...itinerary.itinerary[selectedDate], obj],
-      },
-    };
 
-    try {
-      await updateItinerary({ id: it_id, data: updatedItinerary }).unwrap();
-      toast.success("Transportation added successfully.");
+    if (editingItem && onUpdate) {
+      await onUpdate(obj);
       setIsOpen(false);
-    } catch (error) {
-      console.log('error: ', error);
-      toast.error("Failed to add transportation. Please try again.");
+    } else {
+      const updatedItinerary = {
+        ...itinerary,
+        itinerary: {
+          ...itinerary.itinerary,
+          [selectedDate]: [...(itinerary.itinerary[selectedDate] || []), obj],
+        },
+      };
+
+      try {
+        await updateItinerary({ id: it_id, data: updatedItinerary }).unwrap();
+        toast.success("Transportation added successfully.");
+        setIsOpen(false);
+      } catch (error) {
+        console.log('error: ', error);
+        toast.error("Failed to add transportation. Please try again.");
+      }
     }
   };
 
@@ -89,10 +104,10 @@ const AddTransportation = ({ children }: { children: React.ReactNode }) => {
       <SheetContent className="overflow-y-scroll">
         <SheetHeader>
           <SheetTitle className="text-xl font-semibold">
-            Add a transportation
+            {editingItem ? "Edit transportation" : "Add a transportation"}
           </SheetTitle>
           <p className="text-sm text-muted-foreground">
-            Add your transportation details
+            {editingItem ? "Edit your transportation details" : "Add your transportation details"}
           </p>
         </SheetHeader>
         <form onSubmit={handleSubmit} className="space-y-6 pt-4">
@@ -224,7 +239,7 @@ const AddTransportation = ({ children }: { children: React.ReactNode }) => {
               {isLoading ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
               ) : (
-                "Add to trip"
+                editingItem ? "Update" : "Add to trip"
               )}
             </Button>
           </div>

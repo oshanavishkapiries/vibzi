@@ -17,18 +17,27 @@ import { useSelector } from "react-redux";
 import { useUpdateTripPlanItineraryMutation } from "@/store/api/trip/itenerySlice";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { TimelineItem } from "@/types";
 
-const AddFoodAndDrink = ({ children }: { children: React.ReactNode }) => {
+const AddFoodAndDrink = ({ 
+  children,
+  onUpdate,
+  editingItem 
+}: { 
+  children?: React.ReactNode;
+  onUpdate?: (item:   any) => Promise<void>;
+  editingItem?: TimelineItem | null 
+}) => {
   const [formData, setFormData] = useState({
-    activityName: "",
-    booked: "no",
-    startTime: new Date(),
-    endTime: new Date(),
-    link: "",
-    note: "",
+    activityName: editingItem?.details?.title || "",
+    booked: editingItem?.details?.customFields?.booked || "no",
+    startTime: editingItem?.details?.customFields?.startTime ? new Date(editingItem.details.customFields.startTime) : new Date(),
+    endTime: editingItem?.details?.customFields?.endTime ? new Date(editingItem.details.customFields.endTime) : new Date(),
+    link: editingItem?.details?.customFields?.link || "",
+    note: editingItem?.details?.customFields?.note || "",
   });
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(!!editingItem);
   const itinerary = useSelector((state: any) => state.meta.trip.itinerary);
   const it_id = itinerary?.id;
   const selectedDate = useSelector((state: any) => state.meta.trip.select_date);
@@ -38,10 +47,8 @@ const AddFoodAndDrink = ({ children }: { children: React.ReactNode }) => {
     e.preventDefault();
     if (!itinerary || !selectedDate) return;
 
-  
-
     const obj = {
-      position: itinerary.itinerary[selectedDate].length + 1,
+      position: (itinerary.itinerary[selectedDate]?.length + 1) || 1,
       date: selectedDate,
       type: "restaurant",
       details: {
@@ -50,21 +57,26 @@ const AddFoodAndDrink = ({ children }: { children: React.ReactNode }) => {
       },
     };
 
-    const updatedItinerary = {
-      ...itinerary,
-      itinerary: {
-        ...itinerary.itinerary,
-        [selectedDate]: [...itinerary.itinerary[selectedDate], obj],
-      },
-    };
-
-    try {
-      await updateItinerary({ id: it_id, data: updatedItinerary }).unwrap();
-      toast.success("Food and drink added successfully.");
+    if (editingItem && onUpdate) {
+      await onUpdate(obj);
       setIsOpen(false);
-    } catch (error) {
-      console.log('error: ', error);
-      toast.error("Failed to add food and drink. Please try again.");
+    } else {
+      const updatedItinerary = {
+        ...itinerary,
+        itinerary: {
+          ...itinerary.itinerary,
+          [selectedDate]: [...(itinerary.itinerary[selectedDate] || []), obj],
+        },
+      };
+
+      try {
+        await updateItinerary({ id: it_id, data: updatedItinerary }).unwrap();
+        toast.success("Food and drink added successfully.");
+        setIsOpen(false);
+      } catch (error) {
+        console.log('error: ', error);
+        toast.error("Failed to add food and drink. Please try again.");
+      }
     }
   };
 
@@ -88,11 +100,11 @@ const AddFoodAndDrink = ({ children }: { children: React.ReactNode }) => {
         <SheetHeader>
           <div className="flex items-center justify-between">
             <SheetTitle className="text-xl font-semibold">
-              Add a food and drink
+              {editingItem ? "Edit food and drink" : "Add a food and drink"}
             </SheetTitle>
           </div>
           <p className="text-sm text-muted-foreground">
-            Add a description here
+            {editingItem ? "Edit your food and drink details" : "Add a description here"}
           </p>
         </SheetHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -189,7 +201,7 @@ const AddFoodAndDrink = ({ children }: { children: React.ReactNode }) => {
               {isLoading ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
               ) : (
-                "Add to trip"
+                editingItem ? "Update" : "Add to trip"
               )}
             </Button>
           </div>

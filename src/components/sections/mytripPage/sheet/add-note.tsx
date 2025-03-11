@@ -14,14 +14,23 @@ import { useSelector } from "react-redux";
 import { useUpdateTripPlanItineraryMutation } from "@/store/api/trip/itenerySlice";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { TimelineItem } from "@/types";
 
-const AddNote = ({ children }: { children: React.ReactNode }) => {
+const AddNote = ({ 
+  children,
+  onUpdate,
+  editingItem 
+}: { 
+  children?: React.ReactNode;
+  onUpdate?: (item: any) => Promise<void>;
+  editingItem?: TimelineItem | null;
+}) => {
   const [formData, setFormData] = useState({
-    title: "",
-    note: "",
+    title: editingItem?.details?.title || "",
+    note: editingItem?.details?.customFields?.note || "",
   });
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(!!editingItem);
   const itinerary = useSelector((state: any) => state.meta.trip.itinerary);
   const it_id = itinerary?.id;
   const selectedDate = useSelector((state: any) => state.meta.trip.select_date);
@@ -32,7 +41,7 @@ const AddNote = ({ children }: { children: React.ReactNode }) => {
     if (!itinerary || !selectedDate) return;
 
     const obj = {
-      position: itinerary.itinerary[selectedDate].length + 1,
+      position:  (itinerary.itinerary[selectedDate]?.length + 1) || 1,
       date: selectedDate,
       type: "note",
       details: {
@@ -40,21 +49,27 @@ const AddNote = ({ children }: { children: React.ReactNode }) => {
         customFields: { ...formData },
       },
     };
-    const updatedItinerary = {
-      ...itinerary,
-      itinerary: {
-        ...itinerary.itinerary,
-        [selectedDate]: [...itinerary.itinerary[selectedDate], obj],
-      },
-    };
 
-    try {
-      await updateItinerary({ id: it_id, data: updatedItinerary }).unwrap();
-      toast.success("Note added successfully.");
+    if (editingItem && onUpdate) {
+      await onUpdate(obj);
       setIsOpen(false);
-    } catch (error) {
-      console.log('error: ', error);
-      toast.error("Failed to add note. Please try again.");
+    } else {
+      const updatedItinerary = {
+        ...itinerary,
+        itinerary: {
+          ...itinerary.itinerary,
+          [selectedDate]: [...(itinerary.itinerary[selectedDate] || []), obj],
+        },
+      };
+
+      try {
+        await updateItinerary({ id: it_id, data: updatedItinerary }).unwrap();
+        toast.success("Note added successfully.");
+        setIsOpen(false);
+      } catch (error) {
+        console.log('error: ', error);
+        toast.error("Failed to add note. Please try again.");
+      }
     }
   };
 
@@ -73,9 +88,13 @@ const AddNote = ({ children }: { children: React.ReactNode }) => {
       <SheetContent>
         <SheetHeader>
           <div className="flex items-center justify-between">
-            <SheetTitle className="text-xl font-semibold">Add a Note</SheetTitle>
+            <SheetTitle className="text-xl font-semibold">
+              {editingItem ? "Edit Note" : "Add a Note"}
+            </SheetTitle>
           </div>
-          <p className="text-sm text-muted-foreground">Add a note for your trip</p>
+          <p className="text-sm text-muted-foreground">
+            {editingItem ? "Edit your note" : "Add a note for your trip"}
+          </p>
         </SheetHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
@@ -120,7 +139,7 @@ const AddNote = ({ children }: { children: React.ReactNode }) => {
               {isLoading ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
               ) : (
-                "Add to trip"
+                editingItem ? "Update" : "Add to trip"
               )}
             </Button>
           </div>

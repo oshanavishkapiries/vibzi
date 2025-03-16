@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { useAuth } from "@/components/common/Auth/AuthProvider";
 import Image from "next/image";
 import Link from "next/link";
+import InfiniteGallery from "@/components/common/InfiniteGallery";
 
 export default function VerifyPage() {
   const [verificationCode, setVerificationCode] = useState("");
@@ -56,58 +57,72 @@ export default function VerifyPage() {
   };
 
   return (
-    <div className="grid min-h-svh lg:grid-cols-2">
-      <div className="flex flex-col gap-4 p-6 md:p-10">
-        <div className="flex justify-center gap-2 md:justify-start">
-          <Link href="/" className="flex items-center gap-2 font-medium">
-            <Image src="/logo/logo-rbg.png" alt="logo" width={70} height={32} />
-          </Link>
+    <div className="grid min-h-svh">
+      <div className="relative">
+        {/* InfiniteGallery for mobile */}
+        <div className="absolute inset-0 -z-10 lg:hidden">
+          <div className="h-full w-full bg-black/30 absolute inset-0 z-10" />
+          <InfiniteGallery />
         </div>
-        <div className="flex flex-1 items-center justify-center">
-          <div className="w-full max-w-lg space-y-6">
-            <div className="space-y-2 text-center">
-              <h1 className="text-3xl font-bold">Verify Your Email</h1>
-              <p className="text-gray-500 dark:text-gray-400">
-                Please enter the verification code sent to your email address
-              </p>
-            </div>
-            <form onSubmit={handleVerification} className="space-y-4">
-              <div className="space-y-2">
-                <Input
-                  type="text"
-                  placeholder="Enter verification code"
-                  value={verificationCode}
-                  onChange={(e) => setVerificationCode(e.target.value)}
-                  required
-                />
+        {/* InfiniteGallery for desktop */}
+        <div className="hidden lg:block lg:w-1/2 fixed left-0 top-0 h-full pl-[8%]">
+          <InfiniteGallery />
+        </div>
+
+        <div className="flex flex-col gap-4 p-6 md:p-10 relative z-20 lg:ml-[50%]">
+          <div className="flex justify-center gap-2 md:justify-start">
+            <Link href="/" className="flex items-center gap-2 font-medium">
+              <Image src="/logo/logo-rbg.png" alt="logo" width={70} height={32} className="hidden lg:block" />
+            </Link>
+          </div>
+          <div className="flex flex-1 items-center justify-center">
+            <div className="w-full max-w-lg backdrop-blur-sm bg-white p-6 rounded-xl">
+              <div className="space-y-6">
+                <Link href="/" className="flex items-center gap-2 font-medium">
+                  <Image
+                    src="/logo/logo-rbg.png"
+                    alt="logo"
+                    width={70}
+                    height={32}
+                    className="block lg:hidden"
+                  />
+                </Link>
+                <div className="space-y-2 text-center">
+                  <h1 className="text-3xl font-bold">Verify Your Email</h1>
+                  <p className="text-gray-500">
+                    Please enter the verification code sent to your email address
+                  </p>
+                </div>
+                <form onSubmit={handleVerification} className="space-y-4">
+                  <div className="space-y-2">
+                    <Input
+                      type="text"
+                      placeholder="Enter verification code"
+                      value={verificationCode}
+                      onChange={(e) => setVerificationCode(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={isVerifying}
+                  >
+                    {isVerifying ? "Verifying..." : "Verify Email"}
+                  </Button>
+                </form>
+                <div className="text-center">
+                  <button
+                    onClick={handleResendCode}
+                    className="text-sm text-primary hover:underline"
+                  >
+                    Resend verification code
+                  </button>
+                </div>
               </div>
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={isVerifying}
-              >
-                {isVerifying ? "Verifying..." : "Verify Email"}
-              </Button>
-            </form>
-            <div className="text-center">
-              <button
-                onClick={handleResendCode}
-                className="text-sm text-primary hover:underline"
-              >
-                Resend verification code
-              </button>
             </div>
           </div>
         </div>
-      </div>
-      <div className="relative hidden bg-muted lg:block">
-        <Image
-          src="/2.jpg"
-          alt="Image"
-          fill
-          className="object-cover dark:brightness-[0.2] dark:grayscale"
-          priority
-        />
       </div>
     </div>
   );

@@ -20,6 +20,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Loader2, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
+import InfiniteGallery from "@/components/common/InfiniteGallery";
 
 const signinSchema = z.object({
   emailOrUsername: z.string().min(1, "Email or username is required"),
@@ -60,111 +61,123 @@ export default function SigninPage() {
   };
 
   return (
-    <div className="grid min-h-svh lg:grid-cols-2">
-      <div className="flex flex-col gap-4 p-6 md:p-10">
-        <div className="flex justify-center gap-2 md:justify-start">
-          <Link href="/" className="flex items-center gap-2 font-medium">
-            <Image src="/logo/logo-rbg.png" alt="logo" width={70} height={32} />
-          </Link>
+    <div className="grid min-h-svh">
+      <div className="relative">
+        {/* InfiniteGallery for mobile */}
+        <div className="absolute inset-0 -z-10 lg:hidden">
+          <div className="h-full w-full bg-black/30 absolute inset-0 z-10" />
+          <InfiniteGallery />
         </div>
-        <div className="flex flex-1 items-center justify-center">
-          <div className="w-full max-w-xs">
-            <div className="space-y-6">
-              <div className="space-y-2 text-center">
-                <h1 className="text-3xl font-bold">Welcome back</h1>
-                <p className="text-gray-500 dark:text-gray-400">
-                  Enter your credentials to sign in to your account
-                </p>
-              </div>
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-4"
-                >
-                  <FormField
-                    control={form.control}
-                    name="emailOrUsername"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email or Username</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="john@example.com or johndoe"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+        {/* InfiniteGallery for desktop */}
+        <div className="hidden lg:block lg:w-1/2 fixed left-0 top-0 h-full pl-[8%]">
+          <InfiniteGallery />
+        </div>
+
+        <div className="flex flex-col gap-4 p-6 md:p-10 relative z-20 lg:ml-[50%]">
+          <div className="flex justify-center gap-2 md:justify-start">
+            <Link href="/" className="flex items-center gap-2 font-medium">
+              <Image src="/logo/logo-rbg.png" alt="logo" width={70} height={32} className="hidden lg:block" />
+            </Link>
+          </div>
+          <div className="flex flex-1 items-center justify-center">
+            <div className="w-full max-w-lg backdrop-blur-sm bg-white p-6 rounded-xl">
+              <div className="space-y-6">
+                <Link href="/" className="flex items-center gap-2 font-medium">
+                  <Image
+                    src="/logo/logo-rbg.png"
+                    alt="logo"
+                    width={70}
+                    height={32}
+                    className="block lg:hidden"
                   />
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Password</FormLabel>
-                        <FormControl>
-                          <div className="relative">
+                </Link>
+                <div className="space-y-2 text-center">
+                  <h1 className="text-3xl font-bold">Welcome back</h1>
+                  <p className="text-gray-500">
+                    Enter your credentials to sign in to your account
+                  </p>
+                </div>
+                <Form {...form}>
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-4"
+                  >
+                    <FormField
+                      control={form.control}
+                      name="emailOrUsername"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email or Username</FormLabel>
+                          <FormControl>
                             <Input
-                              placeholder="••••••••"
-                              type={showPassword ? "text" : "password"}
+                              placeholder="john@example.com or johndoe"
                               {...field}
                             />
-                            <button
-                              type="button"
-                              onClick={() => setShowPassword(!showPassword)}
-                              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Password</FormLabel>
+                          <FormControl>
+                            <div className="relative">
+                              <Input
+                                placeholder="••••••••"
+                                type={showPassword ? "text" : "password"}
+                                {...field}
+                              />
+                              <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                              >
+                                {showPassword ? (
+                                  <EyeOff className="h-4 w-4" />
+                                ) : (
+                                  <Eye className="h-4 w-4" />
+                                )}
+                              </button>
+                            </div>
+                          </FormControl>
+                          <div className="flex justify-end">
+                            <Link
+                              href="/auth/forgot-password"
+                              className="text-sm text-primary hover:underline"
                             >
-                              {showPassword ? (
-                                <EyeOff className="h-4 w-4" />
-                              ) : (
-                                <Eye className="h-4 w-4" />
-                              )}
-                            </button>
+                              Forgot password?
+                            </Link>
                           </div>
-                        </FormControl>
-                        <div className="flex justify-end">
-                          <Link
-                            href="/auth/forgot-password"
-                            className="text-sm text-primary hover:underline"
-                          >
-                            Forgot password?
-                          </Link>
-                        </div>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button type="submit" className="w-full">
-                    {isLoading ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      "Sign In"
-                    )}
-                  </Button>
-                </form>
-              </Form>
-              <div className="text-center text-sm">
-                Don&apos;t have an account?{" "}
-                <Link
-                  href="/auth/signup"
-                  className="font-medium text-primary hover:underline"
-                >
-                  Sign up
-                </Link>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <Button type="submit" className="w-full">
+                      {isLoading ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        "Sign In"
+                      )}
+                    </Button>
+                  </form>
+                </Form>
+                <div className="text-center text-sm">
+                  Don&apos;t have an account?{" "}
+                  <Link
+                    href="/auth/signup"
+                    className="font-medium text-primary hover:underline"
+                  >
+                    Sign up
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="relative hidden bg-muted lg:block">
-        <Image
-          src="/2.jpg"
-          alt="Image"
-          fill
-          className="object-cover dark:brightness-[0.2] dark:grayscale"
-          priority
-        />
       </div>
     </div>
   );

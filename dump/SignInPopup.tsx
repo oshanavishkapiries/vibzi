@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import { useId, useState } from "react";
-import { useAuth } from "./AuthProvider";
+import { useAuth } from "@/components/common/Auth/AuthProvider";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 

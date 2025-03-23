@@ -8,11 +8,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { LogIn } from "lucide-react";
 import { useAuth } from "@/components/common/Auth/AuthProvider";
 import { useRouter } from "next/navigation";
 import { RootState } from "@/store/store";
-import SignInPopup from "../Auth/SignInPopup";
+import Link from "next/link";
 
 const Profile = () => {
   const router = useRouter();
@@ -30,11 +29,25 @@ const Profile = () => {
 
   if (!user) {
     return (
-      <SignInPopup>
-        <Button className="rounded-full" variant="outline">
-          <LogIn className="w-4 h-4" /> Sign In
-        </Button>
-      </SignInPopup>
+      <div className="flex flex-row gap-2">
+        <Link href="/auth/signin">
+          <Button
+            className="rounded-full font-semibold text-sm"
+            variant="default"
+          >
+            Sign In
+          </Button>
+        </Link>
+
+        <Link href="/auth/signup">
+          <Button
+            className="rounded-full font-semibold text-sm"
+            variant="outline"
+          >
+            Sign Up
+          </Button>
+        </Link>
+      </div>
     );
   }
 

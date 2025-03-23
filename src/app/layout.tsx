@@ -7,7 +7,6 @@ import { Toaster } from "sonner";
 import AuthProvider from "@/components/common/Auth/AuthProvider";
 import "@/config/amplify";
 
-
 export const metadata: Metadata = {
   metadataBase: new URL("https://vibzi.co"),
   title: "Vibzi - Plan your next trip now",
@@ -47,8 +46,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-      </head>
+      <head></head>
       <body>
         <Toaster position="bottom-right" />
         <ReduxProvider>

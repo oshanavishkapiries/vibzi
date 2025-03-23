@@ -68,7 +68,7 @@ export default function ResultsPage() {
 
   return (
     <div className="container px-3 mx-auto min-h-screen mb-8">
-      <div className="flex flex-row justify-between items-center p-3 lg:hidden">
+      <div className="flex flex-row justify-between items-center px-3 py-6 max-w-4xl mx-auto">
         <AdvanceSearch />
       </div>
       <FilterCloud />

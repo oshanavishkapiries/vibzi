@@ -178,7 +178,7 @@ const DestinationList: React.FC<DestinationListProps> = ({
   return (
     <div
       className={`w-full h-auto
-      } rounded-xl overflow-hidden absolute top-[80px] left-0 right-0 z-[-1] p-3 bg-background shadow-md transition-all duration-500`}
+      } rounded-xl overflow-hidden absolute top-[80px] left-0 right-0 z-10 p-3 bg-background shadow-md transition-all duration-500`}
     >
       {destinations?.slice(0, 5).map((item, index) => (
         <h1

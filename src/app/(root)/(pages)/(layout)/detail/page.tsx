@@ -1,5 +1,5 @@
 "use client";
-import TourDetails from "../../../../components/sections/DetailPage/tour-details";
+import TourDetails from "@/components/sections/DetailPage/tour-details";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useProductByIdQuery } from "@/store/api/product/productSlice";

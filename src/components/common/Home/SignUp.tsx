@@ -106,7 +106,7 @@ const SignUp = () => {
 
   return (
     <div className="flex flex-col gap-4 w-full min-h-screen relative">
-      <div className="w-full h-screen p-4 overflow-hidden relative">
+      <div className="w-full h-screen overflow-hidden relative">
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-9 gap-1">
           {images.map((image, index) => (
             <div

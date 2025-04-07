@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 const InfiniteGallery = () => {
   const [images] = useState([
@@ -29,8 +29,8 @@ const InfiniteGallery = () => {
     "/gallery/15.jpg",
   ]);
 
-  // Distribute images across three columns
-  const distributeImages = () => {
+  
+  const { column1, column2, column3 } = useMemo(() => {
     const shuffled = [...images].sort(() => Math.random() - 0.5);
     const columnSize = Math.ceil(shuffled.length / 3);
 
@@ -39,12 +39,16 @@ const InfiniteGallery = () => {
       column2: shuffled.slice(columnSize, columnSize * 2),
       column3: shuffled.slice(columnSize * 2),
     };
-  };
-
-  const { column1, column2, column3 } = distributeImages();
+  }, [images]);
 
   return (
     <div className="w-full h-full overflow-hidden relative">
+      {/* Top gradient overlay */}
+      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white to-transparent z-10" />
+      
+      {/* Bottom gradient overlay */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent z-10" />
+      
       <div className="absolute inset-0 grid grid-cols-3 gap-3">
         {/* Column 1 - Scroll Up */}
         <div className="overflow-hidden">

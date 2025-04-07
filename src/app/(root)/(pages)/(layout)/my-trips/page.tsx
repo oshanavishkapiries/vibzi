@@ -1,5 +1,5 @@
 "use client";
-import AuthMiddleware from "@/components/common/Auth/AuthMiddleware";
+import { AuthMiddleware } from "@/components/common/Auth/AuthMiddleware";
 import { CreateTripDialog } from "@/components/sections/mytripPage/create-trip-dialog";
 import TripCard from "@/components/sections/mytripPage/TripCard";
 import Tripsection from "@/components/sections/mytripPage/Tripsection";

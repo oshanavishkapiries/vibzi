@@ -18,9 +18,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { Loader2, Eye, EyeOff } from "lucide-react";
+import { Loader2, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import InfiniteGallery from "@/components/common/InfiniteGallery";
+import { FcGoogle } from "react-icons/fc";
+
+
 
 const signinSchema = z.object({
   emailOrUsername: z.string().min(1, "Email or username is required"),
@@ -30,7 +33,7 @@ const signinSchema = z.object({
 type SigninFormValues = z.infer<typeof signinSchema>;
 
 export default function SigninPage() {
-  const { signIn } = useAuth();
+  const { signIn , googleSignIn } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -42,6 +45,14 @@ export default function SigninPage() {
     },
   });
 
+  const handleGoogleSignIn = async () => {
+    try {
+      await googleSignIn();
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+    }
+  };
+
   const onSubmit = async (data: SigninFormValues) => {
     try {
       setIsLoading(true);
@@ -49,7 +60,7 @@ export default function SigninPage() {
       setIsLoading(false);
       toast.success("Sign in successful!");
 
-      window.location.href = "/";
+      window.location.href = "/my-trips";
     } catch (error) {
       setIsLoading(false);
       if (error instanceof Error) {
@@ -61,34 +72,39 @@ export default function SigninPage() {
   };
 
   return (
-    <div className="grid min-h-svh">
-      <div className="relative">
-        {/* InfiniteGallery for mobile */}
-        <div className="absolute inset-0 -z-10 lg:hidden">
-          <div className="h-full w-full bg-black/30 absolute inset-0 z-10" />
-          <InfiniteGallery />
-        </div>
-        {/* InfiniteGallery for desktop */}
-        <div className="hidden lg:block lg:w-1/2 fixed left-0 top-0 h-full pl-[8%]">
-          <InfiniteGallery />
-        </div>
+    <div className="flex flex-col md:flex-row items-center justify-center h-screen">
+      <div className="absolute inset-0 -z-10 lg:hidden">
+        <div className="h-full w-full absolute inset-0 z-10" />
+        <InfiniteGallery />
+      </div>
 
-        <div className="flex flex-col gap-4 p-6 md:p-10 relative z-20 lg:ml-[50%]">
-          <div className="flex justify-center gap-2 md:justify-start">
-            <Link href="/" className="flex items-center gap-2 font-medium">
-              <Image src="/logo/logo-rbg.png" alt="logo" width={70} height={32} className="hidden lg:block" />
-            </Link>
-          </div>
+      {/* left */}
+      <div className="hidden lg:flex flex-col items-center justify-center w-full h-full pl-[100px]">
+        <div className="h-full w-full absolute inset-0 z-10" />
+        <InfiniteGallery />
+      </div>
+
+      {/* right */}
+      <div className="flex flex-col items-center justify-center w-full h-full">
+        <div className="flex flex-col gap-4 p-6 md:p-10 relative z-20 bg-white rounded-xl m-5">
           <div className="flex flex-1 items-center justify-center">
-            <div className="w-full max-w-lg backdrop-blur-sm bg-white p-6 rounded-xl">
+            <div className="w-full max-w-lg backdrop-blur-sm p-3 rounded-xl">
               <div className="space-y-6">
-                <Link href="/" className="flex items-center gap-2 font-medium">
+                <div className="flex items-center">
+                  <Link
+                    href="/"
+                    className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                  >
+                    <ArrowLeft className="h-4 w-4 text-gray-600" />
+                  </Link>
+                </div>{" "}
+                <Link href="/" className="flex justify-center items-center gap-2 font-medium w-full">
                   <Image
                     src="/logo/logo-rbg.png"
                     alt="logo"
-                    width={70}
+                    width={80}
                     height={32}
-                    className="block lg:hidden"
+                    className="block"
                   />
                 </Link>
                 <div className="space-y-2 text-center">
@@ -162,6 +178,25 @@ export default function SigninPage() {
                       ) : (
                         "Sign In"
                       )}
+                    </Button>
+                    <div className="relative">
+                      <div className="absolute inset-0 flex items-center">
+                        <span className="w-full border-t" />
+                      </div>
+                      <div className="relative flex justify-center text-xs uppercase">
+                        <span className="bg-white px-2 text-gray-500">
+                          Or continue with
+                        </span>
+                      </div>
+                    </div>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="w-full flex items-center justify-center gap-2"
+                      onClick={handleGoogleSignIn}
+                    >
+                      <FcGoogle className="h-5 w-5" />
+                      Sign in with Google
                     </Button>
                   </form>
                 </Form>

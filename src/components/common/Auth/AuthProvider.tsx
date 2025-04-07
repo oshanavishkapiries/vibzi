@@ -13,7 +13,9 @@ import {
   confirmResetPassword,
   resetPassword as amplifyForgotPassword,
   ResetPasswordOutput,
+  signInWithRedirect
 } from "@aws-amplify/auth";
+//import { Hub } from "aws-amplify/utils";
 import { AuthContextType } from "@/types";
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -85,6 +87,15 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       throw error;
     } finally {
       dispatch(setLoading(false));
+    }
+  };
+
+  const googleSignIn = async () => {
+    try {
+      await signInWithRedirect({ provider: "Google" });
+
+    } catch (error) {
+      console.error("Google sign-in error:", error);
     }
   };
 
@@ -214,6 +225,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         verifyEmail,
         forgotPassword,
         resetPassword,
+        googleSignIn,
       }}
     >
       {children}

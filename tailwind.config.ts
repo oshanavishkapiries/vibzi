@@ -92,7 +92,7 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "scroll-up": "scroll-up 500s linear infinite",
+        "scroll-up": "scroll-up 350s linear infinite",
         "scroll-down": "scroll-down 500s linear infinite",
       },
     },

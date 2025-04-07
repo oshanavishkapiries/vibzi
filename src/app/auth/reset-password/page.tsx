@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
 import { useAuth } from "@/components/common/Auth/AuthProvider";
+import { useSearchParams } from "next/navigation";
 
 import {
   Form,
@@ -18,33 +19,31 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { Loader2, Eye, EyeOff } from "lucide-react";
+import { Loader2, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import InfiniteGallery from "@/components/common/InfiniteGallery";
 
 const resetPasswordSchema = z
   .object({
-    code: z.string().min(6, "Code must be 6 digits"),
-    newPassword: z
+    password: z
       .string()
       .min(8, "Password must be at least 8 characters")
-      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-      .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-      .regex(/[0-9]/, "Password must contain at least one number")
       .regex(
-        /[^A-Za-z0-9]/,
-        "Password must contain at least one special character"
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
       ),
     confirmPassword: z.string(),
   })
-  .refine((data) => data.newPassword === data.confirmPassword, {
-    message: "Passwords don't match",
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
     path: ["confirmPassword"],
   });
 
 type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
 
 export default function ResetPasswordPage() {
+  const searchParams = useSearchParams();
+  const code = searchParams.get("code");
   const { resetPassword } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -53,65 +52,73 @@ export default function ResetPasswordPage() {
   const form = useForm<ResetPasswordFormValues>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
-      code: "",
-      newPassword: "",
+      password: "",
       confirmPassword: "",
     },
   });
 
   const onSubmit = async (data: ResetPasswordFormValues) => {
+    if (!code) {
+      toast.error("Invalid reset code");
+      return;
+    }
+
     try {
       setIsLoading(true);
-      const response = await resetPassword(data.code, data.newPassword);
-      if (response instanceof Error) {
-        toast.error("Something went wrong, please try again later");
-      } else {
-        toast.success("Password reset successful!");
-        window.location.href = "/auth/signin";
-      }
+      await resetPassword(code, data.password);
       setIsLoading(false);
+      toast.success("Password reset successful!");
+      window.location.href = "/auth/signin";
     } catch (error) {
-      console.log("error", error);
       setIsLoading(false);
-      toast.error("Something went wrong, please try again later");
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An error occurred while resetting your password");
+      }
     }
   };
 
   return (
-    <div className="grid min-h-svh">
-      <div className="relative">
-        {/* InfiniteGallery for mobile */}
-        <div className="absolute inset-0 -z-10 lg:hidden">
-          <div className="h-full w-full bg-black/30 absolute inset-0 z-10" />
-          <InfiniteGallery />
-        </div>
-        {/* InfiniteGallery for desktop */}
-        <div className="hidden lg:block lg:w-1/2 fixed left-0 top-0 h-full pl-[8%]  ">
-          <InfiniteGallery />
-        </div>
+    <div className="flex flex-col md:flex-row items-center justify-center h-screen">
+      <div className="absolute inset-0 -z-10 lg:hidden">
+        <div className="h-full w-full absolute inset-0 z-10" />
+        <InfiniteGallery />
+      </div>
 
-        <div className="flex flex-col gap-4 p-6 md:p-10 relative z-20 lg:ml-[50%]">
-          <div className="flex justify-center gap-2 md:justify-start">
-            <Link href="/" className="flex items-center gap-2 font-medium">
-              <Image src="/logo/logo-rbg.png" alt="logo" width={70} height={32} className="hidden lg:block" />
-            </Link>
-          </div>
+      {/* left */}
+      <div className="hidden lg:flex flex-col items-center justify-center w-full h-full pl-[100px]">
+        <div className="h-full w-full absolute inset-0 z-10" />
+        <InfiniteGallery />
+      </div>
+
+      {/* right */}
+      <div className="flex flex-col items-center justify-center w-full h-full">
+        <div className="flex flex-col gap-4 p-6 md:p-10 relative z-20 bg-white rounded-xl m-5">
           <div className="flex flex-1 items-center justify-center">
-            <div className="w-full max-w-lg backdrop-blur-sm bg-white p-6 rounded-xl">
+            <div className="w-full max-w-lg backdrop-blur-sm p-3 rounded-xl">
               <div className="space-y-6">
-                <Link href="/" className="flex items-center gap-2 font-medium">
+                <div className="flex items-center">
+                  <Link
+                    href="/auth/signin"
+                    className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                  >
+                    <ArrowLeft className="h-4 w-4 text-gray-600" />
+                  </Link>
+                </div>
+                <Link href="/" className="flex justify-center items-center gap-2 font-medium w-full">
                   <Image
                     src="/logo/logo-rbg.png"
                     alt="logo"
-                    width={70}
+                    width={80}
                     height={32}
-                    className="block lg:hidden"
+                    className="block"
                   />
                 </Link>
                 <div className="space-y-2 text-center">
                   <h1 className="text-3xl font-bold">Reset Password</h1>
                   <p className="text-gray-500">
-                    Enter the code sent to your email and your new password
+                    Enter your new password below
                   </p>
                 </div>
                 <Form {...form}>
@@ -121,20 +128,7 @@ export default function ResetPasswordPage() {
                   >
                     <FormField
                       control={form.control}
-                      name="code"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Reset Code</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Enter 6-digit code" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="newPassword"
+                      name="password"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>New Password</FormLabel>
@@ -148,7 +142,7 @@ export default function ResetPasswordPage() {
                               <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                               >
                                 {showPassword ? (
                                   <EyeOff className="h-4 w-4" />
@@ -177,10 +171,8 @@ export default function ResetPasswordPage() {
                               />
                               <button
                                 type="button"
-                                onClick={() =>
-                                  setShowConfirmPassword(!showConfirmPassword)
-                                }
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                               >
                                 {showConfirmPassword ? (
                                   <EyeOff className="h-4 w-4" />
@@ -204,12 +196,12 @@ export default function ResetPasswordPage() {
                   </form>
                 </Form>
                 <div className="text-center text-sm">
-                  Didn&apos;t receive a code?{" "}
+                  Remember your password?{" "}
                   <Link
-                    href="/auth/forgot-password"
+                    href="/auth/signin"
                     className="font-medium text-primary hover:underline"
                   >
-                    Try again
+                    Sign in
                   </Link>
                 </div>
               </div>

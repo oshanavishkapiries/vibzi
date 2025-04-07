@@ -92,6 +92,7 @@ export interface AuthContextType {
     code: string,
     newPassword: string
   ) => Promise<any>;
+  googleSignIn: () => Promise<void>;
 }
 
 export * from "./auth";

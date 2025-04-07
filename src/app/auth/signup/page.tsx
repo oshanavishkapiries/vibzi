@@ -18,10 +18,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { Loader2, Eye, EyeOff } from "lucide-react";
+import { Loader2, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 import InfiniteGallery from "@/components/common/InfiniteGallery";
+import { FcGoogle } from "react-icons/fc";
 
 const signupSchema = z
   .object({
@@ -52,6 +53,7 @@ export default function SignupPage() {
   const { signUp } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [step, setStep] = useState(1);
 
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
@@ -92,47 +94,55 @@ export default function SignupPage() {
     }
   };
 
-  return (
-    <div className="grid min-h-svh">
-      <div className="relative">
-        {/* InfiniteGallery for mobile */}
-        <div className="absolute inset-0 -z-10 lg:hidden">
-          <div className="h-full w-full bg-black/30 absolute inset-0 z-10" />
-          <InfiniteGallery />
-        </div>
-        {/* InfiniteGallery for desktop */}
-        <div className="hidden lg:block lg:w-1/2 fixed left-0 top-0 h-full pl-[8%]">
-          <InfiniteGallery />
-        </div>
+  const handleNext = async () => {
+    const isValid = await form.trigger(["email", "password", "confirmPassword"]);
+    if (isValid) {
+      setStep(2);
+    }
+  };
 
-        <div className="flex flex-col gap-4 p-6 md:p-10 relative z-20 lg:ml-[50%]">
-          <div className="flex justify-center gap-2 md:justify-start">
-            <Link href="/" className="flex items-center gap-2 font-medium">
-              <Image
-                src="/logo/logo-rbg.png"
-                alt="logo"
-                width={70}
-                height={32}
-                className="hidden lg:block"
-              />
-            </Link>
-          </div>
+  return (
+    <div className="flex flex-col md:flex-row items-center justify-center h-screen">
+      <div className="absolute inset-0 -z-10 lg:hidden">
+        <div className="h-full w-full absolute inset-0 z-10" />
+        <InfiniteGallery />
+      </div>
+
+      {/* left */}
+      <div className="hidden lg:flex flex-col items-center justify-center w-full h-full pl-[100px]">
+        <div className="h-full w-full absolute inset-0 z-10" />
+        <InfiniteGallery />
+      </div>
+
+      {/* right */}
+      <div className="flex flex-col items-center justify-center w-full h-full">
+        <div className="flex flex-col gap-4 p-6 md:p-10 relative z-20 bg-white rounded-xl m-5">
           <div className="flex flex-1 items-center justify-center">
-            <div className="w-full max-w-lg backdrop-blur-sm bg-white p-6 rounded-xl">
+            <div className="w-full max-w-lg backdrop-blur-sm p-3 rounded-xl">
               <div className="space-y-6">
-                <Link href="/" className="flex items-center gap-2 font-medium">
+                <div className="flex items-center">
+                  <Link
+                    href="/auth/signin"
+                    className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                  >
+                    <ArrowLeft className="h-4 w-4 text-gray-600" />
+                  </Link>
+                </div>
+                <Link href="/" className="flex justify-center items-center gap-2 font-medium w-full">
                   <Image
                     src="/logo/logo-rbg.png"
                     alt="logo"
-                    width={70}
+                    width={80}
                     height={32}
-                    className="block lg:hidden"
+                    className="block"
                   />
                 </Link>
                 <div className="space-y-2 text-center">
                   <h1 className="text-3xl font-bold">Create an account</h1>
                   <p className="text-gray-500">
-                    Enter your information to create your account
+                    {step === 1 
+                      ? "Enter your email and password to get started"
+                      : "Complete your profile information"}
                   </p>
                 </div>
                 <Form {...form}>
@@ -140,167 +150,207 @@ export default function SignupPage() {
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-4"
                   >
-                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                      <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Email</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="john@example.com"
-                                type="email"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="givenName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>First Name</FormLabel>
-                            <FormControl>
-                              <Input placeholder="John" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="familyName"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Last Name</FormLabel>
-                            <FormControl>
-                              <Input placeholder="Doe" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="birthdate"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Birth Date</FormLabel>
-                            <FormControl>
-                              <Input type="date" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="gender"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Gender</FormLabel>
-                            <FormControl>
-                              <select
-                                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                                {...field}
-                              >
-                                <option value="">Select gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="other">Other</option>
-                              </select>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="password"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Password</FormLabel>
-                            <FormControl>
-                              <div className="relative">
+                    {step === 1 ? (
+                      <>
+                        <FormField
+                          control={form.control}
+                          name="email"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Email</FormLabel>
+                              <FormControl>
                                 <Input
-                                  placeholder="••••••••"
-                                  type={showPassword ? "text" : "password"}
+                                  placeholder="john@example.com"
+                                  type="email"
                                   {...field}
                                 />
-                                <button
-                                  type="button"
-                                  onClick={() => setShowPassword(!showPassword)}
-                                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                                >
-                                  {showPassword ? (
-                                    <EyeOff className="h-4 w-4" />
-                                  ) : (
-                                    <Eye className="h-4 w-4" />
-                                  )}
-                                </button>
-                              </div>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="confirmPassword"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Confirm Password</FormLabel>
-                            <FormControl>
-                              <div className="relative">
-                                <Input
-                                  placeholder="••••••••"
-                                  type={
-                                    showConfirmPassword ? "text" : "password"
-                                  }
-                                  {...field}
-                                />
-                                <button
-                                  type="button"
-                                  onClick={() =>
-                                    setShowConfirmPassword(!showConfirmPassword)
-                                  }
-                                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
-                                >
-                                  {showConfirmPassword ? (
-                                    <EyeOff className="h-4 w-4" />
-                                  ) : (
-                                    <Eye className="h-4 w-4" />
-                                  )}
-                                </button>
-                              </div>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="password"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Password</FormLabel>
+                              <FormControl>
+                                <div className="relative">
+                                  <Input
+                                    placeholder="••••••••"
+                                    type={showPassword ? "text" : "password"}
+                                    {...field}
+                                  />
+                                  <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                                  >
+                                    {showPassword ? (
+                                      <EyeOff className="h-4 w-4" />
+                                    ) : (
+                                      <Eye className="h-4 w-4" />
+                                    )}
+                                  </button>
+                                </div>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="confirmPassword"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Confirm Password</FormLabel>
+                              <FormControl>
+                                <div className="relative">
+                                  <Input
+                                    placeholder="••••••••"
+                                    type={showConfirmPassword ? "text" : "password"}
+                                    {...field}
+                                  />
+                                  <button
+                                    type="button"
+                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                                  >
+                                    {showConfirmPassword ? (
+                                      <EyeOff className="h-4 w-4" />
+                                    ) : (
+                                      <Eye className="h-4 w-4" />
+                                    )}
+                                  </button>
+                                </div>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <Button 
+                          type="button" 
+                          onClick={handleNext}
+                          className="w-full"
+                        >
+                          Next
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                          <FormField
+                            control={form.control}
+                            name="givenName"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>First Name</FormLabel>
+                                <FormControl>
+                                  <Input placeholder="John" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name="familyName"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Last Name</FormLabel>
+                                <FormControl>
+                                  <Input placeholder="Doe" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name="birthdate"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Birth Date</FormLabel>
+                                <FormControl>
+                                  <Input type="date" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name="gender"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Gender</FormLabel>
+                                <FormControl>
+                                  <select
+                                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                    {...field}
+                                  >
+                                    <option value="">Select gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                  </select>
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                        <div className="flex gap-2">
+                          <Button 
+                            type="button" 
+                            variant="outline"
+                            onClick={() => setStep(1)}
+                            className="flex-1"
+                          >
+                            Back
+                          </Button>
+                          <Button 
+                            type="submit" 
+                            className="flex-1"
+                          >
+                            {isLoading ? (
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                              "Sign Up"
+                            )}
+                          </Button>
+                        </div>
+                      </>
+                    )}
+                    <div className="relative">
+                      <div className="absolute inset-0 flex items-center">
+                        <span className="w-full border-t" />
+                      </div>
+                      <div className="relative flex justify-center text-xs uppercase">
+                        <span className="bg-white px-2 text-gray-500">
+                          Or continue with
+                        </span>
+                      </div>
                     </div>
-
-                    <Button type="submit" className="w-full">
-                      {isLoading ? (
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                      ) : (
-                        "Sign Up"
-                      )}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="w-full flex items-center justify-center gap-2"
+                    >
+                      <FcGoogle className="h-5 w-5" />
+                      Sign up with Google
                     </Button>
                   </form>
                 </Form>
                 <div className="text-center text-sm">
                   Already have an account?{" "}
-                  <a
+                  <Link
                     href="/auth/signin"
                     className="font-medium text-primary hover:underline"
                   >
                     Sign in
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

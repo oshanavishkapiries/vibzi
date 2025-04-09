@@ -1,14 +1,17 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const client_id = process.env.NEXT_PUBLIC_USER_POOL_CLIENT_ID;
 const api_url = process.env.NEXT_PUBLIC_API_URL;
 const api_url_2 = process.env.NEXT_PUBLIC_API_URL_2;
 
 const getAuthToken = () => {
   try {
-    const user_id = localStorage.getItem("user_id");
-    const key = `CognitoIdentityServiceProvider.${client_id}.${user_id}.accessToken`;
-    const accessToken = localStorage.getItem(key);
+    const accessTokenKey = Object.keys(localStorage).find(key => key.endsWith('.accessToken'));
+    
+    if (!accessTokenKey) {
+      return null;
+    }
+    
+    const accessToken = localStorage.getItem(accessTokenKey);
     if (!accessToken) {
       return null;
     }

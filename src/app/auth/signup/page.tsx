@@ -50,7 +50,7 @@ type SignupFormValues = z.infer<typeof signupSchema>;
 export default function SignupPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const { signUp } = useAuth();
+  const { signUp , googleSignIn } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [step, setStep] = useState(1);
@@ -337,6 +337,7 @@ export default function SignupPage() {
                       type="button"
                       variant="outline"
                       className="w-full flex items-center justify-center gap-2"
+                      onClick={() => googleSignIn()}
                     >
                       <FcGoogle className="h-5 w-5" />
                       Sign up with Google

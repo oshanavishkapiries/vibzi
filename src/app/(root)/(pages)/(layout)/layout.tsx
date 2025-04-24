@@ -19,7 +19,7 @@ export default function MainLayout({
       <Suspense fallback={<></>}>
         <Header />
       </Suspense>
-      <main className="w-full min-h-screen">
+      <main className="w-full min-h-[calc(100vh-350px)]">
         {isAuthenticated && <TermsAndConditions />}
         <Suspense fallback={<></>}>{children}</Suspense>
       </main>

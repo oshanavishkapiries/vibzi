@@ -47,6 +47,15 @@ const Header = () => {
           >
             Explore
           </Link>
+          <Link
+            href="/esim"
+            className={cn(
+              "max-md:hidden flex flex-row gap-1 items-center text-sm font-semibold transition-all duration-300 hover:border-b-4 hover:border-primary",
+              path === "/esim" && "border-b-4 border-primary"
+            )}
+          >
+            eSIM store
+          </Link>
         </div>
 
         {/* container-end-dev */}
@@ -87,14 +96,24 @@ const Header = () => {
               </div>
               <nav className="flex flex-col gap-3 mt-8">
                 <Link
-                  href="/results"
+                  href="/explore"
                   className={cn(
                     "flex flex-row gap-1 items-center text-sm font-semibold transition-all duration-300 hover:border-b-4 hover:border-primary",
-                    path === "/results" && "border-b-4 border-primary"
+                    path === "/explore" && "border-b-4 border-primary"
                   )}
                   onClick={() => setIsOpen(false)}
                 >
                   Explore
+                </Link>
+                <Link
+                  href="/esim"
+                  className={cn(
+                    "flex flex-row gap-1 items-center text-sm font-semibold transition-all duration-300 hover:border-b-4 hover:border-primary",
+                    path === "/esim" && "border-b-4 border-primary"
+                  )}
+                  onClick={() => setIsOpen(false)}
+                >
+                  eSIM store
                 </Link>
                 <Link
                   href="/about"

@@ -81,7 +81,7 @@ const ItineraryAdd: React.FC<{ initmode: number }> = ({ initmode }) => {
                         <TooltipTrigger asChild>
                           <Button
                             variant="ghost"
-                            className="rounded-full border border-primary"
+                            className="rounded-full border border-primary p-2"
                             size="icon"
                           >
                             <Icon className="h-6 w-6" />

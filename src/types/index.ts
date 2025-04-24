@@ -65,11 +65,23 @@ export interface SearchState {
 }
 
 export interface TimelineItem {
+  id: string;
   type: "activity" | "restaurant" | "hotel" | "flight" | "note";
-  dates?: string;
   details: {
     title: string;
-    customFields: any;
+    customFields: {
+      startTime?: string;
+      endTime?: string;
+      departureLocation?: string;
+      arrivalLocation?: string;
+      reservationNumber?: string;
+      link?: string;
+      note?: string;
+      booked?: string;
+      type?: string;
+      departureTime?: string;
+      arrivalTime?: string;
+    };
   };
 }
 

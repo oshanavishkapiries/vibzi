@@ -122,7 +122,7 @@ export default function SignupPage() {
               <div className="space-y-6">
                 <div className="flex items-center">
                   <Link
-                    href="/auth/signin"
+                    href="/"
                     className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
                   >
                     <ArrowLeft className="h-4 w-4 text-gray-600" />

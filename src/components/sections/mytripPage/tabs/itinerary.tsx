@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setitinerary, setTripDate } from "@/store/slices/metaSlice";
 import { IteneryDateParser } from "@/utils/tripUtils/IteneryDateParser";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { toast } from "sonner";
 
 const Itinerary = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const Itinerary = () => {
   const selectedDate = useSelector((state: any) => state.meta.trip.select_date);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showScrollButtons, setShowScrollButtons] = useState(false);
+  const timelineRef = useRef<any>(null);
 
   const { data } = useGetTripPlanItineraryByIdQuery(
     trip.tripId ? trip.tripId : ""
@@ -61,6 +63,21 @@ const Itinerary = () => {
     }
   };
 
+  const handleDateChange = async (newDate: string) => {
+    if (timelineRef.current?.hasUnsavedChanges) {
+      try {
+        await timelineRef.current.handleSave();
+        dispatch(setTripDate(newDate));
+      } catch (error) {
+        toast.error("Please save your changes before switching dates");
+        console.log(error);
+        return;
+      }
+    } else {
+      dispatch(setTripDate(newDate));
+    }
+  };
+
   return (
     <>
       {/* itinerary */}
@@ -92,7 +109,7 @@ const Itinerary = () => {
                     "rounded-full border-2 border-primary min-w-[80px] hover:bg-primary/25",
                     trip.select_date === date ? "bg-primary text-white" : ""
                   )}
-                  onClick={() => dispatch(setTripDate(date))}
+                  onClick={() => handleDateChange(date)}
                 >
                   {IteneryDateParser(date).short}
                 </Button>
@@ -112,14 +129,8 @@ const Itinerary = () => {
         )}
       </div>
 
-      {trip.select_date && (
-        <h2 className="font-semibold text-xl ms-4">
-          {IteneryDateParser(trip.select_date).long}
-        </h2>
-      )}
-
       {/* timeline */}
-      <TimeLine data={items} />
+      <TimeLine data={items} ref={timelineRef} />
     </>
   );
 };

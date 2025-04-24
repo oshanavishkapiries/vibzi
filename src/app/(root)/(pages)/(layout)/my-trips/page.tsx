@@ -4,7 +4,7 @@ import { CreateTripDialog } from "@/components/sections/mytripPage/create-trip-d
 import TripCard from "@/components/sections/mytripPage/TripCard";
 import Tripsection from "@/components/sections/mytripPage/Tripsection";
 import { Button } from "@/components/ui/button";
-import { setTrip_Id, setTripId , setTripDate } from "@/store/slices/metaSlice";
+import { setTrip_Id, setTripId, setTripDate } from "@/store/slices/metaSlice";
 import { useSearchTripPlansQuery } from "@/store/api/trip/tripPlanSlice";
 import { parseTrips } from "@/utils/tripUtils/tripDataFunction";
 import { Loader2, Plus } from "lucide-react";
@@ -12,6 +12,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MobileBottomNav from "@/components/sections/mytripPage/MobileBottomNav";
+import Image from "next/image";
 
 const MyTrips = () => {
   const router = useRouter();
@@ -50,24 +51,31 @@ const MyTrips = () => {
   return (
     <AuthMiddleware>
       <div
-        className={`container px-3 mx-auto mb-8 ${
+        className={`container min-h-[calc(100vh-350px)] px-3 mx-auto mb-8 ${
           tripsData.length === 0 || isLoading
-            ? "flex justify-center items-center min-h-[500px]"
+            ? "flex justify-center items-center"
             : ""
         }`}
       >
         {isLoading && (
-          <div className="w-full min-h-[500px] flex flex-col items-center justify-center p-6 cursor-pointer shadow-none border-none">
+          <div className="w-full flex flex-col items-center justify-center p-6 cursor-pointer shadow-none border-none">
             <Loader2 className="w-15 h-15 animate-spin" />
           </div>
         )}
 
         {tripsData.length === 0 && !isLoading && (
           <CreateTripDialog>
-            <Button variant="outline" className="w-[240px] mb-2 h-16">
-              <Plus className="h-4 w-4" />
-              Create a new trip
-            </Button>
+            <div className="flex flex-col items-center justify-center gap-4">
+              <Image
+                src="/create_trip.gif"
+                alt="Create Trip"
+                width={80}
+                height={80}
+              />
+              <Button variant="outline" className="rounded-md px-6 py-3">
+                + Create new Trip
+              </Button>
+            </div>
           </CreateTripDialog>
         )}
 
@@ -93,7 +101,9 @@ const MyTrips = () => {
                     alt={trip.title}
                     title={trip.title}
                     description={trip.description}
-                    onClick={() => handleCardClick(trip.id, trip.tripId, trip.startDate)}
+                    onClick={() =>
+                      handleCardClick(trip.id, trip.tripId, trip.startDate)
+                    }
                   />
                 ))}
               </div>

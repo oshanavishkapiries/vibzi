@@ -41,7 +41,7 @@ const Activities = () => {
                 allowFullScreen
                 scrolling="no"
                 allow="autoplay;fullscreen"
-                src="https://onelineplayer.com/player.html?autoplay=true&autopause=false&muted=true&loop=true&url=https://res.cloudinary.com/comseeker/video/upload/v1742711950/vibzi/Giff_3_mvouvr.mp4&poster=&time=false&progressBar=false&overlay=true&muteButton=false&fullscreenButton=true&style=light&quality=auto&playButton=true&buttonColor=&buttonSize=60"
+                src="https://onelineplayer.com/player.html?autoplay=true&autopause=false&muted=true&loop=true&url=https://res.cloudinary.com/comseeker/video/upload/v1744304767/vibzi/0410_ukhxdu.mp4&poster=&time=false&progressBar=false&overlay=true&muteButton=false&fullscreenButton=true&style=light&quality=auto&playButton=true&buttonColor=&buttonSize=60"
                 style={{
                   height: "100%",
                   width: "100%",

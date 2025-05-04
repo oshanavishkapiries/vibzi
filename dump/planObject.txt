@@ -1,0 +1,80 @@
+{
+    "id": "6810726010577f4323a92af4",
+    "packageName": "Maew - 5 GB",
+    "imageUrl": "https://obj-crt.s3.us-east-1.amazonaws.com/uploads/8af7de58-025f-47d3-8a40-8f6cfa4efc44-3.png",
+    "coverage": "Thailand",
+    "validity": "30 Days",
+    "price": "8",
+    "destination": "",
+    "currency": null,
+    "provider": "AIS",
+    "productUrl": "airalo.pxf.io/6y7kor",
+    "packageType": "LOCAL",
+    "region": "ASIA",
+    "packageDetails": {
+        "sms": "N/A",
+        "smsInfo": "N/A",
+        "data": "5 GB",
+        "dataInfo": "N/A",
+        "voice": "N/A",
+        "voiceInfo": "N/A"
+    },
+    "topUpPackages": [
+        {
+            "packageName": "1 GB - 7 Days",
+            "data": "1 GB",
+            "validity": "7 Days",
+            "price": "4.5"
+        },
+        {
+            "packageName": "2 GB - 15 Days",
+            "data": "2 GB",
+            "validity": "15 Days",
+            "price": "5"
+        },
+        {
+            "packageName": "3 GB - 30 Days",
+            "data": "3 GB",
+            "validity": "30 Days",
+            "price": "6"
+        },
+        {
+            "packageName": "5 GB - 30 Days",
+            "data": "5 GB",
+            "validity": "30 Days",
+            "price": "8"
+        },
+        {
+            "packageName": "10 GB - 30 Days",
+            "data": "10 GB",
+            "validity": "30 Days ",
+            "price": "12"
+        },
+        {
+            "packageName": "20 GB - 30 DaysDays",
+            "data": "20 GB",
+            "validity": "30 Days",
+            "price": "18"
+        },
+        {
+            "packageName": "50 GB - 30 Days",
+            "data": "50 GB",
+            "validity": "30 Days",
+            "price": "39.5"
+        }
+    ],
+    "additionalInfo": {
+        "network": "AIS ",
+        "networkType": null,
+        "planType": "Data Only",
+        "validityPolicy": "The validity period starts when the eSIM connects to a mobile network in its coverage area. If you install the eSIM outside of the coverage area, you can connect to a network when you arrive.",
+        "ipRouting": "YES",
+        "ekycRequired": "false",
+        "ekycValidityPeriod": "N/A",
+        "topupOption": "Available",
+        "otherInfo": "You must activate the eSIM within 90 days of purchase."
+    },
+    "supportedCountries": [
+        "Thailand"
+    ]
+}

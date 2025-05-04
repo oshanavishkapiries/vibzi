@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://vibzi.co
-
-# Sitemaps
-Sitemap: https://vibzi.co/sitemap.xml

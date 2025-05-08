@@ -1,4 +1,4 @@
-import { apiSlice1 } from "../../slices/apiSlice";
+import { apiSlice } from "../../slices/apiSlice";
 
 interface CountrySearchRequest {
   type: string;
@@ -19,7 +19,7 @@ interface PackageSearchRequest {
   size: number;
 }
 
-export const esimSlice = apiSlice1.injectEndpoints({
+export const esimSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     searchCountriesOrRegions: builder.mutation<any, CountrySearchRequest>({
       query: (data) => ({

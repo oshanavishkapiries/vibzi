@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const api_url = process.env.NEXT_PUBLIC_API_URL;
-const api_url_2 = process.env.NEXT_PUBLIC_API_URL_2;
+const provider_service_url = process.env.NEXT_PUBLIC_PROVIDER_SERVICE_URL;
+const common_service_url = process.env.NEXT_PUBLIC_COMMON_SERVICE_URL;
 
 const getAuthToken = () => {
   try {
@@ -25,7 +25,7 @@ const getAuthToken = () => {
 export const apiSlice = createApi({
   reducerPath: "apiOne",
   baseQuery: fetchBaseQuery({
-    baseUrl: api_url,
+    baseUrl: provider_service_url,
     prepareHeaders: (headers) => {
       const token = getAuthToken();
       if (token) {
@@ -40,7 +40,7 @@ export const apiSlice = createApi({
 export const apiSlice1 = createApi({
   reducerPath: "apiTwo",
   baseQuery: fetchBaseQuery({
-    baseUrl: api_url_2,
+    baseUrl: common_service_url,
     prepareHeaders: (headers) => {
       const token = getAuthToken();
       if (token) {

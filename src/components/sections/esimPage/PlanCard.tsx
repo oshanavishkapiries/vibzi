@@ -13,7 +13,7 @@ const PlanCard = ({ plan }: PlanCardProps) => {
   return (
     <>
       <div
-        className="bg-primary rounded-lg mt-8 shadow-md cursor-pointer hover:shadow-lg transition-shadow"
+        className="bg-gradient-to-br from-[#058250] to-[#022f30] rounded-lg mt-8 shadow-md cursor-pointer hover:shadow-lg transition-shadow"
         onClick={() => setIsDialogOpen(true)}
       >
         <div className="relative">
@@ -23,7 +23,7 @@ const PlanCard = ({ plan }: PlanCardProps) => {
             </h3>
           </div>
           <div className="absolute -top-6 right-4 z-10">
-            <div className="w-[120px] h-[60px]">
+            <div className="w-[160px] h-[90px]">
               <OptimizedImage
                 src={plan?.imageUrl || "/placeholder.webp"}
                 alt={plan.id}

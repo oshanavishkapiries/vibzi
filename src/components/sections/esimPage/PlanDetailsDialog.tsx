@@ -11,6 +11,7 @@ import OptimizedImage from "@/components/common/OptimizedImage";
 import { Globe, ArrowUpDown, Calendar, Tag, X, Info } from "lucide-react";
 import TopUpPackages from "./TopUpPackages";
 import Image from "next/image";
+import Link from "next/link";
 
 interface PlanDetailsDialogProps {
   isOpen: boolean;
@@ -203,13 +204,14 @@ export default function PlanDetailsDialog({
             <div className="text-2xl font-bold text-gray-800">
               {plan?.price ? `$${parseFloat(plan.price).toFixed(2)} USD` : "-"}
             </div>
-            <button
-              className="bg-gray-800 text-white font-bold text-lg rounded-lg px-12 py-3 shadow hover:bg-gray-700 transition-colors"
-              type="button"
-              onClick={() => window.open(plan?.productUrl, "_blank")}
-            >
-              BUY
-            </button>
+            <Link href={plan?.productUrl || ""} target="_blank">
+              <button
+                className="bg-gray-800 text-white font-bold text-lg rounded-lg px-12 py-3 shadow hover:bg-gray-700 transition-colors"
+                type="button"
+              >
+                BUY
+              </button>
+            </Link>
           </div>
         </DialogFooter>
       </DialogContent>

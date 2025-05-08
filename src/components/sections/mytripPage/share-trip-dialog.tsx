@@ -40,8 +40,8 @@ export function ShareTripDialog({
             <span>Share with anyone</span>
           </div>
           <div className="text-gray-500 text-sm mb-4">
-            Copy and sand the link balow to share your trip. Anyone with this
-            link can view the trip, but can't edit or add to it.
+            Copy and send the link below to share your trip. Anyone with this
+            link can view the trip, but can&apos;t edit or add to it.
           </div>
           <div className="flex items-center gap-3">
             <Input

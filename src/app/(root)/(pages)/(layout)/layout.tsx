@@ -2,18 +2,18 @@
 import React, { Suspense } from "react";
 import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
-import TermsAndConditions from "@/components/common/TearmsAndConditions";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+//import TermsAndConditions from "@/components/common/TearmsAndConditions";
+// import { useSelector } from "react-redux";
+// import { RootState } from "@/store/store";
 
 export default function MainLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
+  // const isAuthenticated = useSelector(
+  //   (state: RootState) => state.auth.isAuthenticated
+  // );
   return (
     <Suspense fallback={<></>}>
       <Suspense fallback={<></>}>

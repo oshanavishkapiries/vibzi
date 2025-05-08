@@ -38,8 +38,8 @@ export function CircleDialog({ children }: { children: React.ReactNode }) {
         <DialogHeader>
           <DialogTitle>Your Circle</DialogTitle>
           <DialogDescription>
-            This is your circle—people you've invited to the trip. They can view
-            the trip details anytime and help edit the plan.
+            This is your circle—people you&apos;ve invited to the trip. They can
+            view the trip details anytime and help edit the plan.
           </DialogDescription>
         </DialogHeader>
         <Tabs.Root defaultValue="members" className="mt-4">

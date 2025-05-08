@@ -12,22 +12,23 @@ import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import ReactCrop, { type Crop, centerCrop, makeAspectCrop } from "react-image-crop";
+import ReactCrop, {
+  type Crop,
+  centerCrop,
+  makeAspectCrop,
+} from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
-import { useUploadTripPlanCoverImageMutation }  from "@/store/api/trip/tripPlanSlice";
+import { useUploadTripPlanCoverImageMutation } from "@/store/api/trip/tripPlanSlice";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
+import Image from "next/image";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ASPECT_RATIO = 16 / 9;
 const CROP_WIDTH = 800;
 const CROP_HEIGHT = CROP_WIDTH / ASPECT_RATIO;
 
-export function ImageUploadDialog({
-  children
-}: {
-    children: React.ReactNode;
-}) {
+export function ImageUploadDialog({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = React.useState(false);
   const [file, setFile] = React.useState<File | null>(null);
   const [preview, setPreview] = React.useState<string | null>(null);
@@ -40,7 +41,8 @@ export function ImageUploadDialog({
     y: 0,
   });
   const [imageRef, setImageRef] = useState<HTMLImageElement | null>(null);
-  const [uploadTripPlanCoverImage, { isLoading }] = useUploadTripPlanCoverImageMutation();
+  const [uploadTripPlanCoverImage, { isLoading }] =
+    useUploadTripPlanCoverImageMutation();
   const tripPlanId = useSelector((state: any) => state.meta.trip.id);
 
   useEffect(() => {
@@ -74,23 +76,23 @@ export function ImageUploadDialog({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'image/*': ['.png', '.jpg', '.jpeg']
+      "image/*": [".png", ".jpg", ".jpeg"],
     },
-    maxFiles: 1,
+    maxSize: 5 * 1024 * 1024, // 5MB
   });
 
   const onImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const { width, height } = e.currentTarget;
-    
+
     // Calculate the maximum possible crop dimensions
     const maxWidth = Math.min(width, CROP_WIDTH);
     const maxHeight = maxWidth / ASPECT_RATIO;
-    
+
     // Create initial crop centered on the image
     const initialCrop = centerCrop(
       makeAspectCrop(
         {
-          unit: 'px',
+          unit: "px",
           width: maxWidth,
           height: maxHeight,
         },
@@ -101,7 +103,7 @@ export function ImageUploadDialog({
       width,
       height
     );
-    
+
     setCrop(initialCrop);
   };
 
@@ -125,8 +127,8 @@ export function ImageUploadDialog({
   const getCroppedImg = async () => {
     if (!file || !imageRef) return null;
 
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
     if (!ctx) return null;
 
     // Set canvas dimensions to match the crop
@@ -168,10 +170,14 @@ export function ImageUploadDialog({
     const croppedFile = await getCroppedImg();
     if (croppedFile) {
       try {
-        await uploadTripPlanCoverImage({ id: tripPlanId, file: croppedFile }).unwrap();
+        await uploadTripPlanCoverImage({
+          id: tripPlanId,
+          file: croppedFile,
+        }).unwrap();
         setOpen(false);
         toast("Cover image uploaded successfully");
       } catch (error) {
+        console.log(error);
         setError("Failed to upload image. Please try again.");
         toast("Failed to upload cover image", {
           description: "Please try again later",
@@ -182,7 +188,7 @@ export function ImageUploadDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-       <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle>Change Cover Image</DialogTitle>
@@ -194,13 +200,14 @@ export function ImageUploadDialog({
               className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-50 cursor-pointer transition hover:border-primary focus:border-primary"
             >
               <input {...getInputProps()} />
-              <Upload className="w-10 h-10 text-gray-400 mb-2" />
-              <p className="font-medium text-gray-700 mb-1">
+              <Upload className="w-8 h-8 text-gray-400 mb-2" />
+              <p className="text-sm text-gray-600">
                 {isDragActive
                   ? "Drop the image here"
-                  : "Drag & drop an image here, or click to select"}
+                  : "Drag & drop an image, or click to select"}
               </p>
-              <p className="text-xs text-gray-400">PNG, JPG, JPEG up to 5MB</p>
+              <p className="text-xs text-gray-500 mt-1">PNG, JPG up to 5MB</p>
+              {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             </div>
           ) : (
             <div className="space-y-4">
@@ -213,20 +220,22 @@ export function ImageUploadDialog({
                     className="max-h-[500px]"
                     locked={true}
                   >
-                    <img
-                      ref={setImageRef}
-                      src={preview}
-                      alt="Preview"
-                      className="max-w-full max-h-[500px] object-contain"
-                      onLoad={onImageLoad}
-                      draggable={false}
-                    />
+                    <div className="relative w-full h-full">
+                      <Image
+                        ref={setImageRef}
+                        src={preview}
+                        alt="Preview"
+                        fill
+                        className="object-contain"
+                        onLoad={onImageLoad}
+                        draggable={false}
+                      />
+                    </div>
                   </ReactCrop>
                 </div>
               </div>
             </div>
           )}
-          {error && <p className="text-sm text-red-500">{error}</p>}
         </div>
         <DialogFooter>
           <Button

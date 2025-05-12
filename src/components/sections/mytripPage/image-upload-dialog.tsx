@@ -17,12 +17,9 @@ import { toast } from "sonner";
 import "react-image-crop/dist/ReactCrop.css";
 import { useUploadTripPlanCoverImageMutation } from "@/store/api/trip/tripPlanSlice";
 import { useSelector } from "react-redux";
+import Image from "next/image";
 
-export function ImageUploadDialog({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function ImageUploadDialog({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = React.useState(false);
   const [file, setFile] = React.useState<File | null>(null);
   const [preview, setPreview] = React.useState<string | null>(null);
@@ -33,10 +30,13 @@ export function ImageUploadDialog({
     width: 320,
     height: 180,
   });
-  const [completedCrop, setCompletedCrop] = React.useState<PixelCrop | null>(null);
+  const [completedCrop, setCompletedCrop] = React.useState<PixelCrop | null>(
+    null
+  );
   const [error, setError] = React.useState<string | null>(null);
   const imgRef = React.useRef<HTMLImageElement | null>(null);
-  const [uploadTripPlanCoverImage, { isLoading }] = useUploadTripPlanCoverImageMutation();
+  const [uploadTripPlanCoverImage, { isLoading }] =
+    useUploadTripPlanCoverImageMutation();
   const tripPlanId = useSelector((state: any) => state.meta.trip.id);
 
   React.useEffect(() => {
@@ -64,8 +64,8 @@ export function ImageUploadDialog({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: { "image/*": [".png", ".jpg", ".jpeg"] },
-    maxSize: 5 * 1024 * 1024, 
-    disabled: !!file, 
+    maxSize: 5 * 1024 * 1024,
+    disabled: !!file,
   });
 
   const getCroppedImg = async (): Promise<File | null> => {
@@ -102,7 +102,11 @@ export function ImageUploadDialog({
           resolve(null);
           return;
         }
-        const croppedFile = new File([blob], file?.name || "cropped-image.jpg", { type: "image/jpeg" });
+        const croppedFile = new File(
+          [blob],
+          file?.name || "cropped-image.jpg",
+          { type: "image/jpeg" }
+        );
         resolve(croppedFile);
       }, "image/jpeg");
     });
@@ -130,17 +134,17 @@ export function ImageUploadDialog({
 
   const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
     imgRef.current = e.currentTarget;
-    
+
     if (imgRef.current) {
       const { width, height } = imgRef.current;
-      
+
       let cropWidth = 320;
       let cropHeight = 180;
-      
+
       if (width < 320 || height < 180) {
         const widthRatio = width / 320;
         const heightRatio = height / 180;
-        
+
         if (widthRatio < heightRatio) {
           cropWidth = width;
           cropHeight = width * (9 / 16);
@@ -149,10 +153,10 @@ export function ImageUploadDialog({
           cropWidth = height * (16 / 9);
         }
       }
-      
+
       const x = Math.max(0, (width - cropWidth) / 2);
       const y = Math.max(0, (height - cropHeight) / 2);
-      
+
       setCrop({ unit: "px", x, y, width: cropWidth, height: cropHeight });
     }
   };
@@ -181,7 +185,9 @@ export function ImageUploadDialog({
               keepSelection={true}
               className="w-full"
             >
-              <img
+              <Image
+                width={320}
+                height={180}
                 src={preview}
                 alt="Preview"
                 className="max-w-full h-auto object-contain"
@@ -200,10 +206,18 @@ export function ImageUploadDialog({
         </div>
         {error && <p className="text-red-500 text-sm">{error}</p>}
         <DialogFooter>
-          <Button variant="outline" onClick={() => setOpen(false)} type="button">
+          <Button
+            variant="outline"
+            onClick={() => setOpen(false)}
+            type="button"
+          >
             Cancel
           </Button>
-          <Button onClick={handleSave} disabled={!file || isLoading} type="button">
+          <Button
+            onClick={handleSave}
+            disabled={!file || isLoading}
+            type="button"
+          >
             {isLoading ? "Uploading..." : "Save"}
           </Button>
         </DialogFooter>

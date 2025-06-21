@@ -19,7 +19,8 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/package-lock.json ./package-lock.json
 COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/amplifyconfiguration.json ./amplifyconfiguration.json
 
-EXPOSE 3000
+EXPOSE 4000
 
 CMD ["sh", "-c", "echo \"NEXT_PUBLIC_PROVIDER_SERVICE_URL=$NEXT_PUBLIC_PROVIDER_SERVICE_URL\nNEXT_PUBLIC_COMMON_SERVICE_URL=$NEXT_PUBLIC_COMMON_SERVICE_URL\" > .env && npm start"]

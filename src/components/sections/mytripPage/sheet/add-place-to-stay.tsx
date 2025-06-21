@@ -19,11 +19,11 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { TimelineItem } from "@/types";
 
-const AddPlaceToStay = ({ 
+const AddPlaceToStay = ({
   children,
   onUpdate,
-  editingItem 
-}: { 
+  editingItem,
+}: {
   children?: React.ReactNode;
   onUpdate?: (item: any) => Promise<void>;
   editingItem?: TimelineItem | null;
@@ -31,10 +31,15 @@ const AddPlaceToStay = ({
   const [formData, setFormData] = useState({
     activityName: editingItem?.details?.title || "",
     booked: editingItem?.details?.customFields?.booked || "no",
-    startTime: editingItem?.details?.customFields?.startTime ? new Date(editingItem.details.customFields.startTime) : new Date(),
-    endTime: editingItem?.details?.customFields?.endTime ? new Date(editingItem.details.customFields.endTime) : new Date(),
+    startTime: editingItem?.details?.customFields?.startTime
+      ? new Date(editingItem.details.customFields.startTime)
+      : new Date(),
+    endTime: editingItem?.details?.customFields?.endTime
+      ? new Date(editingItem.details.customFields.endTime)
+      : new Date(),
     link: editingItem?.details?.customFields?.link || "",
-    reservationNumber: editingItem?.details?.customFields?.reservationNumber || "",
+    reservationNumber:
+      editingItem?.details?.customFields?.reservationNumber || "",
     note: editingItem?.details?.customFields?.note || "",
   });
 
@@ -49,7 +54,7 @@ const AddPlaceToStay = ({
     if (!itinerary || !selectedDate) return;
 
     const obj = {
-      position:(itinerary.itinerary[selectedDate]?.length + 1) || 1,
+      position: itinerary.itinerary[selectedDate]?.length + 1 || 1,
       date: selectedDate,
       type: "hotel",
       details: {
@@ -75,7 +80,7 @@ const AddPlaceToStay = ({
         toast.success("Place to stay added successfully.");
         setIsOpen(false);
       } catch (error) {
-        console.log('error: ', error);
+        console.log("error: ", error);
         toast.error("Failed to add place to stay. Please try again.");
       }
     }
@@ -106,13 +111,15 @@ const AddPlaceToStay = ({
             </SheetTitle>
           </div>
           <p className="text-sm text-muted-foreground">
-            {editingItem ? "Edit your place to stay details" : "Add a description here"}
+            {editingItem
+              ? "Edit your place to stay details"
+              : "Add a description here"}
           </p>
         </SheetHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="activityName">
-              Name Of Activity <span className="text-red-500">*</span>
+              Name Of Place To Stay <span className="text-red-500">*</span>
             </Label>
             <Input
               id="activityName"
@@ -147,9 +154,13 @@ const AddPlaceToStay = ({
               <Label>Check In Time</Label>
               <Input
                 type="time"
-                value={formData.startTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })}
+                value={formData.startTime.toLocaleTimeString("en-US", {
+                  hour12: false,
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
                 onChange={(e) => {
-                  const [hours, minutes] = e.target.value.split(':');
+                  const [hours, minutes] = e.target.value.split(":");
                   const newDate = new Date(formData.startTime);
                   newDate.setHours(parseInt(hours), parseInt(minutes));
                   setFormData({ ...formData, startTime: newDate });
@@ -160,9 +171,13 @@ const AddPlaceToStay = ({
               <Label>Check Out Time</Label>
               <Input
                 type="time"
-                value={formData.endTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })}
+                value={formData.endTime.toLocaleTimeString("en-US", {
+                  hour12: false,
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
                 onChange={(e) => {
-                  const [hours, minutes] = e.target.value.split(':');
+                  const [hours, minutes] = e.target.value.split(":");
                   const newDate = new Date(formData.endTime);
                   newDate.setHours(parseInt(hours), parseInt(minutes));
                   setFormData({ ...formData, endTime: newDate });
@@ -212,8 +227,10 @@ const AddPlaceToStay = ({
             >
               {isLoading ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
+              ) : editingItem ? (
+                "Update"
               ) : (
-                editingItem ? "Update" : "Add to trip"
+                "Add to trip"
               )}
             </Button>
           </div>

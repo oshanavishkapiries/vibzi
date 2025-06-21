@@ -28,8 +28,6 @@ export default function ResultsPage() {
     flag: "",
   });
 
-
-
   useEffect(() => {
     const destinationId = searchParams.get("des_id") || "";
     const startDate = searchParams.get("from") || "";
@@ -58,8 +56,6 @@ export default function ResultsPage() {
     });
   }, [searchParams]);
 
- 
-
   const handlePageChange = (newPage: number) => {
     const params = new URLSearchParams(searchParams);
     params.set("page", newPage.toString());
@@ -73,6 +69,7 @@ export default function ResultsPage() {
       </div>
       <FilterCloud />
       <DestinatioDetails state={state} onPageChange={handlePageChange} />
+
       <FoodandDrinkSection state={state} />
       <AttractionsSection state={state} />
     </div>

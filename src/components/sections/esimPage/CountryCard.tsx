@@ -1,7 +1,7 @@
-import React from 'react';
-import Image from 'next/image';
-import { ChevronDown } from 'lucide-react';
-import { Country } from './EsimTabs';
+import React from "react";
+import Image from "next/image";
+import { ChevronDown } from "lucide-react";
+import { Country } from "./EsimTabs";
 
 interface CountryCardProps {
   country: Country;
@@ -9,7 +9,6 @@ interface CountryCardProps {
 }
 
 const CountryCard = ({ country, onClick }: CountryCardProps) => {
-
   console.log(country);
   return (
     <button
@@ -19,9 +18,9 @@ const CountryCard = ({ country, onClick }: CountryCardProps) => {
       <div className="flex items-center gap-3">
         <div className="relative w-8 h-6">
           <Image
-            src={country.imageUrl || '/placeholder.webp'}
+            src={country.imageUrl || "/placeholder.webp"}
             alt={`${country.name} flag`}
-            sizes='100vw'
+            sizes="100vw"
             fill
             className="object-cover rounded"
           />
@@ -33,4 +32,4 @@ const CountryCard = ({ country, onClick }: CountryCardProps) => {
   );
 };
 
-export default CountryCard; 
+export default CountryCard;

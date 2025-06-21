@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import { useId, useState } from "react";
-import { useAuth } from "@/components/common/Auth/AuthProvider";
+import { useAuth } from "@/providers/AuthProvider";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
@@ -56,10 +56,12 @@ export default function SignInPopup({
         <div className="flex flex-col items-center gap-2">
           <Image
             src="/logo/logo-rbg.png"
+            sizes="(max-width: 768px) 33vw, 20vw"
             alt="Vibzi Logo"
             width={100}
             height={60}
           />
+
           <DialogHeader>
             <DialogTitle className="sm:text-center">Welcome back</DialogTitle>
             <DialogDescription className="sm:text-center">
@@ -90,6 +92,7 @@ export default function SignInPopup({
                 required
                 disabled={isLoading}
               />
+
               <div className="flex justify-end mt-2">
                 <Button
                   type="button"

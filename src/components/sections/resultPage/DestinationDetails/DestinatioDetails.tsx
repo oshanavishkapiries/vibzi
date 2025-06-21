@@ -17,10 +17,10 @@ const DestinatioDetails = (props: any) => {
   const queryParams = {
     ...DEFAULT_SEARCH_PARAMS,
     startDate: parseDateToISO(
-      props.state.startDate || DEFAULT_SEARCH_PARAMS.startDate
+      props.state.startDate || DEFAULT_SEARCH_PARAMS.startDate,
     ),
     endDate: parseDateToISO(
-      props.state.endDate || DEFAULT_SEARCH_PARAMS.endDate
+      props.state.endDate || DEFAULT_SEARCH_PARAMS.endDate,
     ),
     destinationId: props.state.destinationId,
     page: props.state.page - 1,
@@ -45,10 +45,10 @@ const DestinatioDetails = (props: any) => {
   const queryParamsFreeText = {
     ...DEFAULT_SEARCH_STATE_FREE_TEXT,
     startDate: parseDateToISO(
-      props.state.startDate || DEFAULT_SEARCH_STATE_FREE_TEXT.startDate
+      props.state.startDate || DEFAULT_SEARCH_STATE_FREE_TEXT.startDate,
     ),
     endDate: parseDateToISO(
-      props.state.endDate || DEFAULT_SEARCH_STATE_FREE_TEXT.endDate
+      props.state.endDate || DEFAULT_SEARCH_STATE_FREE_TEXT.endDate,
     ),
     searchQuery: props.state.destination,
     page: props.state.page,
@@ -59,7 +59,7 @@ const DestinatioDetails = (props: any) => {
     isFetching,
     isError,
   } = useSearchProductsQuery(
-    props.state.destinationId ? queryParams : queryParamsFreeText
+    props.state.destinationId ? queryParams : queryParamsFreeText,
   );
 
   useEffect(() => {

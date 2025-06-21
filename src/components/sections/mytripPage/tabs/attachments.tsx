@@ -20,7 +20,7 @@ const FileAttachments = () => {
   const [deleteAttachment] = useDeleteAttachmentMutation();
 
   const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const newFiles = event.target.files;
     if (!newFiles?.length) return;
@@ -49,7 +49,7 @@ const FileAttachments = () => {
           formData.append("files", file);
         } else {
           toast.error(
-            `File type ${file.type} is not supported. Please upload images or documents only.`
+            `File type ${file.type} is not supported. Please upload images or documents only.`,
           );
         }
       });
@@ -115,7 +115,14 @@ const FileAttachments = () => {
             >
               <div
                 className="w-full h-full flex flex-col p-2 cursor-pointer"
-                onClick={() => openFileInNewTab("/file?url=" + file.fileUrl + "&filename=" + file.originalFilename)}
+                onClick={() =>
+                  openFileInNewTab(
+                    "/file?url=" +
+                      file.fileUrl +
+                      "&filename=" +
+                      file.originalFilename,
+                  )
+                }
               >
                 <div className="w-full h-full flex items-center justify-center">
                   <div className="w-10 h-10">

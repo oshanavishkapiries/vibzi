@@ -40,6 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <div className="flex items-center text-sm text-muted-foreground mb-2">
             <Badge variant="secondary" className="flex items-center gap-1">
               <Star className="h-3 w-3 fill-primary text-primary" />
+
               <span>{product.reviews.averageReviews.toFixed(1)}</span>
             </Badge>
             <span className="text-sm text-muted-foreground">

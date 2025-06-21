@@ -8,6 +8,7 @@ const initialState: MetaState = {
     id: "",
     tripId: "",
     itinerary: {},
+    isOwner: false,
   },
 };
 
@@ -24,8 +25,11 @@ export const metaSlice = createSlice({
     setTrip_Id: (state, action: PayloadAction<string>) => {
       state.trip.tripId = action.payload;
     },
-    setitinerary:(state, action: PayloadAction<any>) => {
+    setitinerary: (state, action: PayloadAction<any>) => {
       state.trip.itinerary = action.payload;
+    },
+    setIsOwner: (state, action: PayloadAction<boolean>) => {
+      state.trip.isOwner = action.payload;
     },
   },
 });
@@ -34,5 +38,6 @@ export const { setTripDate } = metaSlice.actions;
 export const { setTripId } = metaSlice.actions;
 export const { setTrip_Id } = metaSlice.actions;
 export const { setitinerary } = metaSlice.actions;
+export const { setIsOwner } = metaSlice.actions;
 
 export default metaSlice.reducer;

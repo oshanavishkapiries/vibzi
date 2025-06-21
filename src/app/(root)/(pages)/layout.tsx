@@ -8,9 +8,7 @@ import Header from "@/components/common/Header";
 
 export default function MainLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   // const isAuthenticated = useSelector(
   //   (state: RootState) => state.auth.isAuthenticated
   // );

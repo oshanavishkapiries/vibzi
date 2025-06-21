@@ -100,11 +100,19 @@ export interface AuthContextType {
   ) => Promise<void>;
   verifyEmail: (email: string, code: string, resend?: boolean) => Promise<void>;
   forgotPassword: (email: string) => Promise<any>;
-  resetPassword: (
-    code: string,
-    newPassword: string
-  ) => Promise<any>;
+  resetPassword: (code: string, newPassword: string) => Promise<any>;
   googleSignIn: () => Promise<void>;
+}
+
+export interface MetaState {
+  title: string;
+  trip: {
+    select_date: string;
+    id: string;
+    tripId: string;
+    itinerary: any;
+    isOwner: boolean;
+  };
 }
 
 export * from "./auth";

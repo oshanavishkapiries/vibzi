@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import DocViewer, { DocViewerRenderers } from "@cyntler/react-doc-viewer";
-import 'react-pdf/dist/Page/TextLayer.css';
+import "react-pdf/dist/Page/TextLayer.css";
 import Image from "next/image";
 
 const FilePageContent = () => {
@@ -27,16 +27,18 @@ const FilePageContent = () => {
         <div className="flex items-center gap-4">
           <Image
             src="/logo/logo-rbg.png"
+            sizes="(max-width: 768px) 33vw, 20vw"
             alt="Logo"
             width={60}
             height={40}
             className="object-contain"
           />
+
           <h1 className="text-xl font-semibold">{fileName}</h1>
         </div>
       </div>
-      
-      <div style={{ height: 'calc(100vh - 73px)', width: '100%' }}>
+
+      <div style={{ height: "calc(100vh - 73px)", width: "100%" }}>
         {fileUrl && (
           <DocViewer
             documents={[{ uri: fileUrl, fileName: fileName }]}
@@ -47,7 +49,7 @@ const FilePageContent = () => {
                 disableFileName: true,
               },
             }}
-            style={{ height: '100%' }}
+            style={{ height: "100%" }}
           />
         )}
       </div>

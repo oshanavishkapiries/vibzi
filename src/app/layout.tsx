@@ -2,10 +2,11 @@ import { Metadata } from "next";
 //import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 
-import ReduxProvider from "./(root)/reduxProvider";
+import ReduxProvider from "../providers/reduxProvider";
 import { Toaster } from "sonner";
-import AuthProvider from "@/components/common/Auth/AuthProvider";
+import AuthProvider from "@/providers/AuthProvider";
 import "@/config/amplify";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://vibzi.co"),
@@ -41,17 +42,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <head></head>
-      <body>
-        <Toaster position="bottom-right" />
-        <ReduxProvider>
-          <AuthProvider>{children}</AuthProvider>
-        </ReduxProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body suppressHydrationWarning>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Toaster position="bottom-right" />
+          <ReduxProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </ReduxProvider>
+        </Suspense>
       </body>
       {/* <GoogleAnalytics gaId="G-QVML00G8X9" /> */}
     </html>

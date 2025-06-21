@@ -33,7 +33,7 @@ const FilterCloud = () => {
 
       return newSearchParams.toString();
     },
-    [searchParams]
+    [searchParams],
   );
 
   const handlePriceChange = ({ min, max }: { min: number; max: number }) => {
@@ -93,18 +93,22 @@ const FilterCloud = () => {
           max={Number(searchParams?.get("pri_to")) || 1000}
           onChange={handlePriceChange}
         />
+
         <Duration
           value={searchParams?.get("dur") || undefined}
           onChange={handleDurationChange}
         />
+
         <Rating
           value={searchParams?.get("rat") || undefined}
           onChange={handleRatingChange}
         />
+
         <Flag
           value={searchParams?.get("flag") || undefined}
           onChange={handleFlagChange}
         />
+
         {tags.map((tag) => (
           <Button
             variant="outline"

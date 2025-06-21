@@ -29,7 +29,9 @@ const DetailPage = () => {
         <AdvanceSearch />
       </div>
       <VillaCard isLoading={!ProductData} data={ProductData} />
+
       <TourDetails isLoading={!ProductData} textData={ProductData} />
+
       <Reviews isLoading={!ProductData} reviews={ProductData?.reviews} />
     </div>
   );

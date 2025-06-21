@@ -9,7 +9,9 @@ const Notfound = () => {
       <h1 className="text-6xl font-bold">Page Not Found</h1>
       <Link href="/">
         <Button className="mt-10 p-2 flex items-center">
-        <House />Back to Home</Button>
+          <House />
+          Back to Home
+        </Button>
       </Link>
     </div>
   );

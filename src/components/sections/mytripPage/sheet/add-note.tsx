@@ -16,11 +16,11 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { TimelineItem } from "@/types";
 
-const AddNote = ({ 
+const AddNote = ({
   children,
   onUpdate,
-  editingItem 
-}: { 
+  editingItem,
+}: {
   children?: React.ReactNode;
   onUpdate?: (item: any) => Promise<void>;
   editingItem?: TimelineItem | null;
@@ -41,7 +41,7 @@ const AddNote = ({
     if (!itinerary || !selectedDate) return;
 
     const obj = {
-      position:  (itinerary.itinerary[selectedDate]?.length + 1) || 1,
+      position: itinerary.itinerary[selectedDate]?.length + 1 || 1,
       date: selectedDate,
       type: "note",
       details: {
@@ -67,7 +67,7 @@ const AddNote = ({
         toast.success("Note added successfully.");
         setIsOpen(false);
       } catch (error) {
-        console.log('error: ', error);
+        console.log("error: ", error);
         toast.error("Failed to add note. Please try again.");
       }
     }
@@ -138,8 +138,10 @@ const AddNote = ({
             >
               {isLoading ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
+              ) : editingItem ? (
+                "Update"
               ) : (
-                editingItem ? "Update" : "Add to trip"
+                "Add to trip"
               )}
             </Button>
           </div>

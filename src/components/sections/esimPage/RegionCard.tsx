@@ -1,7 +1,7 @@
-import React from 'react';
-import { ChevronDown } from 'lucide-react';
-import Image from 'next/image';
-import { Region } from './EsimTabs';
+import React from "react";
+import { ChevronDown } from "lucide-react";
+import Image from "next/image";
+import { Region } from "./EsimTabs";
 
 interface RegionCardProps {
   region: Region;
@@ -29,6 +29,6 @@ const RegionCard = ({ region, onClick }: RegionCardProps) => {
       <ChevronDown className="w-5 h-5 text-gray-400 transition-transform duration-200 group-hover:translate-y-0.5" />
     </button>
   );
-}
+};
 
-export default RegionCard; 
+export default RegionCard;

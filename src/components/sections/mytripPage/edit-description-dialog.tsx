@@ -36,11 +36,17 @@ const formSchema = z.object({
   }),
 });
 
-export function EditDescriptionDialog({ children }: { children: React.ReactNode }) {
+export function EditDescriptionDialog({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const trip = useSelector((state: any) => state.meta.trip);
   const [open, setOpen] = React.useState(false);
-  
-  const { data: tripData } = useGetTripPlanByIdQuery(trip.id ?? "");
+
+  const { data: tripData } = useGetTripPlanByIdQuery(trip.id, {
+    skip: !trip.id,
+  });
   const [updateTripPlan] = useUpdateTripPlanMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -102,6 +108,7 @@ export function EditDescriptionDialog({ children }: { children: React.ReactNode 
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="description"
@@ -109,16 +116,17 @@ export function EditDescriptionDialog({ children }: { children: React.ReactNode 
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Textarea 
-                      placeholder="Trip Description" 
-                      className="min-h-[100px]" 
-                      {...field} 
+                    <Textarea
+                      placeholder="Trip Description"
+                      className="min-h-[100px]"
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
             <DialogFooter>
               <Button type="submit">Save changes</Button>
             </DialogFooter>

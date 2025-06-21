@@ -64,6 +64,7 @@ const MobileBottomNav = () => {
                   alt={trip.title}
                   title={trip.title}
                   description={trip.description}
+                  user_id={trip.userId}
                   onClick={() =>
                     handleCardClick(trip.id, trip.tripId, trip.startDate)
                   }

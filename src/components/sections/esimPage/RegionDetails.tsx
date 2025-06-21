@@ -59,6 +59,7 @@ const RegionDetails = ({ region, onBack }: RegionDetailsProps) => {
           height={32}
           className="rounded"
         />
+
         <h2 className="text-2xl font-semibold">{region.name}</h2>
       </div>
 

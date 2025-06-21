@@ -1,0 +1,596 @@
+{
+    "auth": {
+        "isAuthenticated": true,
+        "user": {
+            "id": "642834f8-3011-70f4-9106-a853ab402da1",
+            "name": "oshanavishka6@gmail.com",
+            "email": "oshanavishka6@gmail.com"
+        },
+        "loading": false,
+        "error": null
+    },
+    "apiOne": {
+        "queries": {},
+        "mutations": {},
+        "provided": {},
+        "subscriptions": {},
+        "config": {
+            "online": true,
+            "focused": true,
+            "middlewareRegistered": true,
+            "refetchOnFocus": false,
+            "refetchOnReconnect": false,
+            "refetchOnMountOrArgChange": false,
+            "keepUnusedDataFor": 60,
+            "reducerPath": "apiOne",
+            "invalidationBehavior": "delayed"
+        }
+    },
+    "apiTwo": {
+        "queries": {
+            "getPendingInvites({\"email\":\"oshanavishka6@gmail.com\",\"tripInviteStatus\":\"PENDING\"})": {
+                "status": "fulfilled",
+                "endpointName": "getPendingInvites",
+                "requestId": "rq8xuOFsee14PRyzPJNlf",
+                "originalArgs": {
+                    "email": "oshanavishka6@gmail.com",
+                    "tripInviteStatus": "PENDING"
+                },
+                "startedTimeStamp": 1749130563410,
+                "data": [
+                    {
+                        "id": "6840acaea4f1733791b17266",
+                        "tripId": "vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc",
+                        "userId": "642834f8-3011-70f4-9106-a853ab402da1",
+                        "invitedUser": "bhanukavir22@gmail.com",
+                        "fullName": "Oshan Avishka",
+                        "email": "oshanavishka6@gmail.com",
+                        "tripInviteStatus": "PENDING",
+                        "inviteCode": "19YLNZ",
+                        "tripPlanDto": {
+                            "id": "683c7ddb0c87b427e89367a3",
+                            "tripId": "vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc",
+                            "title": "indi",
+                            "imageUrl": "/6.jpg",
+                            "startDate": "2025-06-01",
+                            "endDate": "2025-06-07",
+                            "destinationId": 4624,
+                            "destinationName": "Chennai",
+                            "description": "india tour",
+                            "userId": "642834f8-3011-70f4-9106-a853ab402da1"
+                        },
+                        "view": false
+                    }
+                ],
+                "fulfilledTimeStamp": 1749130565562
+            },
+            "searchTripPlans({\"destinationName\":\"\",\"page\":0,\"size\":10,\"title\":\"\",\"userId\":\"642834f8-3011-70f4-9106-a853ab402da1\"})": {
+                "status": "fulfilled",
+                "endpointName": "searchTripPlans",
+                "requestId": "lrabYFuRk-z6wW3cjBeDc",
+                "originalArgs": {
+                    "userId": "642834f8-3011-70f4-9106-a853ab402da1",
+                    "title": "",
+                    "destinationName": "",
+                    "page": 0,
+                    "size": 10
+                },
+                "startedTimeStamp": 1749130367742,
+                "data": {
+                    "items": [
+                        {
+                            "id": "683c7ddb0c87b427e89367a3",
+                            "tripId": "vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc",
+                            "title": "indi",
+                            "imageUrl": "/6.jpg",
+                            "startDate": "2025-06-01",
+                            "endDate": "2025-06-07",
+                            "destinationId": 4624,
+                            "destinationName": "Chennai",
+                            "description": "india tour",
+                            "userId": "642834f8-3011-70f4-9106-a853ab402da1"
+                        }
+                    ],
+                    "totalItems": 1,
+                    "currentPage": 0,
+                    "totalPages": 1
+                },
+                "fulfilledTimeStamp": 1749130368855
+            },
+            "getTripPlanById(\"683c7ddb0c87b427e89367a3\")": {
+                "status": "fulfilled",
+                "endpointName": "getTripPlanById",
+                "requestId": "O3m89BWBhU6yfZsDh1l7p",
+                "originalArgs": "683c7ddb0c87b427e89367a3",
+                "startedTimeStamp": 1749130368924,
+                "data": {
+                    "id": "683c7ddb0c87b427e89367a3",
+                    "tripId": "vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc",
+                    "title": "indi",
+                    "imageUrl": "/6.jpg",
+                    "startDate": "2025-06-01",
+                    "endDate": "2025-06-07",
+                    "destinationId": 4624,
+                    "destinationName": "Chennai",
+                    "description": "india tour",
+                    "userId": "642834f8-3011-70f4-9106-a853ab402da1"
+                },
+                "fulfilledTimeStamp": 1749130369574
+            },
+            "getTripMembers(\"vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc\")": {
+                "status": "fulfilled",
+                "endpointName": "getTripMembers",
+                "requestId": "SNDy2ZxZY_cil-oiGoMy1",
+                "originalArgs": "vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc",
+                "startedTimeStamp": 1749130368926,
+                "data": {
+                    "tripId": "vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc",
+                    "collaboratorUserDtos": [
+                        {
+                            "email": "oshanavishka6@gmail.com",
+                            "userId": "642834f8-3011-70f4-9106-a853ab402da1",
+                            "fullName": "Oshan Avishka",
+                            "tripCollaboratorRole": "OWNER"
+                        },
+                        {
+                            "email": "bhanukavir22@gmail.com",
+                            "userId": "5498b408-c0f1-700b-0fe6-e809473ed202",
+                            "fullName": "bhanuka viraj",
+                            "tripCollaboratorRole": "MEMBER"
+                        }
+                    ]
+                },
+                "fulfilledTimeStamp": 1749130369581
+            },
+            "getTripPlanItineraryById(\"vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc\")": {
+                "status": "fulfilled",
+                "endpointName": "getTripPlanItineraryById",
+                "requestId": "3cfL9DElM7V_Buj6zna1-",
+                "originalArgs": "vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc",
+                "startedTimeStamp": 1749130880824,
+                "data": {
+                    "id": "683c7ddb0c87b427e89367a4",
+                    "tripId": "vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc",
+                    "itinerary": {
+                        "2025-06-01": [
+                            {
+                                "position": 3,
+                                "date": "2025-06-01",
+                                "type": "note",
+                                "details": {
+                                    "title": "dede",
+                                    "customFields": {
+                                        "title": "dede",
+                                        "note": "deded"
+                                    }
+                                }
+                            },
+                            {
+                                "position": 1,
+                                "date": "2025-06-01",
+                                "type": "hotel",
+                                "details": {
+                                    "title": "1 day hotel",
+                                    "customFields": {
+                                        "activityName": "1 day hotel",
+                                        "booked": "yes",
+                                        "startTime": "2025-06-01T16:21:48.643Z",
+                                        "endTime": "2025-06-01T18:23:48.643Z",
+                                        "link": "",
+                                        "reservationNumber": "",
+                                        "note": "sasasaa"
+                                    }
+                                }
+                            },
+                            {
+                                "position": 2,
+                                "date": "2025-06-01",
+                                "type": "note",
+                                "details": {
+                                    "title": "swsw",
+                                    "customFields": {
+                                        "title": "swsw",
+                                        "note": "swswsws"
+                                    }
+                                }
+                            }
+                        ],
+                        "2025-06-02": [
+                            {
+                                "position": 1,
+                                "date": "2025-06-02",
+                                "type": "flight",
+                                "details": {
+                                    "title": "deed",
+                                    "customFields": {
+                                        "type": "Flight",
+                                        "name": "deed",
+                                        "departureLocation": "ded",
+                                        "departureTime": "2025-06-05T03:40:04.372Z",
+                                        "arrivalLocation": "",
+                                        "arrivalTime": "2025-06-05T13:38:04.372Z",
+                                        "link": "",
+                                        "reservationNumber": "",
+                                        "note": ""
+                                    }
+                                }
+                            }
+                        ],
+                        "2025-06-03": [
+                            {
+                                "position": 1,
+                                "date": "2025-06-03",
+                                "type": "note",
+                                "details": {
+                                    "title": "hyh",
+                                    "customFields": {
+                                        "title": "hyh",
+                                        "note": "hyhy"
+                                    }
+                                }
+                            }
+                        ],
+                        "2025-06-04": [],
+                        "2025-06-05": [],
+                        "2025-06-06": [],
+                        "2025-06-07": []
+                    }
+                },
+                "fulfilledTimeStamp": 1749130881497
+            },
+            "getTripPlanChecklistByTripId(\"vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc\")": {
+                "status": "fulfilled",
+                "endpointName": "getTripPlanChecklistByTripId",
+                "requestId": "ZDkfrxTB_maGjvWwivfSC",
+                "originalArgs": "vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc",
+                "startedTimeStamp": 1749130368932,
+                "data": {
+                    "id": "683c7ddc0c87b427e89367a5",
+                    "tripId": "vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc",
+                    "checklist": [
+                        {
+                            "id": "2025-06-01T16:23:01.977Z",
+                            "isChecked": false,
+                            "description": "sasas"
+                        },
+                        {
+                            "id": "2025-06-01T16:23:06.097Z",
+                            "isChecked": false,
+                            "description": "sasasa"
+                        },
+                        {
+                            "id": "2025-06-02T04:44:35.976Z",
+                            "isChecked": false,
+                            "description": "swswswsws"
+                        },
+                        {
+                            "id": "2025-06-04T11:42:20.976Z",
+                            "isChecked": false,
+                            "description": "dedede"
+                        }
+                    ]
+                },
+                "fulfilledTimeStamp": 1749130371107
+            },
+            "getAttachmentsByTripId(\"vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc\")": {
+                "status": "fulfilled",
+                "endpointName": "getAttachmentsByTripId",
+                "requestId": "N8MTHxEYcV7f-7iZa_D9x",
+                "originalArgs": "vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc",
+                "startedTimeStamp": 1749130368936,
+                "data": null,
+                "fulfilledTimeStamp": 1749130369762
+            }
+        },
+        "mutations": {
+            "8pAkLEzBtOamY9jmfH97b": {
+                "requestId": "8pAkLEzBtOamY9jmfH97b",
+                "status": "fulfilled",
+                "endpointName": "updateTripPlanItinerary",
+                "startedTimeStamp": 1749130880100,
+                "data": {
+                    "id": "683c7ddb0c87b427e89367a4",
+                    "tripId": "vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc",
+                    "itinerary": {
+                        "2025-06-01": [
+                            {
+                                "position": 3,
+                                "date": "2025-06-01",
+                                "type": "note",
+                                "details": {
+                                    "title": "dede",
+                                    "customFields": {
+                                        "title": "dede",
+                                        "note": "deded"
+                                    }
+                                }
+                            },
+                            {
+                                "position": 1,
+                                "date": "2025-06-01",
+                                "type": "hotel",
+                                "details": {
+                                    "title": "1 day hotel",
+                                    "customFields": {
+                                        "activityName": "1 day hotel",
+                                        "booked": "yes",
+                                        "startTime": "2025-06-01T16:21:48.643Z",
+                                        "endTime": "2025-06-01T18:23:48.643Z",
+                                        "link": "",
+                                        "reservationNumber": "",
+                                        "note": "sasasaa"
+                                    }
+                                }
+                            },
+                            {
+                                "position": 2,
+                                "date": "2025-06-01",
+                                "type": "note",
+                                "details": {
+                                    "title": "swsw",
+                                    "customFields": {
+                                        "title": "swsw",
+                                        "note": "swswsws"
+                                    }
+                                }
+                            }
+                        ],
+                        "2025-06-02": [
+                            {
+                                "position": 1,
+                                "date": "2025-06-02",
+                                "type": "flight",
+                                "details": {
+                                    "title": "deed",
+                                    "customFields": {
+                                        "type": "Flight",
+                                        "name": "deed",
+                                        "departureLocation": "ded",
+                                        "departureTime": "2025-06-05T03:40:04.372Z",
+                                        "arrivalLocation": "",
+                                        "arrivalTime": "2025-06-05T13:38:04.372Z",
+                                        "link": "",
+                                        "reservationNumber": "",
+                                        "note": ""
+                                    }
+                                }
+                            }
+                        ],
+                        "2025-06-03": [
+                            {
+                                "position": 1,
+                                "date": "2025-06-03",
+                                "type": "note",
+                                "details": {
+                                    "title": "hyh",
+                                    "customFields": {
+                                        "title": "hyh",
+                                        "note": "hyhy"
+                                    }
+                                }
+                            }
+                        ],
+                        "2025-06-04": [],
+                        "2025-06-05": [],
+                        "2025-06-06": [],
+                        "2025-06-07": []
+                    }
+                },
+                "fulfilledTimeStamp": 1749130880823
+            }
+        },
+        "provided": {
+            "trips": {
+                "__internal_without_id": [
+                    "searchTripPlans({\"destinationName\":\"\",\"page\":0,\"size\":10,\"title\":\"\",\"userId\":\"642834f8-3011-70f4-9106-a853ab402da1\"})"
+                ]
+            },
+            "trips-id": {
+                "__internal_without_id": [
+                    "getTripPlanById(\"683c7ddb0c87b427e89367a3\")"
+                ]
+            },
+            "TripMembers": {
+                "__internal_without_id": [
+                    "getTripMembers(\"vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc\")"
+                ]
+            },
+            "attachments": {
+                "__internal_without_id": [
+                    "getAttachmentsByTripId(\"vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc\")"
+                ]
+            },
+            "TripInvites": {
+                "__internal_without_id": [
+                    "getPendingInvites({\"email\":\"oshanavishka6@gmail.com\",\"tripInviteStatus\":\"PENDING\"})"
+                ]
+            },
+            "itineraries": {
+                "__internal_without_id": [
+                    "getTripPlanItineraryById(\"vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc\")"
+                ]
+            },
+            "checklists": {
+                "__internal_without_id": [
+                    "getTripPlanChecklistByTripId(\"vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc\")"
+                ]
+            }
+        },
+        "subscriptions": {
+            "getPendingInvites({\"email\":\"oshanavishka6@gmail.com\",\"tripInviteStatus\":\"PENDING\"})": {
+                "bvedm1RZr8L0kw674pdZc": {
+                    "pollingInterval": 0,
+                    "skipPollingIfUnfocused": false
+                }
+            },
+            "searchTripPlans({\"destinationName\":\"\",\"page\":0,\"size\":10,\"title\":\"\",\"userId\":\"642834f8-3011-70f4-9106-a853ab402da1\"})": {
+                "f8yGsapU88FtgHPzaI7HP": {
+                    "pollingInterval": 0,
+                    "skipPollingIfUnfocused": false
+                },
+                "h61DfhXd6b2u25vMlyyNw": {
+                    "pollingInterval": 0,
+                    "skipPollingIfUnfocused": false
+                }
+            },
+            "getTripPlanById(\"683c7ddb0c87b427e89367a3\")": {
+                "O3m89BWBhU6yfZsDh1l7p": {
+                    "pollingInterval": 0,
+                    "skipPollingIfUnfocused": false
+                },
+                "d560BtXc_JvckN9bsujH4": {
+                    "pollingInterval": 0,
+                    "skipPollingIfUnfocused": false
+                },
+                "rJYLbI08Q_ku_wo1vcT_h": {
+                    "pollingInterval": 0,
+                    "skipPollingIfUnfocused": false
+                }
+            },
+            "getTripMembers(\"vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc\")": {
+                "SNDy2ZxZY_cil-oiGoMy1": {
+                    "pollingInterval": 0,
+                    "skipPollingIfUnfocused": false
+                },
+                "8zBb2XrZHtIHs90ZHnxqB": {
+                    "pollingInterval": 0,
+                    "skipPollingIfUnfocused": false
+                },
+                "mGBVUJJEsed3Qfoiobnek": {
+                    "pollingInterval": 0,
+                    "skipPollingIfUnfocused": false
+                }
+            },
+            "getTripPlanItineraryById(\"vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc\")": {
+                "gmzJ4unJ4XyvDfv3HFCtM": {
+                    "pollingInterval": 0,
+                    "skipPollingIfUnfocused": false
+                },
+                "7XGFVBd9JgcMcQA8wafgm": {
+                    "pollingInterval": 0,
+                    "skipPollingIfUnfocused": false
+                }
+            },
+            "getTripPlanChecklistByTripId(\"vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc\")": {
+                "ZDkfrxTB_maGjvWwivfSC": {
+                    "pollingInterval": 0,
+                    "skipPollingIfUnfocused": false
+                }
+            },
+            "getAttachmentsByTripId(\"vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc\")": {
+                "N8MTHxEYcV7f-7iZa_D9x": {
+                    "pollingInterval": 0,
+                    "skipPollingIfUnfocused": false
+                }
+            }
+        },
+        "config": {
+            "online": true,
+            "focused": true,
+            "middlewareRegistered": true,
+            "refetchOnFocus": false,
+            "refetchOnReconnect": false,
+            "refetchOnMountOrArgChange": false,
+            "keepUnusedDataFor": 60,
+            "reducerPath": "apiTwo",
+            "invalidationBehavior": "delayed"
+        }
+    },
+    "meta": {
+        "title": "VIBZI",
+        "trip": {
+            "select_date": "2025-06-02",
+            "id": "683c7ddb0c87b427e89367a3",
+            "tripId": "vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc",
+            "itinerary": {
+                "id": "683c7ddb0c87b427e89367a4",
+                "tripId": "vibzi-81a85ef6-d9d1-4532-b6fe-d0f6126c19bc",
+                "itinerary": {
+                    "2025-06-01": [
+                        {
+                            "position": 3,
+                            "date": "2025-06-01",
+                            "type": "note",
+                            "details": {
+                                "title": "dede",
+                                "customFields": {
+                                    "title": "dede",
+                                    "note": "deded"
+                                }
+                            }
+                        },
+                        {
+                            "position": 1,
+                            "date": "2025-06-01",
+                            "type": "hotel",
+                            "details": {
+                                "title": "1 day hotel",
+                                "customFields": {
+                                    "activityName": "1 day hotel",
+                                    "booked": "yes",
+                                    "startTime": "2025-06-01T16:21:48.643Z",
+                                    "endTime": "2025-06-01T18:23:48.643Z",
+                                    "link": "",
+                                    "reservationNumber": "",
+                                    "note": "sasasaa"
+                                }
+                            }
+                        },
+                        {
+                            "position": 2,
+                            "date": "2025-06-01",
+                            "type": "note",
+                            "details": {
+                                "title": "swsw",
+                                "customFields": {
+                                    "title": "swsw",
+                                    "note": "swswsws"
+                                }
+                            }
+                        }
+                    ],
+                    "2025-06-02": [
+                        {
+                            "position": 1,
+                            "date": "2025-06-02",
+                            "type": "flight",
+                            "details": {
+                                "title": "deed",
+                                "customFields": {
+                                    "type": "Flight",
+                                    "name": "deed",
+                                    "departureLocation": "ded",
+                                    "departureTime": "2025-06-05T03:40:04.372Z",
+                                    "arrivalLocation": "",
+                                    "arrivalTime": "2025-06-05T13:38:04.372Z",
+                                    "link": "",
+                                    "reservationNumber": "",
+                                    "note": ""
+                                }
+                            }
+                        }
+                    ],
+                    "2025-06-03": [
+                        {
+                            "position": 1,
+                            "date": "2025-06-03",
+                            "type": "note",
+                            "details": {
+                                "title": "hyh",
+                                "customFields": {
+                                    "title": "hyh",
+                                    "note": "hyhy"
+                                }
+                            }
+                        }
+                    ],
+                    "2025-06-04": [],
+                    "2025-06-05": [],
+                    "2025-06-06": [],
+                    "2025-06-07": []
+                }
+            },
+            "isOwner": true
+        }
+    }
+}

@@ -27,6 +27,7 @@ export default function TourDetails({ textData, isLoading }: TourDetailsProps) {
             poweredByLogo={"https://shorturl.at/tGcTe"}
             loading={!textData}
           />
+
           {/* Overview */}
           <Card className="shadow-none border-none rounded-none">
             <CardHeader>
@@ -48,7 +49,7 @@ export default function TourDetails({ textData, isLoading }: TourDetailsProps) {
                         {textData.additionalInfo.map(
                           (info: string, index: number) => (
                             <li key={index}>{info}</li>
-                          )
+                          ),
                         )}
                       </ul>
                     )}
@@ -77,9 +78,10 @@ export default function TourDetails({ textData, isLoading }: TourDetailsProps) {
                                   className="flex items-center gap-2"
                                 >
                                   <Check className="h-4 w-4 text-green-500" />
+
                                   <span>{item}</span>
                                 </div>
-                              )
+                              ),
                             )}
                       </div>
                     </>
@@ -103,9 +105,10 @@ export default function TourDetails({ textData, isLoading }: TourDetailsProps) {
                                   className="flex items-center gap-2"
                                 >
                                   <X className="h-4 w-4 text-red-500" />
+
                                   <span>{item}</span>
                                 </div>
-                              )
+                              ),
                             )}
                       </div>
                     </>

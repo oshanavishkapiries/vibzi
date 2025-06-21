@@ -5,7 +5,7 @@ export const attachmentSlice = apiSlice1.injectEndpoints({
   endpoints: (builder) => ({
     uploadAttachment: builder.mutation<void, FormData>({
       query: (formData) => ({
-        url: `/common-service/trip-plan-attachment/upload`,
+        url: `/common-service/sse/trip-collaboration/attachments/upload`,
         method: "POST",
         body: formData,
       }),
@@ -23,8 +23,8 @@ export const attachmentSlice = apiSlice1.injectEndpoints({
       { tripId: string; fileKey: string }
     >({
       query: ({ tripId, fileKey }) => ({
-        url: `/common-service/trip-plan-attachment/remove`,
-        method: "DELETE",
+        url: `/common-service/sse/trip-collaboration/attachments/remove`,
+        method: "POST",
         params: { tripId, fileKey },
       }),
       invalidatesTags: ["attachments"],

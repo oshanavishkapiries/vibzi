@@ -6,7 +6,7 @@ export function useScrollPosition() {
   useEffect(() => {
     const handleScroll = () => {
       setScrollPosition(
-        window.pageYOffset || document.documentElement.scrollTop
+        window.pageYOffset || document.documentElement.scrollTop,
       );
     };
 

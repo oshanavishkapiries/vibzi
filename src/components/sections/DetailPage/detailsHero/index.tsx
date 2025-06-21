@@ -1,10 +1,7 @@
-
-import React from 'react'
+import React from "react";
 
 const DetailsHero = () => {
-  return (
-   <></>
-  )
-}
+  return <></>;
+};
 
-export default DetailsHero
+export default DetailsHero;

@@ -35,7 +35,7 @@ export const itinerarySlice = apiSlice1.injectEndpoints({
       { id: string; data: Partial<TripPlanItinerary> }
     >({
       query: ({ id, data }) => ({
-        url: `/common-service/trip-plan-itinerary/${id}`,
+        url: `/common-service/sse/trip-collaboration/itinerary/${id}`,
         method: "PUT",
         body: data,
       }),

@@ -1,5 +1,5 @@
 import { apiSlice1 } from "../../slices/apiSlice";
-import type { TripPlanChecklist } from '../../../types';
+import type { TripPlanChecklist } from "../../../types";
 
 export const checklistSlice = apiSlice1.injectEndpoints({
   endpoints: (builder) => ({
@@ -16,7 +16,7 @@ export const checklistSlice = apiSlice1.injectEndpoints({
       { id: string; data: Partial<TripPlanChecklist> }
     >({
       query: ({ id, data }) => ({
-        url: `/common-service/trip-plan-checklist/${id}`,
+        url: `/common-service/sse/trip-collaboration/checklist/${id}`,
         method: "PUT",
         body: data,
       }),

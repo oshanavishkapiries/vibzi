@@ -54,7 +54,7 @@ export function CreateTripDialog({ children }: { children: React.ReactNode }) {
     {
       refetchOnMountOrArgChange: true,
       skip: !searchTerm,
-    }
+    },
   );
   const [createTripPlan, { isLoading: isCreating }] =
     useCreateTripPlanMutation();
@@ -76,12 +76,11 @@ export function CreateTripDialog({ children }: { children: React.ReactNode }) {
   const imageUrl = () => {
     return `/${Math.floor(Math.random() * 6) + 1}.jpg`;
   };
-  
 
   const handleSubmit = async (values: FormValues) => {
     try {
       const selectedDestination = suggestionsData?.data?.find(
-        (item: Destination) => item.name === values.destination
+        (item: Destination) => item.name === values.destination,
       );
       if (!selectedDestination) {
         toast.error("Please select a valid destination from the suggestions.");
@@ -97,7 +96,7 @@ export function CreateTripDialog({ children }: { children: React.ReactNode }) {
         userId: userId,
         imageUrl: imageUrl(),
       };
-      
+
       const res = await createTripPlan(tripData).unwrap();
 
       if (!res) {
@@ -116,8 +115,8 @@ export function CreateTripDialog({ children }: { children: React.ReactNode }) {
 
   const handleDestinationSelect = (destinationName: string) => {
     form.setValue("destination", destinationName);
-    setSearchTerm(""); 
-    setIsDropdownOpen(false); 
+    setSearchTerm("");
+    setIsDropdownOpen(false);
   };
 
   return (
@@ -132,7 +131,10 @@ export function CreateTripDialog({ children }: { children: React.ReactNode }) {
         </DialogHeader>
         <div className="max-h-[70vh] overflow-y-auto scrollbar-hide">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 p-2">
+            <form
+              onSubmit={form.handleSubmit(handleSubmit)}
+              className="space-y-6 p-2"
+            >
               <FormField
                 control={form.control}
                 name="tripName"
@@ -146,6 +148,7 @@ export function CreateTripDialog({ children }: { children: React.ReactNode }) {
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
                 name="description"
@@ -163,6 +166,7 @@ export function CreateTripDialog({ children }: { children: React.ReactNode }) {
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
                 name="destination"
@@ -183,6 +187,7 @@ export function CreateTripDialog({ children }: { children: React.ReactNode }) {
                           setTimeout(() => setIsDropdownOpen(false), 500)
                         }
                       />
+
                       {isDropdownOpen &&
                         searchTerm &&
                         suggestionsData?.data?.length > 0 && (
@@ -198,7 +203,7 @@ export function CreateTripDialog({ children }: { children: React.ReactNode }) {
                                 >
                                   {suggestion.name}
                                 </div>
-                              )
+                              ),
                             )}
                           </div>
                         )}
@@ -207,6 +212,7 @@ export function CreateTripDialog({ children }: { children: React.ReactNode }) {
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
                 name="dateRange"
@@ -219,7 +225,8 @@ export function CreateTripDialog({ children }: { children: React.ReactNode }) {
                           {field.value?.from ? (
                             field.value.to ? (
                               <>
-                                Selected: {format(field.value.from, "LLL dd, y")} -{" "}
+                                Selected:{" "}
+                                {format(field.value.from, "LLL dd, y")} -{" "}
                                 {format(field.value.to, "LLL dd, y")}
                               </>
                             ) : (
@@ -231,7 +238,6 @@ export function CreateTripDialog({ children }: { children: React.ReactNode }) {
                         </div>
                         <Calendar
                           mode="range"
-                   
                           defaultMonth={field.value?.from}
                           selected={field.value}
                           onSelect={field.onChange}
@@ -247,6 +253,7 @@ export function CreateTripDialog({ children }: { children: React.ReactNode }) {
                   </FormItem>
                 )}
               />
+
               <DialogFooter>
                 <Button type="submit" className="w-full" disabled={isCreating}>
                   {isCreating ? "Saving..." : "Create Trip"}

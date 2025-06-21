@@ -41,6 +41,7 @@ export function CommonCard({
           <div className="flex items-center justify-start gap-3 mb-2">
             <Badge variant="secondary" className="flex items-center gap-1">
               <Star className="h-3 w-3 fill-primary text-primary" />
+
               <span>{rating.toFixed(2)}</span>
             </Badge>
             <span className="text-sm text-muted-foreground">

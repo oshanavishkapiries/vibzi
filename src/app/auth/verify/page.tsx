@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { useAuth } from "@/components/common/Auth/AuthProvider";
+import { useAuth } from "@/providers/AuthProvider";
 import { useSearchParams } from "next/navigation";
 
 import {
@@ -24,7 +24,10 @@ import { useState } from "react";
 import InfiniteGallery from "@/components/common/InfiniteGallery";
 
 const verifySchema = z.object({
-  code: z.string().min(6, "Code must be 6 digits").max(6, "Code must be 6 digits"),
+  code: z
+    .string()
+    .min(6, "Code must be 6 digits")
+    .max(6, "Code must be 6 digits"),
 });
 
 type VerifyFormValues = z.infer<typeof verifySchema>;
@@ -68,12 +71,14 @@ export default function VerifyPage() {
     <div className="flex flex-col md:flex-row items-center justify-center h-screen">
       <div className="absolute inset-0 -z-10 lg:hidden">
         <div className="h-full w-full absolute inset-0 z-10" />
+
         <InfiniteGallery />
       </div>
 
       {/* left */}
       <div className="hidden lg:flex flex-col items-center justify-center w-full h-full pl-[100px]">
         <div className="h-full w-full absolute inset-0 z-10" />
+
         <InfiniteGallery />
       </div>
 
@@ -91,9 +96,13 @@ export default function VerifyPage() {
                     <ArrowLeft className="h-4 w-4 text-gray-600" />
                   </Link>
                 </div>
-                <Link href="/" className="flex justify-center items-center gap-2 font-medium w-full">
+                <Link
+                  href="/"
+                  className="flex justify-center items-center gap-2 font-medium w-full"
+                >
                   <Image
                     src="/logo/logo-rbg.png"
+                    sizes="(max-width: 768px) 33vw, 20vw"
                     alt="logo"
                     width={80}
                     height={32}
@@ -127,6 +136,7 @@ export default function VerifyPage() {
                         </FormItem>
                       )}
                     />
+
                     <Button type="submit" className="w-full">
                       {isLoading ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
@@ -152,4 +162,4 @@ export default function VerifyPage() {
       </div>
     </div>
   );
-} 
+}

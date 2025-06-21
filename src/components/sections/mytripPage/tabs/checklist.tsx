@@ -42,7 +42,7 @@ const Checklist = () => {
           id: item.id || Date.now().toString(),
           description: item.description,
           isChecked: item.isChecked || false,
-        }))
+        })),
       );
     }
   }, [data]);
@@ -71,7 +71,7 @@ const Checklist = () => {
 
   const toggleItem = async (id: string) => {
     const updatedItems = items.map((item) =>
-      item.id === id ? { ...item, isChecked: !item.isChecked } : item
+      item.id === id ? { ...item, isChecked: !item.isChecked } : item,
     );
     await updateTripPlanChecklist({
       id: _id,
@@ -117,6 +117,7 @@ const Checklist = () => {
           className="flex-1 px-3 py-2 border rounded-md"
           onKeyPress={(e) => e.key === "Enter" && addItem()}
         />
+
         <Button variant="outline" className="gap-2" onClick={addItem}>
           <Plus className="h-4 w-4" />
           Add
@@ -133,6 +134,7 @@ const Checklist = () => {
               checked={item.isChecked}
               onCheckedChange={() => toggleItem(item.id)}
             />
+
             <label
               htmlFor={`item-${item.id}`}
               className={`text-sm font-medium leading-none w-full peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${

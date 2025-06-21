@@ -32,7 +32,7 @@ const TermsAndConditions: React.FC = () => {
     user?.id || "",
     {
       skip: !user?.id,
-    }
+    },
   );
   const [submitConsent, { isLoading }] = useSubmitUserConsentMutation();
 
@@ -113,6 +113,7 @@ const TermsAndConditions: React.FC = () => {
             </div>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="DISAGREE" id="disagree" />
+
               <Label htmlFor="disagree">I do not agree</Label>
             </div>
           </RadioGroup>

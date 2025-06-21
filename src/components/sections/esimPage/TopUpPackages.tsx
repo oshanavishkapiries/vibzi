@@ -38,10 +38,7 @@ export default function TopUpPackages({ packages }: TopUpPackagesProps) {
       >
         <CarouselContent className="-ml-2 md:-ml-4">
           {packages.map((pkg, index) => (
-            <CarouselItem
-              key={index}
-              className="pl-2 md:pl-4 md:basis-1/2"
-            >
+            <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2">
               <TopUpPackageCard package={pkg} />
             </CarouselItem>
           ))}

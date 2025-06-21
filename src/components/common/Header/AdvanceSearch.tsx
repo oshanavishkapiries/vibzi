@@ -62,7 +62,7 @@ export function AdvanceSearch({}: { isCollepsed?: boolean }) {
     debouncedDestination,
     {
       skip: !debouncedDestination,
-    }
+    },
   );
 
   const handleSearch = (e: any) => {

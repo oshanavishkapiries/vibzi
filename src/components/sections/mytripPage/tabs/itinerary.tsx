@@ -18,9 +18,9 @@ const Itinerary = () => {
   const [showScrollButtons, setShowScrollButtons] = useState(false);
   const timelineRef = useRef<any>(null);
 
-  const { data } = useGetTripPlanItineraryByIdQuery(
-    trip.tripId ? trip.tripId : ""
-  );
+  const { data } = useGetTripPlanItineraryByIdQuery(trip.tripId, {
+    skip: !trip.tripId,
+  });
 
   const dates: string[] = Object.keys(data?.itinerary || {});
 
@@ -93,9 +93,12 @@ const Itinerary = () => {
             <ChevronLeft className="h-4 w-4" />
           </Button>
         )}
-        <div className={
-          cn("flex items-center justify-between mx-auto", showScrollButtons ? "w-[90%]" : "w-[100%]" )
-        }>
+        <div
+          className={cn(
+            "flex items-center justify-between mx-auto",
+            showScrollButtons ? "w-[90%]" : "w-[100%]",
+          )}
+        >
           <div
             ref={scrollContainerRef}
             className={"flex gap-2 overflow-x-auto scrollbar-hide py-4"}
@@ -107,7 +110,7 @@ const Itinerary = () => {
                   variant="outline"
                   className={cn(
                     "rounded-full border-2 border-primary min-w-[80px] hover:bg-primary/25",
-                    trip.select_date === date ? "bg-primary text-white" : ""
+                    trip.select_date === date ? "bg-primary text-white" : "",
                   )}
                   onClick={() => handleDateChange(date)}
                 >

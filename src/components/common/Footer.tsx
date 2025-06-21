@@ -12,6 +12,7 @@ export default function Footer() {
               <div className="relative w-[60px] aspect-video">
                 <Image
                   src="/logo/logo-rbg.png"
+                  sizes="(max-width: 768px) 33vw, 20vw"
                   alt="Voyage Vibes Logo"
                   fill
                   className="object-contain grayscale"
@@ -75,6 +76,7 @@ export default function Footer() {
                   width={20}
                   height={20}
                 />
+
                 <span className="sr-only">Pinterest</span>
               </Link>
 
@@ -90,6 +92,7 @@ export default function Footer() {
                   width={20}
                   height={20}
                 />
+
                 <span className="sr-only">Instagram</span>
               </Link>
               <Link
@@ -99,6 +102,7 @@ export default function Footer() {
                 className="text-muted-foreground hover:text-primary transition-colors"
               >
                 <Image src="/logo/li.png" alt="link" width={20} height={20} />
+
                 <span className="sr-only">LinkedIn</span>
               </Link>
               <Link
@@ -108,6 +112,7 @@ export default function Footer() {
                 className="text-muted-foreground hover:text-primary transition-colors"
               >
                 <Image src="/logo/t.png" alt="tiktok" width={20} height={20} />
+
                 <span className="sr-only">TikTok</span>
               </Link>
               <Link
@@ -122,6 +127,7 @@ export default function Footer() {
                   width={20}
                   height={20}
                 />
+
                 <span className="sr-only">Facebook</span>
               </Link>
             </div>

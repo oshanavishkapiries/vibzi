@@ -43,7 +43,9 @@ const EsimTabs = ({
 }) => {
   const [selectedCountry, setSelectedCountry] = React.useState<any>(null);
   const [selectedRegion, setSelectedRegion] = React.useState<any>(null);
-  const [searchResults, setSearchResults] = React.useState<(Country | Region)[]>([]);
+  const [searchResults, setSearchResults] = React.useState<
+    (Country | Region)[]
+  >([]);
 
   const [searchCountriesOrRegions, { isLoading, error }] =
     useSearchCountriesOrRegionsMutation();
@@ -61,24 +63,27 @@ const EsimTabs = ({
     setSelectedRegion(null);
   };
 
-  console.log("selectedCountry ⚡⚡⚡⚡" , selectedCountry);
+  console.log("selectedCountry ⚡⚡⚡⚡", selectedCountry);
 
-  const handleSearch = useCallback(async (type: string, name: string | null = null) => {
-    try {
-      const response = await searchCountriesOrRegions({
-        type,
-        name,
-        page: 0,
-        size: 10,
-      }).unwrap();
+  const handleSearch = useCallback(
+    async (type: string, name: string | null = null) => {
+      try {
+        const response = await searchCountriesOrRegions({
+          type,
+          name,
+          page: 0,
+          size: 10,
+        }).unwrap();
 
-      if (response && response.items) {
-        setSearchResults(response.items);
+        if (response && response.items) {
+          setSearchResults(response.items);
+        }
+      } catch (err) {
+        console.error("Failed to search:", err);
       }
-    } catch (err) {
-      console.error("Failed to search:", err);
-    }
-  }, [searchCountriesOrRegions, setSearchResults]);
+    },
+    [searchCountriesOrRegions, setSearchResults],
+  );
 
   React.useEffect(() => {
     if (activeTab === "COUNTRY") {

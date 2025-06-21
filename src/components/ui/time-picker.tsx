@@ -3,11 +3,7 @@
 import * as React from "react";
 import { Clock } from "lucide-react";
 import { Label } from "./label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "./popover";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 import { Button } from "./button";
 import { cn } from "@/lib/utils";
 import { Input } from "./input";
@@ -24,7 +20,7 @@ export function TimePicker({ date, setDate, label }: TimePickerProps) {
   const [hour, setHour] = React.useState(date ? date.getHours() : 12);
   const [minute, setMinute] = React.useState(date ? date.getMinutes() : 0);
   const [meridiem, setMeridiem] = React.useState<"AM" | "PM">(
-    date ? (date.getHours() >= 12 ? "PM" : "AM") : "PM"
+    date ? (date.getHours() >= 12 ? "PM" : "AM") : "PM",
   );
 
   const handleHourChange = (value: string) => {
@@ -80,7 +76,7 @@ export function TimePicker({ date, setDate, label }: TimePickerProps) {
             variant={"outline"}
             className={cn(
               "w-full justify-start text-left font-normal",
-              !date && "text-muted-foreground"
+              !date && "text-muted-foreground",
             )}
           >
             <Clock className="mr-2 h-4 w-4" />
@@ -105,6 +101,7 @@ export function TimePicker({ date, setDate, label }: TimePickerProps) {
               max={12}
               min={1}
             />
+
             <span className="text-xl">:</span>
             <Input
               ref={minuteRef}
@@ -114,6 +111,7 @@ export function TimePicker({ date, setDate, label }: TimePickerProps) {
               max={59}
               min={0}
             />
+
             <Button
               variant="outline"
               className="w-16"
@@ -127,4 +125,4 @@ export function TimePicker({ date, setDate, label }: TimePickerProps) {
       </Popover>
     </div>
   );
-} 
+}

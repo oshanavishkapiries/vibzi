@@ -19,20 +19,24 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { TimelineItem } from "@/types";
 
-const AddFoodAndDrink = ({ 
+const AddFoodAndDrink = ({
   children,
   onUpdate,
-  editingItem 
-}: { 
+  editingItem,
+}: {
   children?: React.ReactNode;
-  onUpdate?: (item:   any) => Promise<void>;
-  editingItem?: TimelineItem | null 
+  onUpdate?: (item: any) => Promise<void>;
+  editingItem?: TimelineItem | null;
 }) => {
   const [formData, setFormData] = useState({
     activityName: editingItem?.details?.title || "",
     booked: editingItem?.details?.customFields?.booked || "no",
-    startTime: editingItem?.details?.customFields?.startTime ? new Date(editingItem.details.customFields.startTime) : new Date(),
-    endTime: editingItem?.details?.customFields?.endTime ? new Date(editingItem.details.customFields.endTime) : new Date(),
+    startTime: editingItem?.details?.customFields?.startTime
+      ? new Date(editingItem.details.customFields.startTime)
+      : new Date(),
+    endTime: editingItem?.details?.customFields?.endTime
+      ? new Date(editingItem.details.customFields.endTime)
+      : new Date(),
     link: editingItem?.details?.customFields?.link || "",
     note: editingItem?.details?.customFields?.note || "",
   });
@@ -48,7 +52,7 @@ const AddFoodAndDrink = ({
     if (!itinerary || !selectedDate) return;
 
     const obj = {
-      position: (itinerary.itinerary[selectedDate]?.length + 1) || 1,
+      position: itinerary.itinerary[selectedDate]?.length + 1 || 1,
       date: selectedDate,
       type: "restaurant",
       details: {
@@ -74,7 +78,7 @@ const AddFoodAndDrink = ({
         toast.success("Food and drink added successfully.");
         setIsOpen(false);
       } catch (error) {
-        console.log('error: ', error);
+        console.log("error: ", error);
         toast.error("Failed to add food and drink. Please try again.");
       }
     }
@@ -104,13 +108,15 @@ const AddFoodAndDrink = ({
             </SheetTitle>
           </div>
           <p className="text-sm text-muted-foreground">
-            {editingItem ? "Edit your food and drink details" : "Add a description here"}
+            {editingItem
+              ? "Edit your food and drink details"
+              : "Add a description here"}
           </p>
         </SheetHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="activityName">
-              Name Of Activity <span className="text-red-500">*</span>
+              Name Of Food And Drink <span className="text-red-500">*</span>
             </Label>
             <Input
               id="activityName"
@@ -145,9 +151,13 @@ const AddFoodAndDrink = ({
               <Label>Start Time</Label>
               <Input
                 type="time"
-                value={formData.startTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })}
+                value={formData.startTime.toLocaleTimeString("en-US", {
+                  hour12: false,
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
                 onChange={(e) => {
-                  const [hours, minutes] = e.target.value.split(':');
+                  const [hours, minutes] = e.target.value.split(":");
                   const newDate = new Date(formData.startTime);
                   newDate.setHours(parseInt(hours), parseInt(minutes));
                   setFormData({ ...formData, startTime: newDate });
@@ -158,9 +168,13 @@ const AddFoodAndDrink = ({
               <Label>End Time</Label>
               <Input
                 type="time"
-                value={formData.endTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })}
+                value={formData.endTime.toLocaleTimeString("en-US", {
+                  hour12: false,
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
                 onChange={(e) => {
-                  const [hours, minutes] = e.target.value.split(':');
+                  const [hours, minutes] = e.target.value.split(":");
                   const newDate = new Date(formData.endTime);
                   newDate.setHours(parseInt(hours), parseInt(minutes));
                   setFormData({ ...formData, endTime: newDate });
@@ -200,8 +214,10 @@ const AddFoodAndDrink = ({
             >
               {isLoading ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
+              ) : editingItem ? (
+                "Update"
               ) : (
-                editingItem ? "Update" : "Add to trip"
+                "Add to trip"
               )}
             </Button>
           </div>

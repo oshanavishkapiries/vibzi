@@ -49,6 +49,7 @@ export function ShareTripDialog({
               readOnly
               className="flex-1 bg-gray-100 text-gray-400 font-medium"
             />
+
             <Button
               variant="outline"
               className="rounded-full px-6 py-2"

@@ -29,7 +29,6 @@ const InfiniteGallery = () => {
     "/gallery/15.jpg",
   ]);
 
-  
   const { column1, column2, column3 } = useMemo(() => {
     const shuffled = [...images].sort(() => Math.random() - 0.5);
     const columnSize = Math.ceil(shuffled.length / 3);
@@ -45,10 +44,10 @@ const InfiniteGallery = () => {
     <div className="w-full h-full overflow-hidden relative">
       {/* Top gradient overlay */}
       <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white to-transparent z-10" />
-      
+
       {/* Bottom gradient overlay */}
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent z-10" />
-      
+
       <div className="absolute inset-0 grid grid-cols-3 gap-3">
         {/* Column 1 - Scroll Up */}
         <div className="overflow-hidden">
@@ -62,6 +61,7 @@ const InfiniteGallery = () => {
                   src={image}
                   alt={`Gallery image ${index + 1}`}
                   fill
+                  sizes="sizes=(max-width: 768px) 33vw, 20vw"
                   className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
@@ -81,6 +81,7 @@ const InfiniteGallery = () => {
                   src={image}
                   alt={`Gallery image ${index + 1}`}
                   fill
+                  sizes="sizes=(max-width: 768px) 33vw, 20vw"
                   className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
@@ -100,6 +101,7 @@ const InfiniteGallery = () => {
                   src={image}
                   alt={`Gallery image ${index + 1}`}
                   fill
+                  sizes="sizes=(max-width: 768px) 33vw, 20vw"
                   className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>

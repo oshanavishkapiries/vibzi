@@ -9,11 +9,14 @@ import { Pencil } from "lucide-react";
 import { useSelector } from "react-redux";
 import { EditDescriptionDialog } from "./edit-description-dialog";
 import { formatDate } from "@/utils/tripUtils/formatDates";
+import TravelWallet from "./tabs/TravelWallet";
 
 const Tripsection = () => {
   const id = useSelector((state: any) => state.meta.trip.id);
 
-  const { data: tripPlan, isLoading } = useGetTripPlanByIdQuery(id);
+  const { data: tripPlan, isLoading } = useGetTripPlanByIdQuery(id, {
+    skip: !id,
+  });
 
   if (isLoading) {
     return <Scelton />;
@@ -30,22 +33,26 @@ const Tripsection = () => {
         )}`}
         location={tripPlan?.destinationName || "Location"}
       />
-      <div className="flex items-center mt-4">
-        <p className="text-sm text-muted-foreground">
-          {tripPlan?.description || "No description available"}
+
+      <div className="flex items-center justify-center">
+        <p className="text-lg font-semibold">
+          {tripPlan?.title || "Trip Title"}
         </p>
         <EditDescriptionDialog>
-          <Button variant="ghost" size="sm">
-            <Pencil className="h-4 w-4 mr-1" />
+          <Button variant="ghost" size="sm" className="">
+            <Pencil className="h-4 w-4 ml-1" />
           </Button>
         </EditDescriptionDialog>
       </div>
-      <Tabs defaultValue="itinerary" className="w-full mt-4">
-        <TabsList className="bg-background">
-          <TabsTrigger value="checklist">Checklist</TabsTrigger>
-          <TabsTrigger value="itinerary">Itinerary</TabsTrigger>
-          <TabsTrigger value="attachments">Attachments</TabsTrigger>
-        </TabsList>
+      <Tabs defaultValue="itinerary" className="w-full mt-4 mb-6">
+        <div className="w-full overflow-x-auto scrollbar-hide">
+          <TabsList className="bg-background">
+            <TabsTrigger value="checklist">Checklist</TabsTrigger>
+            <TabsTrigger value="itinerary">Itinerary</TabsTrigger>
+            <TabsTrigger value="attachments">Attachments</TabsTrigger>
+            <TabsTrigger value="travel-wallet">Travel Wallet</TabsTrigger>
+          </TabsList>
+        </div>
         <TabsContent value="itinerary" className="space-y-6">
           <Itinerary />
         </TabsContent>
@@ -54,6 +61,9 @@ const Tripsection = () => {
         </TabsContent>
         <TabsContent value="attachments" className="space-y-6">
           <Attachments />
+        </TabsContent>
+        <TabsContent value="travel-wallet" className="space-y-6">
+          <TravelWallet />
         </TabsContent>
       </Tabs>
     </div>

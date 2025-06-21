@@ -23,9 +23,12 @@ export function PriceRange({ min = 0, max = 1000, onChange }: PriceRangeProps) {
   const maxThumbRef = useRef<HTMLInputElement>(null);
   const rangeRef = useRef<HTMLDivElement>(null);
 
-  const getPercent = useCallback((value: number): number => {
-    return Math.round(((value - min) / (max - min)) * 100);
-  }, [min, max]);
+  const getPercent = useCallback(
+    (value: number): number => {
+      return Math.round(((value - min) / (max - min)) * 100);
+    },
+    [min, max],
+  );
 
   useEffect(() => {
     if (rangeRef.current) {
@@ -50,8 +53,16 @@ export function PriceRange({ min = 0, max = 1000, onChange }: PriceRangeProps) {
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="rounded-full shadow-md flex items-center">
-          <DollarSign className="me-1" size={16} strokeWidth={2} aria-hidden="true" />
+        <Button
+          variant="outline"
+          className="rounded-full shadow-md flex items-center"
+        >
+          <DollarSign
+            className="me-1"
+            size={16}
+            strokeWidth={2}
+            aria-hidden="true"
+          />
           Price
           <ChevronDown
             className="-me-1 ms-2 opacity-60"
@@ -175,4 +186,3 @@ export function PriceRange({ min = 0, max = 1000, onChange }: PriceRangeProps) {
     </DropdownMenu>
   );
 }
-

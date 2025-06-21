@@ -1,16 +1,20 @@
-import React from 'react';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { ChevronDown, Star } from 'lucide-react';
-import { Label } from '@/components/ui/label';
+import React from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ChevronDown, Star } from "lucide-react";
+import { Label } from "@/components/ui/label";
 
 const ratingOptions = [
-  { value: '5', label: '5 stars' },
-  { value: '4', label: '4 stars' },
-  { value: '3', label: '3 stars' },
-  { value: '2', label: '2 stars' },
-  { value: '1', label: '1 star' },
+  { value: "5", label: "5 stars" },
+  { value: "4", label: "4 stars" },
+  { value: "3", label: "3 stars" },
+  { value: "2", label: "2 stars" },
+  { value: "1", label: "1 star" },
 ];
 
 interface RatingProps {
@@ -20,17 +24,17 @@ interface RatingProps {
 
 const Rating = ({ onChange }: RatingProps) => {
   const [open, setOpen] = React.useState(false);
-  const [selectedRating, setSelectedRating] = React.useState<string>('');
+  const [selectedRating, setSelectedRating] = React.useState<string>("");
 
   const handleCheckboxChange = (value: string) => {
-    setSelectedRating(value === selectedRating ? '' : value);
-    onChange?.(value === selectedRating ? '' : value);
+    setSelectedRating(value === selectedRating ? "" : value);
+    onChange?.(value === selectedRating ? "" : value);
     setOpen(false);
   };
 
   const getButtonLabel = () => {
-    if (!selectedRating) return 'Rating';
-    return `${selectedRating} ${selectedRating === '1' ? 'Star' : 'Stars'}`;
+    if (!selectedRating) return "Rating";
+    return `${selectedRating} ${selectedRating === "1" ? "Star" : "Stars"}`;
   };
 
   const renderStars = (count: number) => {
@@ -68,6 +72,7 @@ const Rating = ({ onChange }: RatingProps) => {
                 checked={selectedRating === option.value}
                 onCheckedChange={() => handleCheckboxChange(option.value)}
               />
+
               <Label
                 htmlFor={option.value}
                 className="flex items-center space-x-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"

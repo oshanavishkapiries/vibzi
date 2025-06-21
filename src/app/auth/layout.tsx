@@ -7,7 +7,7 @@ import { toast } from "sonner";
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
   const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
+    (state: RootState) => state.auth.isAuthenticated,
   );
 
   if (isAuthenticated) {

@@ -13,7 +13,7 @@ import {
   confirmResetPassword,
   resetPassword as amplifyForgotPassword,
   ResetPasswordOutput,
-  signInWithRedirect
+  signInWithRedirect,
 } from "@aws-amplify/auth";
 //import { Hub } from "aws-amplify/utils";
 import { AuthContextType } from "@/types";
@@ -49,7 +49,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             name: attributes.preferred_username || attributes.email || "",
             email: attributes.email || "",
             picture: attributes.picture || undefined,
-          })
+          }),
         );
       } catch (error) {
         dispatch(setUser(null));
@@ -78,7 +78,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           name: attributes.preferred_username || attributes.email || "",
           email: attributes.email || "",
           picture: attributes.picture || undefined,
-        })
+        }),
       );
     } catch (error) {
       if (error instanceof Error) {
@@ -93,7 +93,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const googleSignIn = async () => {
     try {
       await signInWithRedirect({ provider: "Google" });
-
     } catch (error) {
       console.error("Google sign-in error:", error);
     }
@@ -123,7 +122,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     familyName: string,
     birthdate: string,
     gender: string,
-    phoneNumber: string
+    phoneNumber: string,
   ) => {
     dispatch(setLoading(true));
     try {
@@ -154,7 +153,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const verifyEmail = async (
     email: string,
     code: string,
-    resend: boolean = false
+    resend: boolean = false,
   ) => {
     dispatch(setLoading(true));
     try {
@@ -190,9 +189,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       case "CONFIRM_RESET_PASSWORD_WITH_CODE":
         const codeDeliveryDetails = nextStep.codeDeliveryDetails;
         console.log(
-          `Confirmation code was sent to ${codeDeliveryDetails.deliveryMedium}`
+          `Confirmation code was sent to ${codeDeliveryDetails.deliveryMedium}`,
         );
-        // Collect the confirmation code from the user and pass to confirmResetPassword.
         break;
       case "DONE":
         console.log("Successfully reset password.");
@@ -202,7 +200,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const resetPassword = async (
     confirmationCode: string,
-    newPassword: string
+    newPassword: string,
   ) => {
     try {
       const username = localStorage.getItem("reset_email") || "";

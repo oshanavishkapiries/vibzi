@@ -118,7 +118,7 @@ const ThingsToDo = ({
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="activityName">
-              Name Of Activity <span className="text-red-500">*</span>
+              Name Of Things To Do <span className="text-red-500">*</span>
             </Label>
             <Input
               id="activityName"

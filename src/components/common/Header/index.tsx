@@ -31,6 +31,7 @@ const Header = () => {
           <Link href="/" className={"cursor-pointer"}>
             <Image
               src={"/logo/logo-rbg.png"}
+              sizes="(max-width: 768px) 33vw, 20vw"
               alt="logo"
               width={400}
               height={150}
@@ -42,7 +43,7 @@ const Header = () => {
             href="/explore"
             className={cn(
               "max-md:hidden flex flex-row gap-1 items-center text-sm font-semibold transition-all duration-300 hover:border-b-4 hover:border-primary",
-              path === "/explore" && "border-b-4 border-primary"
+              path === "/explore" && "border-b-4 border-primary",
             )}
           >
             Explore
@@ -51,7 +52,7 @@ const Header = () => {
             href="/esim"
             className={cn(
               "max-md:hidden flex flex-row gap-1 items-center text-sm font-semibold transition-all duration-300 hover:border-b-4 hover:border-primary",
-              path === "/esim" && "border-b-4 border-primary"
+              path === "/esim" && "border-b-4 border-primary",
             )}
           >
             eSIM store
@@ -64,7 +65,7 @@ const Header = () => {
             href="/about"
             className={cn(
               "flex flex-row gap-1 items-center text-sm font-semibold transition-all duration-300 hover:border-b-4 hover:border-primary",
-              path === "/about" && "border-b-4 border-primary"
+              path === "/about" && "border-b-4 border-primary",
             )}
           >
             About
@@ -73,7 +74,7 @@ const Header = () => {
             href={path === "/my-trips" ? "/" : "/my-trips"}
             className={cn(
               "flex flex-row gap-1 items-center text-sm font-semibold transition-all duration-300 hover:border-b-4 hover:border-primary",
-              path === "/my-trips" && "border-b-4 border-primary"
+              path === "/my-trips" && "border-b-4 border-primary",
             )}
           >
             Plan Your Trip
@@ -90,7 +91,6 @@ const Header = () => {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              
               <div className="mt-4">
                 <Profile />
               </div>
@@ -99,7 +99,7 @@ const Header = () => {
                   href="/explore"
                   className={cn(
                     "flex flex-row gap-1 items-center text-sm font-semibold transition-all duration-300 hover:border-b-4 hover:border-primary",
-                    path === "/explore" && "border-b-4 border-primary"
+                    path === "/explore" && "border-b-4 border-primary",
                   )}
                   onClick={() => setIsOpen(false)}
                 >
@@ -109,7 +109,7 @@ const Header = () => {
                   href="/esim"
                   className={cn(
                     "flex flex-row gap-1 items-center text-sm font-semibold transition-all duration-300 hover:border-b-4 hover:border-primary",
-                    path === "/esim" && "border-b-4 border-primary"
+                    path === "/esim" && "border-b-4 border-primary",
                   )}
                   onClick={() => setIsOpen(false)}
                 >
@@ -119,7 +119,7 @@ const Header = () => {
                   href="/about"
                   className={cn(
                     "flex flex-row gap-1 items-center text-sm font-semibold transition-all duration-300 hover:border-b-4 hover:border-primary",
-                    path === "/about" && "border-b-4 border-primary"
+                    path === "/about" && "border-b-4 border-primary",
                   )}
                   onClick={() => setIsOpen(false)}
                 >
@@ -129,7 +129,7 @@ const Header = () => {
                   href={path === "/my-trips" ? "/" : "/my-trips"}
                   className={cn(
                     "flex flex-row gap-1 items-center text-sm font-semibold transition-all duration-300 hover:border-b-4 hover:border-primary",
-                    path === "/my-trips" && "border-b-4 border-primary"
+                    path === "/my-trips" && "border-b-4 border-primary",
                   )}
                   onClick={() => setIsOpen(false)}
                 >

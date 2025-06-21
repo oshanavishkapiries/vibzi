@@ -5,14 +5,11 @@ import { Provider } from "react-redux";
 
 const ReduxProvider = ({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) => {
+}: Readonly<{ children: React.ReactNode }>) => {
+  // store.subscribe(() => {
+  //   console.log('Redux Store State:', store.getState());
+  // });
 
-  store.subscribe(() => {
-    console.log('Redux Store State:', store.getState());
-  });
-  
   return <Provider store={store}>{children}</Provider>;
 };
 

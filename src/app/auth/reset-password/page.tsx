@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { useAuth } from "@/components/common/Auth/AuthProvider";
+import { useAuth } from "@/providers/AuthProvider";
 import { useSearchParams } from "next/navigation";
 
 import {
@@ -30,7 +30,7 @@ const resetPasswordSchema = z
       .min(8, "Password must be at least 8 characters")
       .regex(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
       ),
     confirmPassword: z.string(),
   })
@@ -83,12 +83,14 @@ export default function ResetPasswordPage() {
     <div className="flex flex-col md:flex-row items-center justify-center h-screen">
       <div className="absolute inset-0 -z-10 lg:hidden">
         <div className="h-full w-full absolute inset-0 z-10" />
+
         <InfiniteGallery />
       </div>
 
       {/* left */}
       <div className="hidden lg:flex flex-col items-center justify-center w-full h-full pl-[100px]">
         <div className="h-full w-full absolute inset-0 z-10" />
+
         <InfiniteGallery />
       </div>
 
@@ -106,9 +108,13 @@ export default function ResetPasswordPage() {
                     <ArrowLeft className="h-4 w-4 text-gray-600" />
                   </Link>
                 </div>
-                <Link href="/" className="flex justify-center items-center gap-2 font-medium w-full">
+                <Link
+                  href="/"
+                  className="flex justify-center items-center gap-2 font-medium w-full"
+                >
                   <Image
                     src="/logo/logo-rbg.png"
+                    sizes="(max-width: 768px) 33vw, 20vw"
                     alt="logo"
                     width={80}
                     height={32}
@@ -117,9 +123,7 @@ export default function ResetPasswordPage() {
                 </Link>
                 <div className="space-y-2 text-center">
                   <h1 className="text-3xl font-bold">Reset Password</h1>
-                  <p className="text-gray-500">
-                    Enter your new password below
-                  </p>
+                  <p className="text-gray-500">Enter your new password below</p>
                 </div>
                 <Form {...form}>
                   <form
@@ -139,6 +143,7 @@ export default function ResetPasswordPage() {
                                 type={showPassword ? "text" : "password"}
                                 {...field}
                               />
+
                               <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
@@ -156,6 +161,7 @@ export default function ResetPasswordPage() {
                         </FormItem>
                       )}
                     />
+
                     <FormField
                       control={form.control}
                       name="confirmPassword"
@@ -169,9 +175,12 @@ export default function ResetPasswordPage() {
                                 type={showConfirmPassword ? "text" : "password"}
                                 {...field}
                               />
+
                               <button
                                 type="button"
-                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                onClick={() =>
+                                  setShowConfirmPassword(!showConfirmPassword)
+                                }
                                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                               >
                                 {showConfirmPassword ? (
@@ -186,6 +195,7 @@ export default function ResetPasswordPage() {
                         </FormItem>
                       )}
                     />
+
                     <Button type="submit" className="w-full">
                       {isLoading ? (
                         <Loader2 className="h-4 w-4 animate-spin" />

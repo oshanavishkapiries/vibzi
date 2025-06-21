@@ -11,9 +11,7 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({ src, alt }) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
-    <div
-      className={`relative w-full h-full object-cover rounded-lg overflow-hidden`}
-    >
+    <div className="relative w-full aspect-[12/5] rounded-lg overflow-hidden">
       {!isLoaded && (
         <div className="absolute inset-0 bg-gray-100/25 opacity-75 animate-pulse"></div>
       )}
@@ -25,11 +23,13 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({ src, alt }) => {
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         priority
         onLoad={() => setIsLoaded(true)}
+        style={{ objectPosition: 'center 80%' }}
         className={`duration-500 ease-in-out object-cover hover:scale-110 transition-all ${
           isLoaded ? "opacity-100" : "opacity-0"
         }`}
       />
     </div>
+
   );
 };
 

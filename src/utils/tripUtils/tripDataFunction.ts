@@ -11,5 +11,6 @@ export function parseTrips(response : any) {
       description: item.description,
       imageUrl: item.imageUrl || "/1.jpg",
       startDate: item.startDate,
+      userId: item.userId,
     }));
   }

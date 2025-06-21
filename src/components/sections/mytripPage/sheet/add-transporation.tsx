@@ -18,24 +18,30 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { TimelineItem } from "@/types";
 
-const AddTransportation = ({ 
+const AddTransportation = ({
   children,
   onUpdate,
-  editingItem 
-}: { 
+  editingItem,
+}: {
   children?: React.ReactNode;
-  onUpdate?: (item:   any) => Promise<void>;
+  onUpdate?: (item: any) => Promise<void>;
   editingItem?: TimelineItem | null;
 }) => {
   const [formData, setFormData] = useState({
     type: editingItem?.details?.customFields?.type || "Flight",
     name: editingItem?.details?.title || "",
-    departureLocation: editingItem?.details?.customFields?.departureLocation || "",
-    departureTime: editingItem?.details?.customFields?.departureTime ? new Date(editingItem.details.customFields.departureTime) : new Date(),
+    departureLocation:
+      editingItem?.details?.customFields?.departureLocation || "",
+    departureTime: editingItem?.details?.customFields?.departureTime
+      ? new Date(editingItem.details.customFields.departureTime)
+      : new Date(),
     arrivalLocation: editingItem?.details?.customFields?.arrivalLocation || "",
-    arrivalTime: editingItem?.details?.customFields?.arrivalTime ? new Date(editingItem.details.customFields.arrivalTime) : new Date(),
+    arrivalTime: editingItem?.details?.customFields?.arrivalTime
+      ? new Date(editingItem.details.customFields.arrivalTime)
+      : new Date(),
     link: editingItem?.details?.customFields?.link || "",
-    reservationNumber: editingItem?.details?.customFields?.reservationNumber || "",
+    reservationNumber:
+      editingItem?.details?.customFields?.reservationNumber || "",
     note: editingItem?.details?.customFields?.note || "",
   });
 
@@ -50,7 +56,7 @@ const AddTransportation = ({
     if (!itinerary || !selectedDate) return;
 
     const obj = {
-      position:  (itinerary.itinerary[selectedDate]?.length + 1) || 1,
+      position: itinerary.itinerary[selectedDate]?.length + 1 || 1,
       date: selectedDate,
       type: "flight",
       details: {
@@ -76,7 +82,7 @@ const AddTransportation = ({
         toast.success("Transportation added successfully.");
         setIsOpen(false);
       } catch (error) {
-        console.log('error: ', error);
+        console.log("error: ", error);
         toast.error("Failed to add transportation. Please try again.");
       }
     }
@@ -107,7 +113,9 @@ const AddTransportation = ({
             {editingItem ? "Edit transportation" : "Add a transportation"}
           </SheetTitle>
           <p className="text-sm text-muted-foreground">
-            {editingItem ? "Edit your transportation details" : "Add your transportation details"}
+            {editingItem
+              ? "Edit your transportation details"
+              : "Add your transportation details"}
           </p>
         </SheetHeader>
         <form onSubmit={handleSubmit} className="space-y-6 pt-4">
@@ -151,7 +159,10 @@ const AddTransportation = ({
                 id="departureLocation"
                 value={formData.departureLocation}
                 onChange={(e) =>
-                  setFormData({ ...formData, departureLocation: e.target.value })
+                  setFormData({
+                    ...formData,
+                    departureLocation: e.target.value,
+                  })
                 }
                 placeholder="Enter departure location"
               />
@@ -160,9 +171,13 @@ const AddTransportation = ({
               <Label>Departure Time</Label>
               <Input
                 type="time"
-                value={formData.departureTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })}
+                value={formData.departureTime.toLocaleTimeString("en-US", {
+                  hour12: false,
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
                 onChange={(e) => {
-                  const [hours, minutes] = e.target.value.split(':');
+                  const [hours, minutes] = e.target.value.split(":");
                   const newDate = new Date(formData.departureTime);
                   newDate.setHours(parseInt(hours), parseInt(minutes));
                   setFormData({ ...formData, departureTime: newDate });
@@ -184,9 +199,13 @@ const AddTransportation = ({
               <Label>Arrival Time</Label>
               <Input
                 type="time"
-                value={formData.arrivalTime.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' })}
+                value={formData.arrivalTime.toLocaleTimeString("en-US", {
+                  hour12: false,
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
                 onChange={(e) => {
-                  const [hours, minutes] = e.target.value.split(':');
+                  const [hours, minutes] = e.target.value.split(":");
                   const newDate = new Date(formData.arrivalTime);
                   newDate.setHours(parseInt(hours), parseInt(minutes));
                   setFormData({ ...formData, arrivalTime: newDate });
@@ -210,7 +229,10 @@ const AddTransportation = ({
                 id="reservationNumber"
                 value={formData.reservationNumber}
                 onChange={(e) =>
-                  setFormData({ ...formData, reservationNumber: e.target.value })
+                  setFormData({
+                    ...formData,
+                    reservationNumber: e.target.value,
+                  })
                 }
                 placeholder="Enter reservation number"
               />
@@ -238,8 +260,10 @@ const AddTransportation = ({
             >
               {isLoading ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
+              ) : editingItem ? (
+                "Update"
               ) : (
-                editingItem ? "Update" : "Add to trip"
+                "Add to trip"
               )}
             </Button>
           </div>

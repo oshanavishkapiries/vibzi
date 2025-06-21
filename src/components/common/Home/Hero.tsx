@@ -68,28 +68,33 @@ const Hero = () => {
     },
   ];
 
-  const getRandomImage = useCallback((currentImage: string, currentRow: number) => {
-    const rowImages = currentImages.map((col) => col[currentRow]);
-    const availableImages = images.filter(
-      (img) =>
-        !rowImages.includes(img) && img !== currentImage && !usedImages.has(img)
-    );
-
-    if (availableImages.length === 0) {
-      setUsedImages(new Set());
-      const allImagesExceptCurrent = images.filter(
-        (img) => img !== currentImage
+  const getRandomImage = useCallback(
+    (currentImage: string, currentRow: number) => {
+      const rowImages = currentImages.map((col) => col[currentRow]);
+      const availableImages = images.filter(
+        (img) =>
+          !rowImages.includes(img) &&
+          img !== currentImage &&
+          !usedImages.has(img),
       );
-      return allImagesExceptCurrent[
-        Math.floor(Math.random() * allImagesExceptCurrent.length)
-      ];
-    }
 
-    const newImage =
-      availableImages[Math.floor(Math.random() * availableImages.length)];
-    setUsedImages((prev) => new Set([...prev, newImage]));
-    return newImage;
-  }, [currentImages, images, usedImages]);
+      if (availableImages.length === 0) {
+        setUsedImages(new Set());
+        const allImagesExceptCurrent = images.filter(
+          (img) => img !== currentImage,
+        );
+        return allImagesExceptCurrent[
+          Math.floor(Math.random() * allImagesExceptCurrent.length)
+        ];
+      }
+
+      const newImage =
+        availableImages[Math.floor(Math.random() * availableImages.length)];
+      setUsedImages((prev) => new Set([...prev, newImage]));
+      return newImage;
+    },
+    [currentImages, images, usedImages],
+  );
 
   useEffect(() => {
     const initialColumns = Array.from({ length: 7 }, (_, columnIndex) => {
@@ -210,6 +215,7 @@ const Hero = () => {
                             columnIndex * 2 + imageIndex + 1
                           }`}
                           fill
+                          sizes="sizes=(max-width: 768px) 33vw, 20vw"
                           className={`object-cover transition-all duration-1000 ${
                             changingImage?.col === columnIndex &&
                             changingImage?.row === imageIndex

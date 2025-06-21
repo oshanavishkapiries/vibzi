@@ -76,6 +76,7 @@ const PricingDetails: React.FC<PricingDetailsProps> = ({
       <div className="bg-emerald-50 p-4 rounded-lg">
         <div className="flex gap-2">
           <Check className="h-5 w-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+
           <div>
             <span className="font-medium underline">{cancellationPolicy}</span>{" "}
             <span className="text-muted-foreground">{cancellationDetail}</span>

@@ -54,9 +54,9 @@ const CareersPage = () => {
                 No Current Vacancies
               </h2>
               <p className="text-gray-600 mb-6">
-                We currently don&apos;t have any vacancies! However, if you would still
-                like to send in your CV, we&apos;d love to keep it on file for future
-                opportunities.
+                We currently don&apos;t have any vacancies! However, if you
+                would still like to send in your CV, we&apos;d love to keep it
+                on file for future opportunities.
               </p>
               <div className="space-y-4">
                 <p className="text-gray-600">
@@ -82,7 +82,9 @@ const CareersPage = () => {
                   <div key={index} className="text-center">
                     <div className="text-primary mb-2">{benefit.icon}</div>
                     <h4 className="font-medium mb-2">{benefit.title}</h4>
-                    <p className="text-sm text-gray-600">{benefit.description}</p>
+                    <p className="text-sm text-gray-600">
+                      {benefit.description}
+                    </p>
                   </div>
                 ))}
               </div>

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { useAuth } from "@/components/common/Auth/AuthProvider";
+import { useAuth } from "@/providers/AuthProvider";
 
 import {
   Form,
@@ -23,8 +23,6 @@ import { useState } from "react";
 import InfiniteGallery from "@/components/common/InfiniteGallery";
 import { FcGoogle } from "react-icons/fc";
 
-
-
 const signinSchema = z.object({
   emailOrUsername: z.string().min(1, "Email or username is required"),
   password: z.string().min(1, "Password is required"),
@@ -33,7 +31,7 @@ const signinSchema = z.object({
 type SigninFormValues = z.infer<typeof signinSchema>;
 
 export default function SigninPage() {
-  const { signIn , googleSignIn } = useAuth();
+  const { signIn, googleSignIn } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -75,12 +73,14 @@ export default function SigninPage() {
     <div className="flex flex-col md:flex-row items-center justify-center h-screen">
       <div className="absolute inset-0 -z-10 lg:hidden">
         <div className="h-full w-full absolute inset-0 z-10" />
+
         <InfiniteGallery />
       </div>
 
       {/* left */}
       <div className="hidden lg:flex flex-col items-center justify-center w-full h-full pl-[100px]">
         <div className="h-full w-full absolute inset-0 z-10" />
+
         <InfiniteGallery />
       </div>
 
@@ -98,9 +98,13 @@ export default function SigninPage() {
                     <ArrowLeft className="h-4 w-4 text-gray-600" />
                   </Link>
                 </div>{" "}
-                <Link href="/" className="flex justify-center items-center gap-2 font-medium w-full">
+                <Link
+                  href="/"
+                  className="flex justify-center items-center gap-2 font-medium w-full"
+                >
                   <Image
                     src="/logo/logo-rbg.png"
+                    sizes="(max-width: 768px) 33vw, 20vw"
                     alt="logo"
                     width={80}
                     height={32}
@@ -134,6 +138,7 @@ export default function SigninPage() {
                         </FormItem>
                       )}
                     />
+
                     <FormField
                       control={form.control}
                       name="password"
@@ -147,6 +152,7 @@ export default function SigninPage() {
                                 type={showPassword ? "text" : "password"}
                                 {...field}
                               />
+
                               <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
@@ -172,6 +178,7 @@ export default function SigninPage() {
                         </FormItem>
                       )}
                     />
+
                     <Button type="submit" className="w-full">
                       {isLoading ? (
                         <Loader2 className="h-4 w-4 animate-spin" />

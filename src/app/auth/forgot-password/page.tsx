@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
-import { useAuth } from "@/components/common/Auth/AuthProvider";
+import { useAuth } from "@/providers/AuthProvider";
 
 import {
   Form,
@@ -60,12 +60,14 @@ export default function ForgotPasswordPage() {
     <div className="flex flex-col md:flex-row items-center justify-center h-screen">
       <div className="absolute inset-0 -z-10 lg:hidden">
         <div className="h-full w-full absolute inset-0 z-10" />
+
         <InfiniteGallery />
       </div>
 
       {/* left */}
       <div className="hidden lg:flex flex-col items-center justify-center w-full h-full pl-[100px]">
         <div className="h-full w-full absolute inset-0 z-10" />
+
         <InfiniteGallery />
       </div>
 
@@ -83,9 +85,13 @@ export default function ForgotPasswordPage() {
                     <ArrowLeft className="h-4 w-4 text-gray-600" />
                   </Link>
                 </div>
-                <Link href="/" className="flex justify-center items-center gap-2 font-medium w-full">
+                <Link
+                  href="/"
+                  className="flex justify-center items-center gap-2 font-medium w-full"
+                >
                   <Image
                     src="/logo/logo-rbg.png"
+                    sizes="(max-width: 768px) 33vw, 20vw"
                     alt="logo"
                     width={80}
                     height={32}
@@ -95,7 +101,8 @@ export default function ForgotPasswordPage() {
                 <div className="space-y-2 text-center">
                   <h1 className="text-3xl font-bold">Forgot Password</h1>
                   <p className="text-gray-500">
-                    Enter your email address and we&apos;ll send you instructions to reset your password
+                    Enter your email address and we&apos;ll send you
+                    instructions to reset your password
                   </p>
                 </div>
                 <Form {...form}>
@@ -120,6 +127,7 @@ export default function ForgotPasswordPage() {
                         </FormItem>
                       )}
                     />
+
                     <Button type="submit" className="w-full">
                       {isLoading ? (
                         <Loader2 className="h-4 w-4 animate-spin" />

@@ -33,9 +33,9 @@ interface AttractionsCardProps {
 }
 
 const AttractionsCard: React.FC<AttractionsCardProps> = ({ product }) => {
-  const imageUrl = product.images?.[0]?.variants?.find(
-    (variant) => variant.width === 480
-  )?.url || "https://via.placeholder.com/480x320";
+  const imageUrl =
+    product.images?.[0]?.variants?.find((variant) => variant.width === 480)
+      ?.url || "https://via.placeholder.com/480x320";
 
   return (
     <div className="block">
@@ -49,6 +49,7 @@ const AttractionsCard: React.FC<AttractionsCardProps> = ({ product }) => {
               {product.reviews.totalReviews > 0 && (
                 <Badge variant="secondary" className="flex items-center gap-1">
                   <Star className="h-3 w-3 fill-primary text-primary" />
+
                   <span>{product.reviews.averageReviews.toFixed(1)}</span>
                 </Badge>
               )}
@@ -66,7 +67,7 @@ const AttractionsCard: React.FC<AttractionsCardProps> = ({ product }) => {
             <MapPin className="h-4 w-4" />
             <span className="text-sm">{product.destinationName}</span>
           </div>
-          <div 
+          <div
             className="text-xs text-muted-foreground line-clamp-3"
             dangerouslySetInnerHTML={{ __html: product.description }}
           />

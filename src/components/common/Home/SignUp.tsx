@@ -5,7 +5,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
-import { useAuth } from "../Auth/AuthProvider";
+import { useAuth } from "../../../providers/AuthProvider";
 import MiniFooter from "./MiniFooter";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,7 +31,7 @@ const signupSchema = z
       .min(8, "Password must be at least 8 characters")
       .regex(
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
       ),
     confirmPassword: z.string(),
     givenName: z.string().min(1, "First name is required"),
@@ -110,7 +110,7 @@ const SignUp = () => {
         data.familyName,
         data.birthdate,
         data.gender,
-        "+94770000000"
+        "+94770000000",
       );
       setIsLoading(false);
       toast.success("Sign up successful! Please verify your email address.");
@@ -147,10 +147,10 @@ const SignUp = () => {
       if (isValid) {
         const password = form.getValues("password");
         const confirmPassword = form.getValues("confirmPassword");
-        setFormData({ 
-          ...formData, 
+        setFormData({
+          ...formData,
           password,
-          confirmPassword
+          confirmPassword,
         });
         form.reset({
           email: formData.email,
@@ -204,6 +204,7 @@ const SignUp = () => {
                 src={image}
                 alt={`Gallery image ${index + 1}`}
                 fill
+                sizes="sizes=(max-width: 768px) 33vw, 20vw"
                 className="object-cover"
               />
             </div>
@@ -244,15 +245,18 @@ const SignUp = () => {
                 <h1 className="text-2xl font-bold mb-2">vibzi.</h1>
                 <p className="text-gray-600">Create an account</p>
                 <p className="text-sm text-gray-500">
-                  {step === 1 
+                  {step === 1
                     ? "Enter your email to get started"
                     : step === 2
-                    ? "Create a secure password"
-                    : "Complete your profile information"}
+                      ? "Create a secure password"
+                      : "Complete your profile information"}
                 </p>
               </div>
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-4"
+                >
                   {step === 1 ? (
                     <>
                       <FormField
@@ -272,8 +276,9 @@ const SignUp = () => {
                           </FormItem>
                         )}
                       />
-                      <Button 
-                        type="button" 
+
+                      <Button
+                        type="button"
                         onClick={handleNext}
                         className="w-full"
                       >
@@ -295,6 +300,7 @@ const SignUp = () => {
                                   type={showPassword ? "text" : "password"}
                                   {...field}
                                 />
+
                                 <button
                                   type="button"
                                   onClick={() => setShowPassword(!showPassword)}
@@ -312,6 +318,7 @@ const SignUp = () => {
                           </FormItem>
                         )}
                       />
+
                       <FormField
                         control={form.control}
                         name="confirmPassword"
@@ -322,12 +329,17 @@ const SignUp = () => {
                               <div className="relative">
                                 <Input
                                   placeholder="••••••••"
-                                  type={showConfirmPassword ? "text" : "password"}
+                                  type={
+                                    showConfirmPassword ? "text" : "password"
+                                  }
                                   {...field}
                                 />
+
                                 <button
                                   type="button"
-                                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                  onClick={() =>
+                                    setShowConfirmPassword(!showConfirmPassword)
+                                  }
                                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                                 >
                                   {showConfirmPassword ? (
@@ -342,17 +354,18 @@ const SignUp = () => {
                           </FormItem>
                         )}
                       />
+
                       <div className="flex gap-2">
-                        <Button 
-                          type="button" 
+                        <Button
+                          type="button"
                           variant="outline"
                           onClick={handleBack}
                           className="flex-1"
                         >
                           Back
                         </Button>
-                        <Button 
-                          type="button" 
+                        <Button
+                          type="button"
                           onClick={handleNext}
                           className="flex-1"
                         >
@@ -376,6 +389,7 @@ const SignUp = () => {
                             </FormItem>
                           )}
                         />
+
                         <FormField
                           control={form.control}
                           name="familyName"
@@ -389,6 +403,7 @@ const SignUp = () => {
                             </FormItem>
                           )}
                         />
+
                         <FormField
                           control={form.control}
                           name="birthdate"
@@ -402,6 +417,7 @@ const SignUp = () => {
                             </FormItem>
                           )}
                         />
+
                         <FormField
                           control={form.control}
                           name="gender"
@@ -425,18 +441,15 @@ const SignUp = () => {
                         />
                       </div>
                       <div className="flex gap-2">
-                        <Button 
-                          type="button" 
+                        <Button
+                          type="button"
                           variant="outline"
                           onClick={handleBack}
                           className="flex-1"
                         >
                           Back
                         </Button>
-                        <Button 
-                          type="submit" 
-                          className="flex-1"
-                        >
+                        <Button type="submit" className="flex-1">
                           {isLoading ? (
                             <Loader2 className="h-4 w-4 animate-spin" />
                           ) : (

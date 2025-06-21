@@ -13,7 +13,9 @@ const Explore = () => {
               Explore your activities
             </h2>
             <p className="text-base lg:text-lg text-gray-600 leading-relaxed text-center lg:text-left">
-              Find the perfect activities with Vibzi’s activity search—explore options, filter by interest, and add them to your itinerary with ease.
+              Find the perfect activities with Vibzi’s activity search—explore
+              options, filter by interest, and add them to your itinerary with
+              ease.
             </p>
             <div className="pt-4 flex justify-center lg:justify-start">
               <Link href="/explore">
